@@ -3,3 +3,7 @@ pycache
 .venv
 .coverage
 htmlcov/
+.env
+src/__pycache__
+src/entities/__pycache__
+src/repositories/__pycache__
