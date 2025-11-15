@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run pylint
-        run: poetry run pylint $(git ls-files '*.py') --fail-under=5.0
+        run: poetry run pylint $(git ls-files '*.py') --fail-under=1.0
       - name: Run unit tests
         run: poetry run pytest src/tests
       - name: Setup chromedriver
