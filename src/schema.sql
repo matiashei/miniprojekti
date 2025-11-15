@@ -1,5 +1,4 @@
-CREATE TABLE references (
+CREATE TABLE citations (
   id SERIAL PRIMARY KEY,
   content TEXT NOT NULL,
-  done BOOLEAN DEFAULT FALSE
 )

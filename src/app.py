@@ -1,35 +1,30 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.reference_repository import get_references, create_reference, set_done
+from repositories.citation_repository import get_citations, create_citation
 from config import app, test_env
-from util import validate_reference
+from util import validate_citation
 
 @app.route("/")
 def index():
-    references = get_references()
-    unfinished = len([reference for reference in references if not reference.done])
-    return render_template("index.html", references=references, unfinished=unfinished)
+    citations = get_citations()
+    unfinished = len([citation for citation in citations])
+    return render_template("index.html", citations=citations, unfinished=unfinished)
 
-@app.route("/new_reference")
+@app.route("/new_citation")
 def new():
-    return render_template("new_reference.html")
+    return render_template("new_citation.html")
 
-@app.route("/create_reference", methods=["POST"])
-def reference_creation():
+@app.route("/create_citation", methods=["POST"])
+def citation_creation():
     content = request.form.get("content")
 
     try:
-        validate_reference(content)
-        create_reference(content)
+        validate_citation(content)
+        create_citation(content)
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_reference")
-
-@app.route("/toggle_reference/<reference_id>", methods=["POST"])
-def toggle_reference(reference_id):
-    set_done(reference_id)
-    return redirect("/")
+        return  redirect("/new_citation")
 
 # testausta varten oleva reitti
 if test_env:

@@ -1,34 +1,27 @@
 {% extends "layout.html" %}
 
 {% block title %}
-reference app
+citation app
 {% endblock %}
 
 {% block body %}
 
-<h2>reference app</h2>
-
-<div>
-  things still unfinished: {{ unfinished }}
-</div>
+<h2>citation app</h2>
 
 <ul>
-  {% for reference in references %}
+  {% for citation in citations %}
     <li style="display: flex">
       <div>
-        {{ reference }}
+        {{ citation }}
       </div>
-      {% if not reference.done %}
-        <form action="/toggle_reference/{{ reference.id }}" method="post" style="margin-left: 10px;">
-          <button type="submit">mark as done</button>
+        <form action="/toggle_citation/{{ citation.id }}" method="post" style="margin-left: 10px;">
         </form>
-      {% endif %}
     </li>
   {% endfor %}
 </ul>
 
 <div>
-  <a href="/new_reference">Create new reference</a>
+  <a href="/new_citation">Create new citation</a>
 </div>
 
 {% endblock %}
