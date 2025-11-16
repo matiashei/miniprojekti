@@ -1,4 +1,8 @@
 CREATE TABLE citations (
   id SERIAL PRIMARY KEY,
-  content TEXT NOT NULL
+  title TEXT,
+  author TEXT,
+  publisher TEXT,
+  isbn TEXT,
+  year INT
 )
