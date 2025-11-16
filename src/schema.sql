@@ -1,4 +1,4 @@
 CREATE TABLE citations (
   id SERIAL PRIMARY KEY,
-  content TEXT NOT NULL,
+  content TEXT NOT NULL
 )
