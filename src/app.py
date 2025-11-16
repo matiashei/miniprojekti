@@ -1,8 +1,8 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import get_book_citations, create_book_citation, create_citation
+from repositories.citation_repository import get_book_citations, create_book_citation
 from config import app, test_env
-from util import validate_citation, validate_book
+from util import validate_book
 
 @app.route("/")
 def index():
@@ -37,7 +37,7 @@ def citation_creation():
 
 # testausta varten oleva reitti
 if test_env:
-    @app.route("/reset_db")
+    @app.route("/reset_db", methods=["POST"])
     def reset_database():
         reset_db()
         return jsonify({ 'message': "db reset" })
