@@ -8,8 +8,10 @@ citation app
 
 <h2>citation app</h2>
 
-<ul>
-  {% for citation in citations %}
+{% if book_citations %}
+<h3>Added citations:</h3>
+  <ul>
+  {% for citation in book_citations %}
     <li style="display: flex">
       <div>
         {{ citation }}
@@ -18,8 +20,8 @@ citation app
         </form>
     </li>
   {% endfor %}
-</ul>
-
+  </ul>
+{% endif %}
 <div>
   <a href="/new_citation">Create new citation</a>
 </div>
