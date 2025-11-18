@@ -7,3 +7,4 @@ htmlcov/
 src/__pycache__
 src/entities/__pycache__
 src/repositories/__pycache__
+src/tests/__pycache__
