@@ -1,13 +1,6 @@
 class UserInputError(Exception):
     pass
 
-def validate_citation(content):
-    if len(content) < 5:
-        raise UserInputError("Citation content length must be greater than 4 characters")
-
-    if len(content) > 100:
-        raise UserInputError("Citation content length must be smaller than 100 characters")
-
 def validate_book(title, author, publisher, isbn, year):
     if not title or title.isspace() or len(title) > 75:
         raise UserInputError("Title length must be less than 75 characters")
