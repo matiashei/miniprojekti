@@ -11,13 +11,9 @@ citation app
 {% if book_citations %}
 <h3>Added citations:</h3>
   <ul>
-  {% for citation in book_citations %}
-    <li style="display: flex">
-      <div>
-        {{ citation }}
-      </div>
-        <form action="/toggle_citation/{{ citation.id }}" method="post" style="margin-left: 10px;">
-        </form>
+  {% for title, author, publisher, isbn, year in book_citations %}
+    <li>
+      {{ author }}. <em>{{ title }}.</em> {{ publisher }}, {{ year }}. ISBN {{ isbn }}
     </li>
   {% endfor %}
   </ul>
