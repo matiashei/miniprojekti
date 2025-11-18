@@ -1,5 +1,5 @@
 from sqlalchemy import text
-from config import db
+from config import db, app
 
 from entities.citation import Citation
 
@@ -14,12 +14,13 @@ def create_citation(content):
     db.session.commit()
 
 def create_book_citation(title, author, publisher, isbn, year):
-    sql = text("INSERT INTO citations (title, author, publisher, isbn, year) " \
-    "VALUES (:title, :author, :publisher, :isbn, :year)")
+    with app.app_context():
+        sql = text("INSERT INTO citations (title, author, publisher, isbn, year) " \
+        "VALUES (:title, :author, :publisher, :isbn, :year)")
 
-    db.session.execute(sql, { "title": title, "author": author, "publisher": publisher,
-                            "isbn": isbn, "year": year })
-    db.session.commit()
+        db.session.execute(sql, { "title": title, "author": author, "publisher": publisher,
+                                "isbn": isbn, "year": year })
+        db.session.commit()
 
 # Temporary function to get book citations for front page listing
 def get_book_citations():
