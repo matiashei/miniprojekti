@@ -6,7 +6,7 @@ from util import validate_book, UserInputError
 class TestValidateBook(unittest.TestCase):
 
     def test_valid_book(self):
-        validate_book("Title", "Author", "Pub", "12345", "2025")
+        validate_book("Title", "Author", "Publisher", "12345", "2025")
 
     def test_empty_title(self):
         with self.assertRaises(UserInputError):
@@ -55,4 +55,3 @@ class TestValidateBook(unittest.TestCase):
     def test_too_low_year(self):
         with self.assertRaises(UserInputError):
             validate_book("Title", "Author", "Publisher", "123", "-1")
-            
