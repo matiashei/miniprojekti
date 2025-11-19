@@ -8,40 +8,119 @@ Create a new citation
 
 <h2>Create a new citation</h2>
 
+<style>
+.hidden { display: none; }
+</style>
+
 <form action="/create_citation" method="post">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  <p>
-  <label for="title">Title:</label>
-  <input type="text" name="title" id="title" maxlength="75">
-  </p>
-  <p>
-  <label for="author">Author:</label>
-  <input type="text" name="author" id="author" maxlength="75">
-  </p>
-  <p>
-  <label for="publisher">Publisher:</label>
-  <input type="text" name="publisher" id="publisher" maxlength="50">
-  </p>
-  <p>
-  <label for="ISBN">ISBN:</label>
-  <input type="text" name="ISBN" id="ISBN" maxlength="20">
-  </p>
-  <p>
-  <label for="year">Year:</label>
-  <input type="number" name="year" id="year" maxlength="4" min="0" max="2025">
-  </p>
-  <br>
-  <button type="submit">
-    Create
-  </button>
+
+    <label for="choice">Choose citation type:</label>
+    <select id="choice" name="citation_type">
+        <option value="">-Choose-</option>
+        <option value="1">Book</option>
+        <option value="2">Inproceedings</option>
+        <option value="3">Article</option>
+    </select>
+
+    <div id="book" class="hidden">
+      <p>
+        <label for="title_book">The title of the book:</label>
+        <input type="text" name="title_book" id="title_book" maxlength="75">
+      </p>
+      <p>
+        <label for="author_book">The author(s) of the book:</label>
+        <input type="text" name="author_book" id="author_book" maxlength="75">
+      </p>
+      <p>
+        <label for="publisher_book">The publisher of the book:</label>
+        <input type="text" name="publisher_book" id="publisher_book" maxlength="50">
+      </p>
+      <p>
+        <label for="ISBN_book">ISBN of the book:</label>
+        <input type="text" name="ISBN_book" id="ISBN_book" maxlength="20">
+      </p>
+      <p>
+        <label for="year_book">The year the book was published:</label>
+        <input type="number" name="year_book" id="year_book" min="0" max="2025">
+      </p>
+    </div>
+
+    <div id="inproceedings" class="hidden">
+      <p>
+        <label for="title_inproceedings">The title of the paper:</label>
+        <input type="text" name="title_inproceedings" id="title_inproceedings" maxlength="75">
+      </p>
+      <p>
+        <label for="author_inproceedings">The author(s) of the paper:</label>
+        <input type="text" name="author_inproceedings" id="author_inproceedings">
+      </p>
+      <p>
+        <label for="booktitle_inproceedings">The title of the conference proceedings:</label>
+        <input type="text" name="booktitle_inproceedings" id="booktitle_inproceedings" maxlength="100">
+      </p>
+      <p>
+        <label for="year_inproceedings">The year the conference proceedings were published:</label>
+        <input type="number" name="year_inproceedings" id="year_inproceedings" min="0" max="2025">
+      </p>
+    </div>
+
+    <div id="article" class="hidden">
+      <p>
+        <label for="title_article">The title of the article:</label>
+        <input type="text" name="title_article" id="title_article" maxlength="75">
+      </p>
+      <p>
+        <label for="author_article">The name(s) of the author(s) of the article:</label>
+        <input type="text" name="author_article" id="author_article">
+      </p>
+      <p>
+        <label for="journal_article">The name of the journal, magazine, or newspaper in which the article was published:</label>
+        <input type="text" name="journal_article" id="journal_article">
+      </p>
+      <p>
+        <label for="year_article">The year of publication:</label>
+        <input type="number" name="year_article" id="year_article" min="0" max="0">
+      </p>
+    </div>
+    <button type="submit" id="submit_button" class="hidden" >Create</button>
+
+
 </form>
+
+<script>
+    const valinta = document.getElementById("choice");
+    const book = document.getElementById("book");
+    const inproceedings = document.getElementById("inproceedings");
+    const article =document.getElementById("article");
+    const submit_button = document.getElementById("submit_button");
+
+    valinta.addEventListener("change", function() {
+        if (this.value === "1") {
+          book.classList.remove("hidden");
+          inproceedings.classList.add("hidden");
+          article.classList.add("hidden");
+          submit_button.classList.remove("hidden");
+        }
+        else if (this.value === "2") {
+          book.classList.add("hidden");
+          inproceedings.classList.remove("hidden");
+          article.classList.add("hidden")
+          submit_button.classList.remove("hidden");
+        }
+        else if (this.value === "3") {
+          book.classList.add("hidden");
+          inproceedings.classList.add("hidden");
+          article.classList.remove("hidden");
+          submit_button.classList.remove("hidden");
+
+        }
+        else {
+          book.classList.add("hidden");
+          inproceedings.classList.add("hidden");
+          article.classList.add("hidden");
+          submit_button.classList.add("hidden");
+        }
+    });
+</script>
 
 {% endblock %}
