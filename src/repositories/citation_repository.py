@@ -20,7 +20,7 @@ def create_book_citation(title, author, publisher, isbn, year):
             VALUES ('book', :title, :author, :publisher, :isbn, :year)
         """)
 
-        db.session.execute(sql, { "title": title, "author": author, "publisher": publisher,
+        db.session.execute(sql, { "type": type, "title": title, "author": author, "publisher": publisher,
                                 "isbn": isbn, "year": year })
         db.session.commit()
 
@@ -31,7 +31,7 @@ def create_inproceedings_citation(title, author, booktitle, year):
         VALUES ('inproceedings', :title, :author, :booktitle, :year)
         """)
 
-        db.session.execute(sql, { "title": title, "author": author, "booktitle": booktitle,
+        db.session.execute(sql, { "type": type, "title": title, "author": author, "booktitle": booktitle,
                                 "year": year })
         db.session.commit()
 
@@ -42,7 +42,7 @@ def create_article_citation(title, author, journal, year):
             VALUES ('article', :title, :author, :journal, :year)
         """)
 
-        db.session.execute(sql, { "title": title, "author": author, "journal": journal,
+        db.session.execute(sql, { "type": type, "title": title, "author": author, "journal": journal,
                                 "year": year })
         db.session.commit()
 
