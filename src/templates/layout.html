@@ -11,5 +11,19 @@
   </head>
   <body>
     {% block body %}{% endblock %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", select);
+
+      function confirmDeletion(e) {
+        if (!confirm("Confirm deletion")) {
+          e.preventDefault();
+        }}
+
+      function select() {
+        const forms = document.querySelectorAll("form.delete_citations");
+        forms.forEach(form => form.addEventListener("submit", confirmDeletion));
+      }
+    </script>
   </body>
 </html>
