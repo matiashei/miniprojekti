@@ -1,8 +1,8 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import get_book_citations, create_book_citation
+from repositories.citation_repository import get_book_citations, create_book_citation, create_inproceedings_citation, create_article_citation
 from config import app, test_env
-from util import validate_book
+from util import validate_book, validate_inproceedings, validate_article
 
 @app.route("/")
 def index():
@@ -19,17 +19,47 @@ def index():
 def new():
     return render_template("new_citation.html")
 
-@app.route("/create_citation", methods=["POST"])
-def citation_creation():
+@app.route("/create_book_citation", methods=["POST"])
+def citation_creation_book():
     title = request.form.get("title")
     author = request.form.get("author")
     publisher = request.form.get("publisher")
-    isbn = request.form.get("ISBN")
+    isbn = request.form.get("isbn")
     year = request.form.get("year")
 
     try:
         validate_book(title, author, publisher, isbn, year)
         create_book_citation(title, author, publisher, isbn, year)
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return  redirect("/new_citation")
+
+@app.route("/create_inproceedings_citation", methods=["POST"])
+def citation_creation_inproceedings():
+    title = request.form.get("title")
+    author = request.form.get("author")
+    booktitle = request.form.get("booktitle")
+    year = request.form.get("year")
+
+    try:
+        validate_inproceedings(title, author, booktitle, year)
+        create_inproceedings_citation(title, author, booktitle, year)
+        return redirect("/")
+    except Exception as error:
+        flash(str(error))
+        return  redirect("/new_citation")
+
+@app.route("/create_article_citation", methods=["POST"])
+def citation_creation_article():
+    title = request.form.get("title")
+    author = request.form.get("author")
+    journal = request.form.get("journal")
+    year = request.form.get("year")
+
+    try:
+        validate_inproceedings(title, author, journal, year)
+        create_article_citation(title, author, journal, year)
         return redirect("/")
     except Exception as error:
         flash(str(error))
