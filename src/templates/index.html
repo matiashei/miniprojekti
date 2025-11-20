@@ -11,10 +11,27 @@ citation app
 {% if book_citations %}
 <h3>Added citations:</h3>
   <ul>
-  {% for title, author, publisher, isbn, year in book_citations %}
+  {% for citation in book_citations %}
+
+  {% if citation.type == 'book' %}
     <li>
-      {{ author }}. <em>{{ title }}.</em> {{ publisher }}, {{ year }}. ISBN {{ isbn }}
+      Type: {{ citation.type }} <br>
+      {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
     </li>
+  
+  {% elif citation.type == 'inproceedings' %}
+    <li>
+      Type: {{ citation.type }} <br>
+      {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
+    </li>
+
+  {% elif citation.type == 'article' %}
+    <li>
+      Type: {{ citation.type }} <br>
+      {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
+    </li>
+  {% endif %}
+
   {% endfor %}
   </ul>
 {% endif %}
