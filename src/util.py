@@ -3,7 +3,7 @@ class UserInputError(Exception):
 
 def validate_book(title, author, publisher, isbn, year):
     if not title or title.isspace() or len(title) > 75:
-        raise UserInputError("Title length must be less than 75 characters")
+        raise UserInputError("Title cannot be empty and the lenght must be less than 75 characters")
 
     if author.isspace() or len(author) > 75:
         raise UserInputError("Author length must be less than 75 characters")
