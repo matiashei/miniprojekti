@@ -12,23 +12,43 @@ citation app
   <a href="/new_citation">Create new citation</a>
 </div>
 
+
 {% if book_citations %}
   <h3>Added citations:</h3>
   <form action="/delete_citations" method="post" class="delete_citations">
-    {% for id, type, title, author, publisher, isbn, year in book_citations %}
+    {% for citation in book_citations %}
+
+    {% if citation.type == 'book' %}
       <li class="citation">
-        {{ author }}. <em>{{ title }}.</em> {{ publisher }}, {{ year }}. ISBN: {{ isbn }}
-        <input type="checkbox" name="citation_id" value="{{ id }}" class="checkbox">
+        Type: {{ citation.type }} <br>
+        {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox">
       </li>
+    
+    {% elif citation.type == 'inproceedings' %}
+      <li class="citation">
+        Type: {{ citation.type }} <br>
+        {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox">
+      </li>
+
+    {% elif citation.type == 'article' %}
+      <li class="citation">
+        Type: {{ citation.type }} <br>
+        {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox">
+      </li>
+    {% endif %}
+
     {% endfor %}
     <input type="submit" value="Delete selected citations" style="display:none" id="deleteButton">
   </form>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      let deleteButton = document.getElementById("deleteButton");
-      let form = document.querySelector("form.delete_citations");
-      let checkbox = form.querySelectorAll("input[name='citation_id']");
+      const deleteButton = document.getElementById("deleteButton");
+      const form = document.querySelector("form.delete_citations");
+      const checkbox = form.querySelectorAll("input[name='citation_id']");
 
       function updateDeleteButton() {
         let anyChecked = Array.from(checkbox).some(checkbox => checkbox.checked);

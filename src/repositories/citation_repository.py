@@ -45,7 +45,7 @@ def delete_citation(citation_id):
 
 # Temporary function to get all citations for front page listing
 def get_book_citations():
-    result = db.session.execute(text("SELECT id, type, title, author, publisher, isbn, year " \
+    result = db.session.execute(text("SELECT * " \
     "FROM citations"))
     book_citations = result.fetchall()
     return book_citations
