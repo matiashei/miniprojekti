@@ -1,0 +1,12 @@
+body {
+  font-family: serif;
+}
+
+div {
+  margin: 1em;
+}
+
+.citation {
+  margin: 1em 1em;
+  list-style: square;
+}

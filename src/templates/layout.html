@@ -7,8 +7,23 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/main.css">
   </head>
   <body>
     {% block body %}{% endblock %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", select);
+
+      function confirmDeletion(e) {
+        if (!confirm("Confirm deletion")) {
+          e.preventDefault();
+        }}
+
+      function select() {
+        const forms = document.querySelectorAll("form.delete_citations");
+        forms.forEach(form => form.addEventListener("submit", confirmDeletion));
+      }
+    </script>
   </body>
 </html>
