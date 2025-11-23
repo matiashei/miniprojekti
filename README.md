@@ -29,15 +29,16 @@ $ poetry run python src/index.py
 ```
 
 ### Definition of Done
-* Acceptance criteria have been defined in the Product Backlog for each user story chosen for the sprint.
-  * Starting from sprint 2, the acceptance criteria will be documented in Robot Framework syntax.
-  * A link to the Product Backlog can be found in README.md.
-* The implemented code is tested with automated robot tests and unit tests.
+* A new feature should fullfill the acceptance criteria for it. The acceptance criteria is defined in the Product Backlog (link above) for each user story chosen for the sprint.
+* The implemented code is tested with automated robot tests and unit tests:
+  * Robot Framework tests are used to verify at least some of the user stories.
+  * Unittests are used to verify at least some features.
   * The test coverage is on a reasonable level.
-* The customer can see the code in the GitHub repository.
+* The customer can view the code in the public GitHub repository.
 * Continuous integration (CI) is implemented using GitHub Actions.
   * The status of the code and tests is visible in GitHub Actions. A badge with a link to the CI status can be found in README.md.
-* The code should be as easily maintainable as possible
+* The code should be as easily maintainable as possible:
   * Clear and justified architecture.
   * Clear and consistent naming conventions.
-  * Consistent, clean coding style, which is monitored using Pylint. The Pylint score is at least 8/10, and the Pylint status is displayed in README.md.
+  * Consistent, clean coding style, which is monitored using Pylint. The Pylint threshold for passing is 8/10, and the Pylint status is displayed in README.md.
+* New feature branch merges into main and dev branches are done through pull requests, in which the reviewer can check the code with the Definition of Done in mind.
