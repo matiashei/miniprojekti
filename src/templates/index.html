@@ -11,9 +11,10 @@ citation app
 {% if book_citations %}
 <h3>Added citations:</h3>
   <ul>
-  {% for title, author, publisher, isbn, year in book_citations %}
+  {% for id, title, author, publisher, isbn, year in book_citations %}
     <li>
       {{ author }}. <em>{{ title }}.</em> {{ publisher }}, {{ year }}. ISBN {{ isbn }}
+      <a href="/edit_citation/{{ id }}">Edit</a>
     </li>
   {% endfor %}
   </ul>
