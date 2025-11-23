@@ -12,7 +12,7 @@ from util import validate_book, validate_inproceedings, validate_article
 
 @app.route("/")
 def index():
-    # temporary function to fetch all sitations
+    # temporary function to fetch all citations
     book_citations = get_book_citations()
     return render_template("index.html", book_citations=book_citations)
 
@@ -44,7 +44,7 @@ def citation_creation_inproceedings():
     author = request.form.get("author")
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
-    citation_type = "article"
+    citation_type = "inproceedings"
 
     try:
         validate_inproceedings(title, author, booktitle, year)
