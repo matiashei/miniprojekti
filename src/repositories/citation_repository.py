@@ -1,16 +1,14 @@
 from sqlalchemy import text
 from config import db, app
 
-from entities.citation import Citation
-
 def create_book_citation(citation_type, title, author, publisher, isbn, year):
     with app.app_context():
         sql = text("""INSERT INTO citations
             (type, title, author, publisher, isbn, year)
-            VALUES ('book', :title, :author, :publisher, :isbn, :year)
+            VALUES (:citation_type, :title, :author, :publisher, :isbn, :year)
         """)
 
-        db.session.execute(sql, { "type": citation_type, "title": title, "author": author,
+        db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
                                 "publisher": publisher, "isbn": isbn, "year": year })
         db.session.commit()
 
@@ -19,10 +17,10 @@ def create_inproceedings_citation(citation_type, title, author, booktitle, year)
         citation_type = "inproceedings"
         sql = text("""INSERT INTO citations
         (type, title, author, booktitle, year)
-        VALUES ('inproceedings', :title, :author, :booktitle, :year)
+        VALUES (:citation_type, :title, :author, :booktitle, :year)
         """)
 
-        db.session.execute(sql, { "type": citation_type, "title": title, "author": author,
+        db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
                                 "booktitle": booktitle, "year": year })
         db.session.commit()
 
@@ -30,10 +28,10 @@ def create_article_citation(citation_type, title, author, journal, year):
     with app.app_context():
         sql = text("""INSERT INTO citations
             (type, title, author, journal, year)
-            VALUES ('article', :title, :author, :journal, :year)
+            VALUES (:citation_type, :title, :author, :journal, :year)
         """)
 
-        db.session.execute(sql, { "type": citation_type, "title": title, "author": author,
+        db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
                                 "journal": journal, "year": year })
         db.session.commit()
 
