@@ -94,7 +94,6 @@ def update_article_citation(id, title, author, journal, year):
 
 # Temporary function to get book citations for front page listing
 def get_book_citations():
-    result = db.session.execute(text("SELECT id, title, author, publisher, isbn, year " \
-    "FROM citations"))
+    result = db.session.execute(text("SELECT * FROM citations"))
     book_citations = result.fetchall()
     return book_citations
