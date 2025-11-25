@@ -22,21 +22,24 @@ citation app
       <li class="citation">
         Type: {{ citation.type }} <br>
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox">
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
+        <a href="/edit_citation/{{ citation.id }}">Edit</a>
       </li>
     
     {% elif citation.type == 'inproceedings' %}
       <li class="citation">
         Type: {{ citation.type }} <br>
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox">
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
+        <a href="/edit_citation/{{ citation.id }}">Edit</a>
       </li>
 
     {% elif citation.type == 'article' %}
       <li class="citation">
         Type: {{ citation.type }} <br>
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox">
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
+        <a href="/edit_citation/{{ citation.id }}">Edit</a>
       </li>
     {% endif %}
 
