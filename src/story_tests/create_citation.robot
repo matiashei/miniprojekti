@@ -23,6 +23,42 @@ Add Book Sitation With Missing Title
     Click Button  Create
     Add Citation Should Fail With Message  Title cannot be empty and the lenght must be less than 75 characters
 
+Add Inproceedings Citation With Valid Inputs
+    Select Citation Option From Dropwdown  Inproceedings
+    Set Inproceedings Citation Fields  Testipaperi  Jukka Julkaisija  Testijulkaisu  2025
+    Click Button  css=#inproceedings button[type="submit"]
+    Add Citation Should Succeed
+
+Add Inproceedings Citation With Invalid Year
+    Select Citation Option From Dropwdown  Inproceedings
+    Set Inproceedings Citation Fields  Testipaperi  Jukka Julkaisija  Testijulkaisu  9999
+    Click Button  css=#inproceedings button[type="submit"]
+    Form Submmission Should Fail
+
+Add Inproceedings Citation With Missing Title
+    Select Citation Option From Dropwdown  Inproceedings
+    Set Inproceedings Citation Fields  ${EMPTY}  Jukka Julkaisija  Testijulkaisu  2025
+    Click Button  css=#inproceedings button[type="submit"]
+    Add Citation Should Fail With Message  Title length must be less than 75 characters
+
+Add Article Citation With Valid Inputs
+    Select Citation Option From Dropwdown  Article
+    Set Article Citation Fields  Testiartikkeli  Jukka Julkaisija  Testijulkaisu  2025
+    Click Button  css=#article button[type="submit"]
+    Add Citation Should Succeed
+
+Add Article Citation With Invalid Year
+    Select Citation Option From Dropwdown  Article
+    Set Article Citation Fields  Testipaperi  Jukka Julkaisija  Testijulkaisu  9999
+    Click Button  css=#article button[type="submit"]
+    Form Submmission Should Fail
+
+Add Article Citation With Missing Title
+    Select Citation Option From Dropwdown  Article
+    Set Article Citation Fields  ${EMPTY}  Jukka Julkaisija  Testijulkaisu  2025
+    Click Button  css=#article button[type="submit"]
+    Add Citation Should Fail With Message  Title length must be less than 75 characters
+
 *** Keywords ***
 Add Citation Should Succeed
     Main Page Should Be Open
@@ -42,6 +78,20 @@ Set Book Citation Fields
     Input Text  publisher  ${publisher}
     Input Text  isbn  ${ISBN}
     Input Text  year  ${year}
+
+Set Inproceedings Citation Fields
+    [Arguments]  ${title}  ${author}  ${booktitle}  ${year}
+    Input Text  css=#inproceedings input[name="title"]  ${title}
+    Input Text  css=#inproceedings input[name="author"]  ${author}
+    Input Text  css=#inproceedings input[name="booktitle"]  ${booktitle}
+    Input Text  css=#inproceedings input[name="year"]  ${year}
+
+Set Article Citation Fields
+    [Arguments]  ${title}  ${author}  ${journal}  ${year}
+    Input Text  css=#article input[name="title"]  ${title}
+    Input Text  css=#article input[name="author"]  ${author}
+    Input Text  css=#article input[name="journal"]  ${journal}
+    Input Text  css=#article input[name="year"]  ${year}
 
 Select Citation Option From Dropwdown
     [Arguments]  ${option}
