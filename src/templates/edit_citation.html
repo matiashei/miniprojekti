@@ -8,6 +8,12 @@ Edit citation
 
 <h2>Edit citation</h2>
 
+{% for message in get_flashed_messages() %}
+<p>
+  {{ message }}
+</p>
+{% endfor %}
+
 <style>
 .hidden { display: none; }
 </style>
