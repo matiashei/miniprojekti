@@ -6,3 +6,5 @@ htmlcov/
 .env
 **/__pycache__/
 report.html
+log.html
+output.xml
