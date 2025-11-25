@@ -5,3 +5,4 @@ pycache
 htmlcov/
 .env
 **/__pycache__/
+report.html
