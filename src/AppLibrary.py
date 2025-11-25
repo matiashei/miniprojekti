@@ -1,5 +1,5 @@
 import requests
-from repositories.citation_repository import create_book_citation
+from repositories.citation_repository import create_book_citation, create_inproceedings_citation, create_article_citation
 
 class AppLibrary:
     def __init__(self):
@@ -12,3 +12,9 @@ class AppLibrary:
     # pylint: disable=too-many-arguments
     def create_book_citation(self, title, author, publisher, isbn, year):
         create_book_citation("book", title, author, publisher, isbn, year)
+
+    def create_inproceedings_citation(self, title, author, booktitle, year):
+        create_inproceedings_citation("inproceedings", title, author, booktitle, year)
+
+    def create_article_citation(self, title, author, journal, year):
+        create_article_citation("article", title, author, journal, year)
