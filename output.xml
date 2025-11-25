@@ -1,0 +1,2043 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.12.3 on linux)" generated="2025-11-25T22:45:10.371892" rpa="false" schemaversion="5">
+<suite id="s1" name="Story Tests" source="/home/mcheino/Asiakirjat/ohtu/projektimini/src/story_tests">
+<suite id="s1-s1" name="Citations" source="/home/mcheino/Asiakirjat/ohtu/projektimini/src/story_tests/citations.robot">
+<kw name="Open And Configure Browser" owner="resource" type="SETUP">
+<if>
+<branch type="IF" condition="$BROWSER == 'chrome'">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-11-25T22:45:10.873236" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x73c4e5f5dbb0&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-11-25T22:45:10.872557" elapsed="0.000738"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--incognito</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:45:10.873485" elapsed="0.000193"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>-disable-search-engine-choice-screen</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:45:10.873817" elapsed="0.000160"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:10.871688" elapsed="0.002341"/>
+</branch>
+<branch type="ELSE IF" condition="$BROWSER == 'firefox'">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].FirefoxOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:10.874216" elapsed="0.000031"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--private-window</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:10.874353" elapsed="0.000028"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:45:10.874086" elapsed="0.000335"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:45:10.871652" elapsed="0.002809"/>
+</if>
+<if>
+<branch type="IF" condition="$HEADLESS == 'true'">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>0.05 seconds</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:10.874752" elapsed="0.000036"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:10.874884" elapsed="0.000030"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:45:10.874528" elapsed="0.000431"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>${DELAY}</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2025-11-25T22:45:10.875106" elapsed="0.000389"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:10.875000" elapsed="0.000548"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:45:10.874512" elapsed="0.001074"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:10.876003" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
+<arg>browser=${BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:10.875702" elapsed="0.597418"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:10.871393" elapsed="0.601939"/>
+</kw>
+<test id="s1-s1-t1" name="At start there are no citations" line="8">
+<kw name="Reset Citations" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:45:11.474602" elapsed="0.177740"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:11.474165" elapsed="0.178452"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:11.654321" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:11.653876" elapsed="0.744550"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:11.653222" elapsed="0.745571"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:12.915035" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:45:12.400243" elapsed="0.515242"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:12.399447" elapsed="0.516363"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:13.943397" level="INFO">Current page contains text 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:45:12.916441" elapsed="1.027413"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:14.973918" level="INFO">Current page contains text 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:45:13.944690" elapsed="1.029655"/>
+</kw>
+<kw name="Page Should Not Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:16.523479" level="INFO">Current page does not contain text 'Added citations:'.</msg>
+<arg>Added citations:</arg>
+<doc>Verifies the current page does not contain ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:45:14.975477" elapsed="1.548298"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:11.473466" elapsed="5.051350"/>
+</test>
+<test id="s1-s1-t2" name="List shows a single added citation" line="15">
+<kw name="Reset Citations" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:45:16.527300" elapsed="0.177957"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:16.526735" elapsed="0.178857"/>
+</kw>
+<kw name="Create First Book Citation">
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Testikirja</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>2024</arg>
+<status status="PASS" start="2025-11-25T22:45:16.706918" elapsed="1.103695"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:16.706203" elapsed="1.104871"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:17.813563" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:17.812896" elapsed="0.731652"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:17.811930" elapsed="0.733196"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:19.059138" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:45:18.546709" elapsed="0.512830"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:18.545891" elapsed="0.513911"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:20.089533" level="INFO">Current page contains text 'Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123'.</msg>
+<arg>Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:45:19.060328" elapsed="1.029631"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:16.525853" elapsed="3.565350"/>
+</test>
+<test id="s1-s1-t3" name="List shows multiple citations" line="21">
+<kw name="Reset Citations" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:45:20.096275" elapsed="0.174440"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:20.095395" elapsed="0.175719"/>
+</kw>
+<kw name="Create First Book Citation">
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Testikirja</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>2024</arg>
+<status status="PASS" start="2025-11-25T22:45:20.272423" elapsed="0.172226"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:20.271776" elapsed="0.173335"/>
+</kw>
+<kw name="Create Second Book Citation">
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Testikirja2</arg>
+<arg>Teppo Teikalainen</arg>
+<arg>Testijulkaisija2</arg>
+<arg>123-4567890124</arg>
+<arg>2025</arg>
+<status status="PASS" start="2025-11-25T22:45:20.446719" elapsed="0.171806"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:20.445868" elapsed="0.173070"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:20.620386" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:20.620045" elapsed="0.710879"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:20.619476" elapsed="0.711908"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:21.846387" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:45:21.332857" elapsed="0.514017"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:21.332067" elapsed="0.515312"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:22.874537" level="INFO">Current page contains text 'Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123'.</msg>
+<arg>Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:45:21.848230" elapsed="1.026639"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:23.903021" level="INFO">Current page contains text 'Teppo Teikalainen. Testikirja2. Testijulkaisija2, 2025. ISBN 123-4567890124'.</msg>
+<arg>Teppo Teikalainen. Testikirja2. Testijulkaisija2, 2025. ISBN 123-4567890124</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:45:22.875515" elapsed="1.027881"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:20.093074" elapsed="3.810925"/>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-25T22:45:23.905983" elapsed="0.597980"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:10.396687" elapsed="14.107415"/>
+</suite>
+<suite id="s1-s2" name="Create Citation" source="/home/mcheino/Asiakirjat/ohtu/projektimini/src/story_tests/create_citation.robot">
+<kw name="Open And Configure Browser" owner="resource" type="SETUP">
+<if>
+<branch type="IF" condition="$BROWSER == 'chrome'">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-11-25T22:45:24.511319" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x73c4e5fa4cb0&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-11-25T22:45:24.510802" elapsed="0.000581"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--incognito</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:45:24.511606" elapsed="0.000275"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>-disable-search-engine-choice-screen</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:45:24.512077" elapsed="0.000269"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:24.510364" elapsed="0.002068"/>
+</branch>
+<branch type="ELSE IF" condition="$BROWSER == 'firefox'">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].FirefoxOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:24.512706" elapsed="0.000050"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--private-window</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:24.512920" elapsed="0.000622"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:45:24.512519" elapsed="0.001149"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:45:24.510320" elapsed="0.003439"/>
+</if>
+<if>
+<branch type="IF" condition="$HEADLESS == 'true'">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>0.05 seconds</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:24.514456" elapsed="0.000097"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:45:24.514737" elapsed="0.000043"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:45:24.513893" elapsed="0.000948"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>${DELAY}</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2025-11-25T22:45:24.515040" elapsed="0.000441"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:24.514898" elapsed="0.000654"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:45:24.513858" elapsed="0.001745"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:24.516133" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
+<arg>browser=${BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:24.515768" elapsed="0.573810"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:24.509977" elapsed="0.579744"/>
+</kw>
+<test id="s1-s2-t1" name="Add Book Citation With Valid Inputs" line="8">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:45:25.090631" elapsed="0.177706"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:25.270176" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:25.269642" elapsed="0.740867"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:25.268853" elapsed="0.742019"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:26.012281" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:26.011297" elapsed="1.671197"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:28.196457" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:45:27.684122" elapsed="0.512720"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:27.683368" elapsed="0.513814"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:25.090319" elapsed="3.107102"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:28.199951" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:28.199234" elapsed="1.129829"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:29.331035" level="INFO">Selecting options from selection list 'citation_type' by label Book.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:45:29.330126" elapsed="5.208673"/>
+</kw>
+<arg>Book</arg>
+<status status="PASS" start="2025-11-25T22:45:28.198160" elapsed="6.340954"/>
+</kw>
+<kw name="Set Book Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:34.541429" level="INFO">Typing text 'Testikirja' into text field 'title'.</msg>
+<arg>title</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:34.540796" elapsed="1.658662"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:36.200878" level="INFO">Typing text 'Matti Meikalainen' into text field 'author'.</msg>
+<arg>author</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:36.200072" elapsed="1.629604"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:37.830919" level="INFO">Typing text 'Testijulkaisija' into text field 'publisher'.</msg>
+<arg>publisher</arg>
+<arg>${publisher}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:37.830146" elapsed="1.624896"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:39.456926" level="INFO">Typing text '123-4567890123' into text field 'isbn'.</msg>
+<arg>isbn</arg>
+<arg>${ISBN}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:39.456081" elapsed="1.630900"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:41.089102" level="INFO">Typing text '2020' into text field 'year'.</msg>
+<arg>year</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:41.088105" elapsed="1.617827"/>
+</kw>
+<arg>Testikirja</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>2020</arg>
+<status status="PASS" start="2025-11-25T22:45:34.539726" elapsed="8.166664"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:42.707793" level="INFO">Clicking button 'Create'.</msg>
+<arg>Create</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:42.707052" elapsed="2.511038"/>
+</kw>
+<kw name="Add Citation Should Succeed">
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:45.731933" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:45:45.220364" elapsed="0.511941"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:45.219839" elapsed="0.513244"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:45.219018" elapsed="0.514279"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:25.089811" elapsed="20.643883"/>
+</test>
+<test id="s1-s2-t2" name="Add Book Citation With Invalid Year" line="14">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:45:45.735470" elapsed="0.173055"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:45.910087" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:45:45.909759" elapsed="0.703061"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:45.909077" elapsed="0.704205"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:46.614924" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:46.614174" elapsed="1.652098"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:48.774006" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:45:48.267243" elapsed="0.506951"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:48.266842" elapsed="0.507594"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:45.734949" elapsed="3.039619"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:48.775783" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:48.775451" elapsed="1.081639"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:49.859387" level="INFO">Selecting options from selection list 'citation_type' by label Book.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:45:49.858439" elapsed="5.165262"/>
+</kw>
+<arg>Book</arg>
+<status status="PASS" start="2025-11-25T22:45:48.774938" elapsed="6.249108"/>
+</kw>
+<kw name="Set Book Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:55.026141" level="INFO">Typing text 'Testikirja' into text field 'title'.</msg>
+<arg>title</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:55.025673" elapsed="1.642132"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:56.668613" level="INFO">Typing text 'Matti Meikalainen' into text field 'author'.</msg>
+<arg>author</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:56.668156" elapsed="1.616306"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:58.285948" level="INFO">Typing text 'Testijulkaisija' into text field 'publisher'.</msg>
+<arg>publisher</arg>
+<arg>${publisher}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:58.284934" elapsed="1.618918"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:45:59.905591" level="INFO">Typing text '123-4567890123' into text field 'isbn'.</msg>
+<arg>isbn</arg>
+<arg>${ISBN}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:45:59.904643" elapsed="1.620319"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:01.527466" level="INFO">Typing text '9999' into text field 'year'.</msg>
+<arg>year</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:01.526434" elapsed="1.612677"/>
+</kw>
+<arg>Testikirja</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>9999</arg>
+<status status="PASS" start="2025-11-25T22:45:55.024748" elapsed="8.115195"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:03.141139" level="INFO">Clicking button 'Create'.</msg>
+<arg>Create</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:03.140619" elapsed="2.117089"/>
+</kw>
+<kw name="Form Submmission Should Fail">
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:05.768624" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:46:05.260052" elapsed="0.508884"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:05.259074" elapsed="0.510153"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:05.258392" elapsed="0.511323"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:45.734216" elapsed="20.036157"/>
+</test>
+<test id="s1-s2-t3" name="Add Book Sitation With Missing Title" line="20">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:46:05.772915" elapsed="0.194766"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:05.969363" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:46:05.968992" elapsed="0.736672"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:05.968306" elapsed="0.737833"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:06.707247" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:06.706673" elapsed="1.644404"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:08.863403" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:46:08.352800" elapsed="0.511056"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:08.351895" elapsed="0.512350"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:05.772069" elapsed="3.092405"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:08.867467" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:08.866703" elapsed="1.101890"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:09.970205" level="INFO">Selecting options from selection list 'citation_type' by label Book.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:46:09.969348" elapsed="5.163294"/>
+</kw>
+<arg>Book</arg>
+<status status="PASS" start="2025-11-25T22:46:08.865390" elapsed="6.267628"/>
+</kw>
+<kw name="Set Book Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:15.135973" level="INFO">Typing text '' into text field 'title'.</msg>
+<arg>title</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:15.135359" elapsed="1.623608"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:16.760873" level="INFO">Typing text 'Matti Meikalainen' into text field 'author'.</msg>
+<arg>author</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:16.759818" elapsed="1.645216"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:18.405653" level="INFO">Typing text 'Testijulkaisija' into text field 'publisher'.</msg>
+<arg>publisher</arg>
+<arg>${publisher}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:18.405327" elapsed="1.622914"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:20.030020" level="INFO">Typing text '123-4567890123' into text field 'isbn'.</msg>
+<arg>isbn</arg>
+<arg>${ISBN}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:20.029131" elapsed="1.619643"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:21.650027" level="INFO">Typing text '2020' into text field 'year'.</msg>
+<arg>year</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:21.649373" elapsed="1.600159"/>
+</kw>
+<arg>${EMPTY}</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>2020</arg>
+<status status="PASS" start="2025-11-25T22:46:15.133689" elapsed="8.116188"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:23.250972" level="INFO">Clicking button 'Create'.</msg>
+<arg>Create</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:23.250458" elapsed="2.136350"/>
+</kw>
+<kw name="Add Citation Should Fail With Message">
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:25.898202" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:46:25.388029" elapsed="0.510553"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:25.387713" elapsed="0.511380"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:26.921294" level="INFO">Current page contains text 'Title cannot be empty and the lenght must be less than 75 characters'.</msg>
+<arg>${message}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:46:25.899569" elapsed="1.022530"/>
+</kw>
+<arg>Title cannot be empty and the lenght must be less than 75 characters</arg>
+<status status="PASS" start="2025-11-25T22:46:25.387231" elapsed="1.535339"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:05.770964" elapsed="21.152206"/>
+</test>
+<test id="s1-s2-t4" name="Add Inproceedings Citation With Valid Inputs" line="26">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:46:26.925759" elapsed="0.207164"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:27.134997" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:46:27.134570" elapsed="0.705521"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:27.133673" elapsed="0.707045"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:27.841702" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:27.841133" elapsed="1.649633"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:30.003974" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:46:29.493277" elapsed="0.511314"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:29.492128" elapsed="0.512986"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:26.925026" elapsed="3.080294"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:30.006993" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:30.006606" elapsed="1.093929"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:31.101964" level="INFO">Selecting options from selection list 'citation_type' by label Inproceedings.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:46:31.101138" elapsed="5.167301"/>
+</kw>
+<arg>Inproceedings</arg>
+<status status="PASS" start="2025-11-25T22:46:30.005912" elapsed="6.263060"/>
+</kw>
+<kw name="Set Inproceedings Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:36.273049" level="INFO">Typing text 'Testipaperi' into text field 'css=#inproceedings input[name="title"]'.</msg>
+<arg>css=#inproceedings input[name="title"]</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:36.271614" elapsed="1.633942"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:37.907128" level="INFO">Typing text 'Jukka Julkaisija' into text field 'css=#inproceedings input[name="author"]'.</msg>
+<arg>css=#inproceedings input[name="author"]</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:37.906266" elapsed="1.629515"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:39.537235" level="INFO">Typing text 'Testijulkaisu' into text field 'css=#inproceedings input[name="booktitle"]'.</msg>
+<arg>css=#inproceedings input[name="booktitle"]</arg>
+<arg>${booktitle}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:39.536428" elapsed="1.636757"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:41.175667" level="INFO">Typing text '2025' into text field 'css=#inproceedings input[name="year"]'.</msg>
+<arg>css=#inproceedings input[name="year"]</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:41.174075" elapsed="1.616303"/>
+</kw>
+<arg>Testipaperi</arg>
+<arg>Jukka Julkaisija</arg>
+<arg>Testijulkaisu</arg>
+<arg>2025</arg>
+<status status="PASS" start="2025-11-25T22:46:36.269826" elapsed="6.521049"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:42.792344" level="INFO">Clicking button 'css=#inproceedings button[type="submit"]'.</msg>
+<arg>css=#inproceedings button[type="submit"]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:42.791629" elapsed="2.969225"/>
+</kw>
+<kw name="Add Citation Should Succeed">
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:46.278021" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:46:45.763823" elapsed="0.514750"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:45.763035" elapsed="0.516104"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:45.761951" elapsed="0.517545"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:26.923963" elapsed="19.356204"/>
+</test>
+<test id="s1-s2-t5" name="Add Inproceedings Citation With Invalid Year" line="32">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:46:46.283914" elapsed="0.184833"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:46.470947" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:46:46.470460" elapsed="0.694499"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:46.469569" elapsed="0.695898"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:47.166705" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:47.166033" elapsed="1.705545"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:49.382277" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:46:48.872962" elapsed="0.509681"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:48.872270" elapsed="0.510733"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:46.282806" elapsed="3.100368"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:49.385522" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:49.384764" elapsed="1.095736"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:50.481501" level="INFO">Selecting options from selection list 'citation_type' by label Inproceedings.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:46:50.480957" elapsed="5.130017"/>
+</kw>
+<arg>Inproceedings</arg>
+<status status="PASS" start="2025-11-25T22:46:49.384092" elapsed="6.227129"/>
+</kw>
+<kw name="Set Inproceedings Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:55.612730" level="INFO">Typing text 'Testipaperi' into text field 'css=#inproceedings input[name="title"]'.</msg>
+<arg>css=#inproceedings input[name="title"]</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:55.612284" elapsed="1.636591"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:57.250084" level="INFO">Typing text 'Jukka Julkaisija' into text field 'css=#inproceedings input[name="author"]'.</msg>
+<arg>css=#inproceedings input[name="author"]</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:57.249418" elapsed="1.621111"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:46:58.871716" level="INFO">Typing text 'Testijulkaisu' into text field 'css=#inproceedings input[name="booktitle"]'.</msg>
+<arg>css=#inproceedings input[name="booktitle"]</arg>
+<arg>${booktitle}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:46:58.871087" elapsed="1.614658"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:00.487044" level="INFO">Typing text '9999' into text field 'css=#inproceedings input[name="year"]'.</msg>
+<arg>css=#inproceedings input[name="year"]</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:00.486446" elapsed="1.601419"/>
+</kw>
+<arg>Testipaperi</arg>
+<arg>Jukka Julkaisija</arg>
+<arg>Testijulkaisu</arg>
+<arg>9999</arg>
+<status status="PASS" start="2025-11-25T22:46:55.611645" elapsed="6.476533"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:02.089307" level="INFO">Clicking button 'css=#inproceedings button[type="submit"]'.</msg>
+<arg>css=#inproceedings button[type="submit"]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:02.088713" elapsed="2.615590"/>
+</kw>
+<kw name="Form Submmission Should Fail">
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:05.216190" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:47:04.706775" elapsed="0.509673"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:04.705848" elapsed="0.510816"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:04.705012" elapsed="0.511786"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:46:46.281139" elapsed="18.936026"/>
+</test>
+<test id="s1-s2-t6" name="Add Inproceedings Citation With Missing Title" line="38">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:47:05.219556" elapsed="0.183470"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:05.404633" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:47:05.404295" elapsed="0.750909"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:05.403599" elapsed="0.752013"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:06.156839" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:06.156276" elapsed="1.638370"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:08.305568" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:47:07.796280" elapsed="0.509611"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:07.795413" elapsed="0.510755"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:05.218809" elapsed="3.087835"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:08.308533" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:08.308004" elapsed="1.091915"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:09.401228" level="INFO">Selecting options from selection list 'citation_type' by label Inproceedings.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:47:09.400557" elapsed="5.130248"/>
+</kw>
+<arg>Inproceedings</arg>
+<status status="PASS" start="2025-11-25T22:47:08.307236" elapsed="6.223773"/>
+</kw>
+<kw name="Set Inproceedings Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:14.532801" level="INFO">Typing text '' into text field 'css=#inproceedings input[name="title"]'.</msg>
+<arg>css=#inproceedings input[name="title"]</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:14.532408" elapsed="1.615761"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:16.149188" level="INFO">Typing text 'Jukka Julkaisija' into text field 'css=#inproceedings input[name="author"]'.</msg>
+<arg>css=#inproceedings input[name="author"]</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:16.148663" elapsed="1.644062"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:17.797857" level="INFO">Typing text 'Testijulkaisu' into text field 'css=#inproceedings input[name="booktitle"]'.</msg>
+<arg>css=#inproceedings input[name="booktitle"]</arg>
+<arg>${booktitle}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:17.793686" elapsed="1.641646"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:19.436532" level="INFO">Typing text '2025' into text field 'css=#inproceedings input[name="year"]'.</msg>
+<arg>css=#inproceedings input[name="year"]</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:19.435861" elapsed="1.632733"/>
+</kw>
+<arg>${EMPTY}</arg>
+<arg>Jukka Julkaisija</arg>
+<arg>Testijulkaisu</arg>
+<arg>2025</arg>
+<status status="PASS" start="2025-11-25T22:47:14.531374" elapsed="6.537489"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:21.069629" level="INFO">Clicking button 'css=#inproceedings button[type="submit"]'.</msg>
+<arg>css=#inproceedings button[type="submit"]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:21.069239" elapsed="2.634667"/>
+</kw>
+<kw name="Add Citation Should Fail With Message">
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:24.216526" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:47:23.706779" elapsed="0.509996"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:23.706351" elapsed="0.510644"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:25.244301" level="INFO">Current page contains text 'Title length must be less than 75 characters'.</msg>
+<arg>${message}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:47:24.217291" elapsed="1.027586"/>
+</kw>
+<arg>Title length must be less than 75 characters</arg>
+<status status="PASS" start="2025-11-25T22:47:23.705042" elapsed="1.540104"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:05.217794" elapsed="20.027806"/>
+</test>
+<test id="s1-s2-t7" name="Add Article Citation With Valid Inputs" line="44">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:47:25.247589" elapsed="0.211335"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:25.460574" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:47:25.460189" elapsed="0.713585"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:25.459514" elapsed="0.714548"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:26.174949" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:26.174506" elapsed="1.643961"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:28.328962" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:47:27.819804" elapsed="0.509494"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:27.819141" elapsed="0.510410"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:25.246968" elapsed="3.082721"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:28.331297" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:28.330888" elapsed="1.088409"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:29.420108" level="INFO">Selecting options from selection list 'citation_type' by label Article.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:47:29.419654" elapsed="5.153091"/>
+</kw>
+<arg>Article</arg>
+<status status="PASS" start="2025-11-25T22:47:28.330244" elapsed="6.242812"/>
+</kw>
+<kw name="Set Article Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:34.575171" level="INFO">Typing text 'Testiartikkeli' into text field 'css=#article input[name="title"]'.</msg>
+<arg>css=#article input[name="title"]</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:34.574608" elapsed="1.641983"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:36.217931" level="INFO">Typing text 'Jukka Julkaisija' into text field 'css=#article input[name="author"]'.</msg>
+<arg>css=#article input[name="author"]</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:36.217175" elapsed="1.631954"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:37.850576" level="INFO">Typing text 'Testijulkaisu' into text field 'css=#article input[name="journal"]'.</msg>
+<arg>css=#article input[name="journal"]</arg>
+<arg>${journal}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:37.849764" elapsed="1.623811"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:39.474445" level="INFO">Typing text '2025' into text field 'css=#article input[name="year"]'.</msg>
+<arg>css=#article input[name="year"]</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:39.473960" elapsed="1.609702"/>
+</kw>
+<arg>Testiartikkeli</arg>
+<arg>Jukka Julkaisija</arg>
+<arg>Testijulkaisu</arg>
+<arg>2025</arg>
+<status status="PASS" start="2025-11-25T22:47:34.573693" elapsed="6.510404"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:41.085316" level="INFO">Clicking button 'css=#article button[type="submit"]'.</msg>
+<arg>css=#article button[type="submit"]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:41.084704" elapsed="2.995226"/>
+</kw>
+<kw name="Add Citation Should Succeed">
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:44.593550" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:47:44.082785" elapsed="0.511133"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:44.081857" elapsed="0.512342"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:44.080795" elapsed="0.513608"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:25.246140" elapsed="19.348675"/>
+</test>
+<test id="s1-s2-t8" name="Add Article Citation With Invalid Year" line="50">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:47:44.596758" elapsed="0.160138"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:44.758758" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:47:44.758176" elapsed="0.698668"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:44.757557" elapsed="0.699724"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:45.458183" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:45.457667" elapsed="1.647908"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:47.616535" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:47:47.107007" elapsed="0.509896"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:47.106281" elapsed="0.510907"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:44.596172" elapsed="3.021225"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:47.619767" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:47.619385" elapsed="1.089662"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:48.710975" level="INFO">Selecting options from selection list 'citation_type' by label Article.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:47:48.709721" elapsed="5.156936"/>
+</kw>
+<arg>Article</arg>
+<status status="PASS" start="2025-11-25T22:47:47.618279" elapsed="6.248794"/>
+</kw>
+<kw name="Set Article Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:53.869731" level="INFO">Typing text 'Testipaperi' into text field 'css=#article input[name="title"]'.</msg>
+<arg>css=#article input[name="title"]</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:53.869100" elapsed="1.632424"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:55.502922" level="INFO">Typing text 'Jukka Julkaisija' into text field 'css=#article input[name="author"]'.</msg>
+<arg>css=#article input[name="author"]</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:55.502251" elapsed="1.628416"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:57.132092" level="INFO">Typing text 'Testijulkaisu' into text field 'css=#article input[name="journal"]'.</msg>
+<arg>css=#article input[name="journal"]</arg>
+<arg>${journal}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:57.131313" elapsed="1.624398"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:47:58.756864" level="INFO">Typing text '9999' into text field 'css=#article input[name="year"]'.</msg>
+<arg>css=#article input[name="year"]</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:47:58.756187" elapsed="1.604569"/>
+</kw>
+<arg>Testipaperi</arg>
+<arg>Jukka Julkaisija</arg>
+<arg>Testijulkaisu</arg>
+<arg>9999</arg>
+<status status="PASS" start="2025-11-25T22:47:53.868131" elapsed="6.493014"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:00.362906" level="INFO">Clicking button 'css=#article button[type="submit"]'.</msg>
+<arg>css=#article button[type="submit"]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:00.362235" elapsed="2.625202"/>
+</kw>
+<kw name="Form Submmission Should Fail">
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:03.500404" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:02.989826" elapsed="0.510878"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:02.989074" elapsed="0.511877"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:02.988123" elapsed="0.512980"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:47:44.595388" elapsed="18.906181"/>
+</test>
+<test id="s1-s2-t9" name="Add Article Citation With Missing Title" line="56">
+<kw name="Reset Citations And Go To Create Citation Page" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:48:03.504190" elapsed="0.194683"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:03.700535" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:03.700075" elapsed="0.736731"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:03.699403" elapsed="0.737695"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:04.437932" level="INFO">Clicking link 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:04.437456" elapsed="1.641380"/>
+</kw>
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:06.589939" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:06.080194" elapsed="0.510054"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:06.079481" elapsed="0.511019"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:03.503446" elapsed="3.087204"/>
+</kw>
+<kw name="Select Citation Option From Dropwdown">
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:06.592320" level="INFO">Clicking element 'choice'.</msg>
+<arg>choice</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:06.591908" elapsed="1.090714"/>
+</kw>
+<kw name="Select From List By Label" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:07.683914" level="INFO">Selecting options from selection list 'citation_type' by label Article.</msg>
+<arg>citation_type</arg>
+<arg>${option}</arg>
+<doc>Selects options from selection list ``locator`` by ``labels``.</doc>
+<status status="PASS" start="2025-11-25T22:48:07.683184" elapsed="5.151211"/>
+</kw>
+<arg>Article</arg>
+<status status="PASS" start="2025-11-25T22:48:06.591197" elapsed="6.243606"/>
+</kw>
+<kw name="Set Article Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:12.838668" level="INFO">Typing text '' into text field 'css=#article input[name="title"]'.</msg>
+<arg>css=#article input[name="title"]</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:12.837890" elapsed="1.616579"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:14.455378" level="INFO">Typing text 'Jukka Julkaisija' into text field 'css=#article input[name="author"]'.</msg>
+<arg>css=#article input[name="author"]</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:14.454879" elapsed="1.628805"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:16.085115" level="INFO">Typing text 'Testijulkaisu' into text field 'css=#article input[name="journal"]'.</msg>
+<arg>css=#article input[name="journal"]</arg>
+<arg>${journal}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:16.084329" elapsed="1.621772"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:17.707140" level="INFO">Typing text '2025' into text field 'css=#article input[name="year"]'.</msg>
+<arg>css=#article input[name="year"]</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:17.706559" elapsed="1.603581"/>
+</kw>
+<arg>${EMPTY}</arg>
+<arg>Jukka Julkaisija</arg>
+<arg>Testijulkaisu</arg>
+<arg>2025</arg>
+<status status="PASS" start="2025-11-25T22:48:12.835568" elapsed="6.475426"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:19.312119" level="INFO">Clicking button 'css=#article button[type="submit"]'.</msg>
+<arg>css=#article button[type="submit"]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:19.311653" elapsed="2.650248"/>
+</kw>
+<kw name="Add Citation Should Fail With Message">
+<kw name="Add Citation Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:22.474426" level="INFO">Page title is 'Create a new citation'.</msg>
+<arg>Create a new citation</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:21.964076" elapsed="0.510735"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:21.963576" elapsed="0.511558"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:23.495539" level="INFO">Current page contains text 'Title length must be less than 75 characters'.</msg>
+<arg>${message}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:22.475570" elapsed="1.020347"/>
+</kw>
+<arg>Title length must be less than 75 characters</arg>
+<status status="PASS" start="2025-11-25T22:48:21.962787" elapsed="1.533505"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:03.502337" elapsed="19.994557"/>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-25T22:48:23.498115" elapsed="0.560614"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:45:24.505094" elapsed="179.553906"/>
+</suite>
+<suite id="s1-s3" name="Delete Citations" source="/home/mcheino/Asiakirjat/ohtu/projektimini/src/story_tests/delete_citations.robot">
+<kw name="Open And Configure Browser" owner="resource" type="SETUP">
+<if>
+<branch type="IF" condition="$BROWSER == 'chrome'">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-11-25T22:48:24.067481" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x73c4e5fd2f30&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-11-25T22:48:24.066929" elapsed="0.000616"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--incognito</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:48:24.067773" elapsed="0.000235"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>-disable-search-engine-choice-screen</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:48:24.068167" elapsed="0.000242"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.066419" elapsed="0.002073"/>
+</branch>
+<branch type="ELSE IF" condition="$BROWSER == 'firefox'">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].FirefoxOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:24.068739" elapsed="0.000044"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--private-window</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:24.068926" elapsed="0.000034"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:48:24.068567" elapsed="0.000447"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:48:24.066375" elapsed="0.002689"/>
+</if>
+<if>
+<branch type="IF" condition="$HEADLESS == 'true'">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>0.05 seconds</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:24.069422" elapsed="0.000038"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:24.069577" elapsed="0.000032"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:48:24.069150" elapsed="0.000510"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>${DELAY}</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2025-11-25T22:48:24.069838" elapsed="0.000337"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.069707" elapsed="0.000547"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:48:24.069128" elapsed="0.001175"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:24.070785" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
+<arg>browser=${BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:24.070455" elapsed="0.655170"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.066080" elapsed="0.659735"/>
+</kw>
+<test id="s1-s3-t1" name="At start there are no citations" line="8">
+<kw name="Reset Citations" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:48:24.727829" elapsed="0.220728"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.727043" elapsed="0.221986"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:24.951309" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:24.950823" elapsed="0.776420"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.949879" elapsed="0.777894"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:26.242259" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:25.728965" elapsed="0.513667"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:25.728340" elapsed="0.514557"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:27.270444" level="INFO">Current page contains text 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:26.243375" elapsed="1.027324"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:28.297249" level="INFO">Current page contains text 'Create new citation'.</msg>
+<arg>Create new citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:27.271141" elapsed="1.026475"/>
+</kw>
+<kw name="Page Should Not Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:29.845000" level="INFO">Current page does not contain text 'Added citations:'.</msg>
+<arg>Added citations:</arg>
+<doc>Verifies the current page does not contain ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:28.298310" elapsed="1.547021"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.725952" elapsed="5.120080"/>
+</test>
+<test id="s1-s3-t2" name="Citation Gets Deleted" line="15">
+<kw name="Reset Citations" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:48:29.848388" elapsed="0.168181"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:29.847750" elapsed="0.169131"/>
+</kw>
+<kw name="Create First Book Citation">
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Testikirja</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>2024</arg>
+<status status="PASS" start="2025-11-25T22:48:30.018021" elapsed="0.168749"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:30.017428" elapsed="0.169665"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:30.188636" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:30.188256" elapsed="0.747400"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:30.187615" elapsed="0.748447"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:31.448239" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:30.937469" elapsed="0.511418"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:30.936711" elapsed="0.512472"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:32.477420" level="INFO">Current page contains text 'Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123'.</msg>
+<arg>Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:31.449704" elapsed="1.028064"/>
+</kw>
+<kw name="Select Checkbox" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:32.479156" level="INFO">Selecting checkbox 'citation_id'.</msg>
+<arg>citation_id</arg>
+<doc>Selects the checkbox identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:32.478588" elapsed="2.153087"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:34.633088" level="INFO">Clicking button 'deleteButton'.</msg>
+<arg>deleteButton</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:34.632481" elapsed="1.625327"/>
+</kw>
+<kw name="Handle Confirmation Popup">
+<kw name="Handle Alert" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:36.259873" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg time="2025-11-25T22:48:37.785155" level="INFO">${alert} = Confirm deletion</msg>
+<var>${alert}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<status status="PASS" start="2025-11-25T22:48:36.259505" elapsed="1.525812"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-11-25T22:48:37.786196" level="INFO">Alert message: Confirm deletion</msg>
+<arg>Alert message: ${alert}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-11-25T22:48:37.785742" elapsed="0.000617"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:36.258546" elapsed="1.527983"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:38.302276" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:37.787487" elapsed="0.515186"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:37.786960" elapsed="0.516058"/>
+</kw>
+<kw name="Page Should Not Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:39.840109" level="INFO">Current page does not contain text 'Added citations:'.</msg>
+<arg>Added citations:</arg>
+<doc>Verifies the current page does not contain ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:38.303686" elapsed="1.536690"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:29.846823" elapsed="9.994100"/>
+</test>
+<test id="s1-s3-t3" name="Multiple Citations Get Deleted" line="26">
+<kw name="Reset Citations" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:48:39.843058" elapsed="0.212673"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:39.842494" elapsed="0.213688"/>
+</kw>
+<kw name="Create First Book Citation">
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Testikirja</arg>
+<arg>Matti Meikalainen</arg>
+<arg>Testijulkaisija</arg>
+<arg>123-4567890123</arg>
+<arg>2024</arg>
+<status status="PASS" start="2025-11-25T22:48:40.057744" elapsed="0.186180"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:40.056925" elapsed="0.187335"/>
+</kw>
+<kw name="Create Second Book Citation">
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Testikirja2</arg>
+<arg>Matti Meikalainen2</arg>
+<arg>Testijulkaisija2</arg>
+<arg>123-4567890123</arg>
+<arg>2024</arg>
+<status status="PASS" start="2025-11-25T22:48:40.245451" elapsed="0.181314"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:40.244781" elapsed="0.182243"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:40.428559" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:40.428119" elapsed="0.698451"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:40.427492" elapsed="0.699461"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:41.637961" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:41.128177" elapsed="0.510120"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:41.127540" elapsed="0.511029"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:42.659327" level="INFO">Current page contains text 'Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123'.</msg>
+<arg>Matti Meikalainen. Testikirja. Testijulkaisija, 2024. ISBN 123-4567890123</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:41.639016" elapsed="1.020504"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:43.685474" level="INFO">Current page contains text 'Matti Meikalainen2. Testikirja2. Testijulkaisija2, 2024. ISBN 123-4567890123'.</msg>
+<arg>Matti Meikalainen2. Testikirja2. Testijulkaisija2, 2024. ISBN 123-4567890123</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:42.659862" elapsed="1.025988"/>
+</kw>
+<kw name="Select All Checkboxes">
+<kw name="Get WebElements" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:44.209615" level="INFO">${checkboxes} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="f8ced3c5b9b9311471d376f43538689f", element="f.A7B5BF029DF319D107E2603070B7BDB4.d.A3CDEE8DF8B6BA18DB7343B6DA88CA2E.e.19")&gt;, &lt;selenium.webdriv...</msg>
+<var>${checkboxes}</var>
+<arg>css:input[type='checkbox']</arg>
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:43.687881" elapsed="0.521895"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Select Checkbox" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:44.211828" level="INFO">Selecting checkbox '&lt;selenium.webdriver.remote.webelement.WebElement (session="f8ced3c5b9b9311471d376f43538689f", element="f.A7B5BF029DF319D107E2603070B7BDB4.d.A3CDEE8DF8B6BA18DB7343B6DA88CA2E.e.19")&gt;'.</msg>
+<arg>${checkbox}</arg>
+<doc>Selects the checkbox identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:44.211152" elapsed="1.091472"/>
+</kw>
+<var name="${checkbox}">&lt;selenium.webdriver.remote.webelement.WebElement (session="f8ced3c5b9b9311471d376f43538689f", element="f.A7B5BF029DF319D107E2603070B7BDB4.d.A3CDEE8DF8B6BA18DB7343B6DA88CA2E.e.19")&gt;</var>
+<status status="PASS" start="2025-11-25T22:48:44.210753" elapsed="1.092173"/>
+</iter>
+<iter>
+<kw name="Select Checkbox" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:45.304835" level="INFO">Selecting checkbox '&lt;selenium.webdriver.remote.webelement.WebElement (session="f8ced3c5b9b9311471d376f43538689f", element="f.A7B5BF029DF319D107E2603070B7BDB4.d.A3CDEE8DF8B6BA18DB7343B6DA88CA2E.e.20")&gt;'.</msg>
+<arg>${checkbox}</arg>
+<doc>Selects the checkbox identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:45.303876" elapsed="1.098073"/>
+</kw>
+<var name="${checkbox}">&lt;selenium.webdriver.remote.webelement.WebElement (session="f8ced3c5b9b9311471d376f43538689f", element="f.A7B5BF029DF319D107E2603070B7BDB4.d.A3CDEE8DF8B6BA18DB7343B6DA88CA2E.e.20")&gt;</var>
+<status status="PASS" start="2025-11-25T22:48:45.303495" elapsed="1.098795"/>
+</iter>
+<var>${checkbox}</var>
+<value>@{checkboxes}</value>
+<status status="PASS" start="2025-11-25T22:48:44.210096" elapsed="2.192431"/>
+</for>
+<status status="PASS" start="2025-11-25T22:48:43.686798" elapsed="2.716047"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:46.404263" level="INFO">Clicking button 'deleteButton'.</msg>
+<arg>deleteButton</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:46.403450" elapsed="1.613092"/>
+</kw>
+<kw name="Handle Confirmation Popup">
+<kw name="Handle Alert" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:48.018886" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<msg time="2025-11-25T22:48:49.542635" level="INFO">${alert} = Confirm deletion</msg>
+<var>${alert}</var>
+<doc>Handles the current alert and returns its message.</doc>
+<status status="PASS" start="2025-11-25T22:48:48.018483" elapsed="1.524426"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-11-25T22:48:49.543922" level="INFO">Alert message: Confirm deletion</msg>
+<arg>Alert message: ${alert}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-11-25T22:48:49.543406" elapsed="0.000661"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:48.017520" elapsed="1.526787"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:50.236577" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:49.545920" elapsed="0.691017"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:49.544866" elapsed="0.692410"/>
+</kw>
+<kw name="Page Should Not Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:51.769860" level="INFO">Current page does not contain text 'Added citations:'.</msg>
+<arg>Added citations:</arg>
+<doc>Verifies the current page does not contain ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:50.237805" elapsed="1.532459"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:39.841568" elapsed="11.929343"/>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-25T22:48:51.772495" elapsed="0.560491"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:24.060099" elapsed="28.273134"/>
+</suite>
+<suite id="s1-s4" name="Edit Citations" source="/home/mcheino/Asiakirjat/ohtu/projektimini/src/story_tests/edit_citations.robot">
+<kw name="Open And Configure Browser" owner="resource" type="SETUP">
+<if>
+<branch type="IF" condition="$BROWSER == 'chrome'">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-11-25T22:48:52.342657" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x73c4e5fef260&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-11-25T22:48:52.342225" elapsed="0.000496"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--incognito</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:48:52.342918" elapsed="0.000218"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>-disable-search-engine-choice-screen</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-25T22:48:52.343313" elapsed="0.000205"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:52.341839" elapsed="0.001758"/>
+</branch>
+<branch type="ELSE IF" condition="$BROWSER == 'firefox'">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].FirefoxOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:52.343819" elapsed="0.000048"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--private-window</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:52.344028" elapsed="0.000047"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:48:52.343666" elapsed="0.000483"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:48:52.341800" elapsed="0.002424"/>
+</if>
+<if>
+<branch type="IF" condition="$HEADLESS == 'true'">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>0.05 seconds</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:52.344612" elapsed="0.000049"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2025-11-25T22:48:52.344813" elapsed="0.000048"/>
+</kw>
+<status status="NOT RUN" start="2025-11-25T22:48:52.344326" elapsed="0.000612"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>${DELAY}</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2025-11-25T22:48:52.345164" elapsed="0.000452"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:52.345006" elapsed="0.000691"/>
+</branch>
+<status status="PASS" start="2025-11-25T22:48:52.344298" elapsed="0.001465"/>
+</if>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:52.346340" level="INFO">Opening browser 'chrome' to base url 'None'.</msg>
+<arg>browser=${BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:52.345933" elapsed="0.621550"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:52.341572" elapsed="0.626122"/>
+</kw>
+<test id="s1-s4-t1" name="Edit Citation Successfully" line="8">
+<kw name="Reset Citations And Make Citation" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:48:52.968927" elapsed="0.184710"/>
+</kw>
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Muokkauskirja</arg>
+<arg>Matti Muokkaaja</arg>
+<arg>Muokkausjulkaisija</arg>
+<arg>987-6543210987</arg>
+<arg>2023</arg>
+<status status="PASS" start="2025-11-25T22:48:53.153963" elapsed="0.164011"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:52.968549" elapsed="0.349759"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:53.319787" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:48:53.319489" elapsed="0.762376"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:53.318901" elapsed="0.763298"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:54.593767" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:48:54.083864" elapsed="0.510236"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:54.083160" elapsed="0.511280"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:55.620501" level="INFO">Current page contains text 'Matti Muokkaaja. Muokkauskirja. Muokkausjulkaisija, 2023. ISBN 987-6543210987'.</msg>
+<arg>Matti Muokkaaja. Muokkauskirja. Muokkausjulkaisija, 2023. ISBN 987-6543210987</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:54.595019" elapsed="1.025749"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:55.621857" level="INFO">Clicking link 'Edit'.</msg>
+<arg>Edit</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:55.621319" elapsed="1.852322"/>
+</kw>
+<kw name="Edit Citation Page Should Be Open">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:58.503633" level="INFO">Current page contains text 'Edit citation'.</msg>
+<arg>Edit citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:48:57.475687" elapsed="1.028260"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:57.474833" elapsed="1.029409"/>
+</kw>
+<kw name="Set Book Citation Fields">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:48:58.507262" level="INFO">Typing text 'Muokattu Kirja' into text field 'title'.</msg>
+<arg>title</arg>
+<arg>${title}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:48:58.506038" elapsed="1.662682"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:00.170561" level="INFO">Typing text 'Muokattu Muokkaaja' into text field 'author'.</msg>
+<arg>author</arg>
+<arg>${author}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:00.169677" elapsed="1.626131"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:01.797042" level="INFO">Typing text 'Muokattu Julkaisija' into text field 'publisher'.</msg>
+<arg>publisher</arg>
+<arg>${publisher}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:01.796409" elapsed="1.625976"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:03.423840" level="INFO">Typing text '111-2223334445' into text field 'isbn'.</msg>
+<arg>isbn</arg>
+<arg>${isbn}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:03.422971" elapsed="1.624067"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:05.048191" level="INFO">Typing text '2022' into text field 'year'.</msg>
+<arg>year</arg>
+<arg>${year}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:05.047586" elapsed="1.628496"/>
+</kw>
+<arg>Muokattu Kirja</arg>
+<arg>Muokattu Muokkaaja</arg>
+<arg>Muokattu Julkaisija</arg>
+<arg>111-2223334445</arg>
+<arg>2022</arg>
+<status status="PASS" start="2025-11-25T22:48:58.504831" elapsed="8.171675"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:06.677491" level="INFO">Clicking button 'Edit'.</msg>
+<arg>Edit</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:06.676994" elapsed="2.551623"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:09.741081" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:49:09.230414" elapsed="0.511110"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:09.229475" elapsed="0.512358"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:10.770559" level="INFO">Current page contains text 'Muokattu Muokkaaja. Muokattu Kirja. Muokattu Julkaisija, 2022. ISBN 111-2223334445'.</msg>
+<arg>Muokattu Muokkaaja. Muokattu Kirja. Muokattu Julkaisija, 2022. ISBN 111-2223334445</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:09.742454" elapsed="1.028481"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:52.967824" elapsed="17.803787"/>
+</test>
+<test id="s1-s4-t2" name="Edit Citation With Empty Title" line="19">
+<kw name="Reset Citations And Make Citation" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:49:10.774473" elapsed="0.165485"/>
+</kw>
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Muokkauskirja</arg>
+<arg>Matti Muokkaaja</arg>
+<arg>Muokkausjulkaisija</arg>
+<arg>987-6543210987</arg>
+<arg>2023</arg>
+<status status="PASS" start="2025-11-25T22:49:10.940333" elapsed="0.154841"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:10.773911" elapsed="0.321669"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:11.097464" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:49:11.096967" elapsed="0.712723"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:11.096270" elapsed="0.713866"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:12.321647" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:49:11.811610" elapsed="0.510362"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:11.810759" elapsed="0.511701"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:13.344110" level="INFO">Current page contains text 'Matti Muokkaaja. Muokkauskirja. Muokkausjulkaisija, 2023. ISBN 987-6543210987'.</msg>
+<arg>Matti Muokkaaja. Muokkauskirja. Muokkausjulkaisija, 2023. ISBN 987-6543210987</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:12.323106" elapsed="1.021316"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:13.345422" level="INFO">Clicking link 'Edit'.</msg>
+<arg>Edit</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:13.344941" elapsed="1.817832"/>
+</kw>
+<kw name="Edit Citation Page Should Be Open">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:16.185309" level="INFO">Current page contains text 'Edit citation'.</msg>
+<arg>Edit citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:15.164194" elapsed="1.021516"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:15.163510" elapsed="1.022486"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:16.187847" level="INFO">Typing text '' into text field 'id=title'.</msg>
+<arg>id=title</arg>
+<arg>${EMPTY}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:16.186518" elapsed="1.619150"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:17.806836" level="INFO">Clicking button 'Edit'.</msg>
+<arg>Edit</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:17.806388" elapsed="2.322455"/>
+</kw>
+<kw name="Edit Citation Page Should Be Open">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:21.153380" level="INFO">Current page contains text 'Edit citation'.</msg>
+<arg>Edit citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:20.130330" elapsed="1.023378"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:20.129637" elapsed="1.024346"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:22.177645" level="INFO">Current page contains text 'Title cannot be empty and the lenght must be less than 75 characters'.</msg>
+<arg>Title cannot be empty and the lenght must be less than 75 characters</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:21.154573" elapsed="1.023400"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:10.772703" elapsed="11.405923"/>
+</test>
+<test id="s1-s4-t3" name="Edit Citation With Invalid Year" line="30">
+<kw name="Reset Citations And Make Citation" type="SETUP">
+<kw name="Reset Database" owner="AppLibrary">
+<status status="PASS" start="2025-11-25T22:49:22.181590" elapsed="0.159025"/>
+</kw>
+<kw name="Create Book Citation" owner="AppLibrary">
+<arg>Muokkauskirja</arg>
+<arg>Matti Muokkaaja</arg>
+<arg>Muokkausjulkaisija</arg>
+<arg>987-6543210987</arg>
+<arg>2023</arg>
+<status status="PASS" start="2025-11-25T22:49:22.341106" elapsed="0.177222"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:22.180694" elapsed="0.338396"/>
+</kw>
+<kw name="Go To Home Page" owner="resource">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:22.521169" level="INFO">Opening url 'http://localhost:5001'</msg>
+<arg>${HOME_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2025-11-25T22:49:22.520687" elapsed="0.709006"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:22.519981" elapsed="0.710082"/>
+</kw>
+<kw name="Main Page Should Be Open" owner="resource">
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:23.741138" level="INFO">Page title is 'citation app'.</msg>
+<arg>citation app</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-11-25T22:49:23.231698" elapsed="0.509812"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:23.230963" elapsed="0.510850"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:24.767166" level="INFO">Current page contains text 'Matti Muokkaaja. Muokkauskirja. Muokkausjulkaisija, 2023. ISBN 987-6543210987'.</msg>
+<arg>Matti Muokkaaja. Muokkauskirja. Muokkausjulkaisija, 2023. ISBN 987-6543210987</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:23.742543" elapsed="1.024996"/>
+</kw>
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:24.768611" level="INFO">Clicking link 'Edit'.</msg>
+<arg>Edit</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:24.768108" elapsed="1.824681"/>
+</kw>
+<kw name="Edit Citation Page Should Be Open">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:27.618005" level="INFO">Current page contains text 'Edit citation'.</msg>
+<arg>Edit citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:26.594151" elapsed="1.024226"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:26.593450" elapsed="1.025208"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:27.619722" level="INFO">Typing text '9999' into text field 'id=year'.</msg>
+<arg>id=year</arg>
+<arg>9999</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:27.619143" elapsed="1.616902"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:29.237318" level="INFO">Clicking button 'Edit'.</msg>
+<arg>Edit</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-11-25T22:49:29.236754" elapsed="2.124002"/>
+</kw>
+<kw name="Edit Citation Page Should Be Open">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-11-25T22:49:32.387303" level="INFO">Current page contains text 'Edit citation'.</msg>
+<arg>Edit citation</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-11-25T22:49:31.362460" elapsed="1.025197"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:31.361455" elapsed="1.026512"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:49:22.179466" elapsed="10.209041"/>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-11-25T22:49:32.389797" elapsed="0.561012"/>
+</kw>
+<status status="PASS" start="2025-11-25T22:48:52.334595" elapsed="40.616407"/>
+</suite>
+<status status="PASS" start="2025-11-25T22:45:10.372834" elapsed="262.579569"/>
+</suite>
+<statistics>
+<total>
+<stat pass="18" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Story Tests" id="s1" pass="18" fail="0" skip="0">Story Tests</stat>
+<stat name="Citations" id="s1-s1" pass="3" fail="0" skip="0">Story Tests.Citations</stat>
+<stat name="Create Citation" id="s1-s2" pass="9" fail="0" skip="0">Story Tests.Create Citation</stat>
+<stat name="Delete Citations" id="s1-s3" pass="3" fail="0" skip="0">Story Tests.Delete Citations</stat>
+<stat name="Edit Citations" id="s1-s4" pass="3" fail="0" skip="0">Story Tests.Edit Citations</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
