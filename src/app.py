@@ -94,7 +94,7 @@ def citation_edition_book(id):
 
     try:
         validate_book(title, author, publisher, isbn, year)
-        update_book_citation(id,title, author, publisher, isbn, year)
+        update_book_citation(id, title, author, publisher, isbn, year)
         print("Book citation updated successfully.")
         return redirect("/")
     except Exception as error:

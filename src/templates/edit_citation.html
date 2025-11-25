@@ -39,7 +39,7 @@ Edit citation
 
 
 {%elif citation.type == "inproceedings"%}
-    <form action="/edit_inproceedings_citation/{{citation.id}}" method="post" id="book" class="{% if citation.type == 'inproceedings' %}{% else %}hidden{% endif %}">
+    <form action="/edit_inproceedings_citation/{{citation.id}}" method="post" id="{{ citation.id }}" class="{% if citation.type == 'inproceedings' %}{% else %}hidden{% endif %}">
       <p>
         <label for="title">The title of the paper:</label>
         <input type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
@@ -59,14 +59,14 @@ Edit citation
       <button type="submit" id="submit_button" >Edit</button>
   </form>
 
-{% elif citation.type == "article" %}   
-    <form action="/edit_article_citation/{{citation.id}}" method="post" id="book" class="{% if citation.type == 'article' %}{% else %}hidden{% endif %}">
+{% elif citation.type == "article" %}
+    <form action="/edit_article_citation/{{citation.id}}" method="post" id="{{ citation.id }}" class="{% if citation.type == 'article' %}{% else %}hidden{% endif %}">
 
         <p>
             <label for="title">The title of the article:</label>
             <input type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
         </p>
-         <p>
+        <p>
             <label for="author">The name(s) of the author(s) of the article:</label>
             <input type="text" name="author" id="author" value="{{ citation.author }}">
         </p>

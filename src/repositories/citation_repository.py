@@ -90,7 +90,7 @@ def update_article_citation(id, title, author, journal, year):
         """)
         db.session.execute(sql, { "id": id, "title": title, "author": author, "journal": journal,
                                 "year": year })
-        db.session.commit()     
+        db.session.commit()
 
 # Temporary function to get book citations for front page listing
 def get_book_citations():
