@@ -1,16 +1,49 @@
 from sqlalchemy import text
 from config import db, app
-
-
-def get_citations():
-    result = db.session.execute(text("SELECT id, title FROM citations"))
-    citations = result.fetchall()
-    return [Citation(citation[0], citation[1]) for citation in citations]
+from entities.citation import Citation
 
 def get_citation(id):
-    sql = text("SELECT id, type, title, author, publisher, isbn, year, booktitle, journal FROM citations WHERE id = :id")
+    sql = text("""SELECT id, type, title, author, publisher, isbn,
+               year, booktitle, journal FROM citations WHERE id = :id""")
     result = db.session.execute(sql, { "id": id })
-    return result.fetchone() if result else None
+    citation = result.fetchone()
+
+    if citation:
+        return Citation(
+            citation_id=citation.id,
+            type=citation.type,
+            title=citation.title,
+            author=citation.author,
+            publisher=citation.publisher,
+            isbn=citation.isbn,
+            year=citation.year,
+            booktitle=citation.booktitle,
+            journal=citation.journal
+        )
+    else:
+        return None
+
+def get_all_citations():
+    result = db.session.execute(text("SELECT * FROM citations"))
+    citations = result.fetchall()
+
+    citation_objects = []
+    for citation in citations:
+        citation_objects.append(
+            Citation(
+                citation_id=citation.id,
+                type=citation.type,
+                title=citation.title,
+                author=citation.author,
+                publisher=citation.publisher,
+                isbn=citation.isbn,
+                year=citation.year,
+                booktitle=citation.booktitle,
+                journal=citation.journal
+            )
+        )
+
+    return citation_objects
 
 def create_book_citation(citation_type, title, author, publisher, isbn, year):
     with app.app_context():
@@ -91,9 +124,3 @@ def update_article_citation(id, title, author, journal, year):
         db.session.execute(sql, { "id": id, "title": title, "author": author, "journal": journal,
                                 "year": year })
         db.session.commit()
-
-# Temporary function to get book citations for front page listing
-def get_book_citations():
-    result = db.session.execute(text("SELECT * FROM citations"))
-    book_citations = result.fetchall()
-    return book_citations

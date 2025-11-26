@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import (
-    get_book_citations,
+    get_all_citations,
     create_book_citation,
     create_inproceedings_citation,
     create_article_citation,
@@ -19,7 +19,7 @@ from util import validate_book, validate_inproceedings, validate_article
 @app.route("/")
 def index():
     # temporary function to fetch all citations
-    book_citations = get_book_citations()
+    book_citations = get_all_citations()
     return render_template("index.html", book_citations=book_citations)
 
 
