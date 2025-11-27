@@ -21,7 +21,7 @@ Add Book Sitation With Missing Title
     Select Citation Option From Dropwdown  Book
     Set Book Citation Fields  ${EMPTY}  Matti Meikalainen  Testijulkaisija  123-4567890123  2020
     Click Button  Create
-    Add Citation Should Fail With Message  Title cannot be empty and the lenght must be less than 75 characters
+    Add Citation Should Fail With Message  Title cannot be empty and the length must be less than 75 characters
 
 Add Inproceedings Citation With Valid Inputs
     Select Citation Option From Dropwdown  Inproceedings
@@ -39,7 +39,7 @@ Add Inproceedings Citation With Missing Title
     Select Citation Option From Dropwdown  Inproceedings
     Set Inproceedings Citation Fields  ${EMPTY}  Jukka Julkaisija  Testijulkaisu  2025
     Click Button  css=#inproceedings button[type="submit"]
-    Add Citation Should Fail With Message  Title length must be less than 75 characters
+    Add Citation Should Fail With Message  Title cannot be empty and the length must be less than 75 characters
 
 Add Article Citation With Valid Inputs
     Select Citation Option From Dropwdown  Article
@@ -57,7 +57,7 @@ Add Article Citation With Missing Title
     Select Citation Option From Dropwdown  Article
     Set Article Citation Fields  ${EMPTY}  Jukka Julkaisija  Testijulkaisu  2025
     Click Button  css=#article button[type="submit"]
-    Add Citation Should Fail With Message  Title length must be less than 75 characters
+    Add Citation Should Fail With Message  Title cannot be empty and the length must be less than 75 characters
 
 *** Keywords ***
 Add Citation Should Succeed
