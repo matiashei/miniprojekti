@@ -11,6 +11,9 @@ from repositories.citation_repository import (
     update_article_citation,
     get_citation
 )
+from repositories.tags_repository import (
+    create_tags
+)
 
 from config import app, test_env
 from util import validate_book, validate_inproceedings, validate_article
@@ -35,10 +38,13 @@ def citation_creation_book():
     isbn = request.form.get("isbn")
     year = request.form.get("year")
     citation_type = "book"
+    citation_tags = request.form.get("tags").split(",")
 
     try:
         validate_book(title, author, publisher, isbn, year)
-        create_book_citation(citation_type, title, author, publisher, isbn, year)
+        citation_id = create_book_citation(citation_type, title, author, publisher, isbn, year)
+        print(citation_id)
+        create_tags(citation_id, citation_tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))

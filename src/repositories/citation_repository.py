@@ -1,6 +1,7 @@
 from sqlalchemy import text
 from config import db, app
 from entities.citation import Citation
+from repositories.tags_repository import get_citation_tags
 
 def get_citation(id):
     sql = text("""SELECT id, type, title, author, publisher, isbn,
@@ -29,6 +30,7 @@ def get_all_citations():
 
     citation_objects = []
     for citation in citations:
+        tag_list = get_citation_tags(citation.id)
         citation_objects.append(
             Citation(
                 citation_id=citation.id,
@@ -39,7 +41,8 @@ def get_all_citations():
                 isbn=citation.isbn,
                 year=citation.year,
                 booktitle=citation.booktitle,
-                journal=citation.journal
+                journal=citation.journal,
+                tags = tag_list
             )
         )
 
@@ -50,11 +53,14 @@ def create_book_citation(citation_type, title, author, publisher, isbn, year):
         sql = text("""INSERT INTO citations
             (type, title, author, publisher, isbn, year)
             VALUES (:citation_type, :title, :author, :publisher, :isbn, :year)
+            RETURNING id
         """)
 
-        db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
+        result = db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
                                 "publisher": publisher, "isbn": isbn, "year": year })
         db.session.commit()
+
+        return result.fetchone()[0]
 
 def create_inproceedings_citation(citation_type, title, author, booktitle, year):
     with app.app_context():

@@ -47,6 +47,10 @@ Create a new citation
         <label for="year">The year the book was published:</label>
         <input type="number" name="year" id="year" min="0" max="2025">
       </p>
+      <p>
+        <label for="tags">Optional tags for the refrence:</label>
+        <input type="text" name="tags" id="book_tags">
+      </p>
       <button type="submit" id="submit_button" >Create</button>
 </form>
 <form action="/create_inproceedings_citation" method="post" id="inproceedings" class="hidden">

@@ -21,6 +21,7 @@ citation app
     {% if citation.type == 'book' %}
       <li class="citation">
         Type: {{ citation.type }} <br>
+        Tags: {{ citation.tags }} <br>
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
         <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
         <a href="/edit_citation/{{ citation.id }}">Edit</a>

@@ -1,5 +1,5 @@
 class Citation:
-    def __init__(self, citation_id, type, title, author, publisher, isbn, year, booktitle, journal):
+    def __init__(self, citation_id, type, title, author, publisher, isbn, year, booktitle, journal, tags=[]):
         self.id = citation_id
         self.type = type
         self.title = title
@@ -9,3 +9,4 @@ class Citation:
         self.year = year
         self.booktitle = booktitle
         self.journal = journal
+        self.tags = tags
