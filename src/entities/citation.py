@@ -1,7 +1,11 @@
 class Citation:
-    def __init__(self, citation_id, content):
+    def __init__(self, citation_id, type, title, author, publisher, isbn, year, booktitle, journal):
         self.id = citation_id
-        self.content = content
-
-    def __str__(self):
-        return f"{self.content}"
+        self.type = type
+        self.title = title
+        self.author = author
+        self.publisher = publisher
+        self.isbn = isbn
+        self.year = year
+        self.booktitle = booktitle
+        self.journal = journal
