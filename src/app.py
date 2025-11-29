@@ -9,7 +9,8 @@ from repositories.citation_repository import (
     update_book_citation,
     update_inproceedings_citation,
     update_article_citation,
-    get_citation
+    get_citation,
+    get_bibtex_citation
 )
 
 from config import app, test_env
@@ -141,6 +142,16 @@ def delete_citations():
             flash(str(error))
             return redirect("/")
     return redirect("/")
+
+@app.route("/", methods=["GET","POST"])
+def get_bibtex():
+    bibtex_results = []
+    if request.method == "POST":
+        for citation in get_all_citations():
+            bibtex = get_bibtex_citation(citation.id)
+            bibtex_results.append(bibtex)
+    return render_template("index.html", bibtex_results=bibtex_results, book_citations=get_all_citations())
+
 
 # testausta varten oleva reitti
 if test_env:

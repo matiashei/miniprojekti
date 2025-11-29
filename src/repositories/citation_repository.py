@@ -124,3 +124,44 @@ def update_article_citation(id, title, author, journal, year):
         db.session.execute(sql, { "id": id, "title": title, "author": author, "journal": journal,
                                 "year": year })
         db.session.commit()
+
+def get_bibtex_citation(citation_id):
+    citation = get_citation(citation_id)
+    if not citation:
+        return None
+
+    if citation.type == "book":
+        return get_book_bibtex(citation, citation_id)
+    if citation.type == "inproceedings":
+        return get_inproceedings_bibtex(citation, citation_id)
+    if citation.type == "article":
+        return get_article_bibtex(citation, citation_id)
+    return None
+
+def get_book_bibtex(citation, citation_id):
+    bibtex = f"@book{{book{citation_id},\n"
+    bibtex += f"    author = {{{citation.author}}},\n"
+    bibtex += f"    title = {{{citation.title}}},\n"
+    bibtex += f"    year = {{{citation.year}}},\n"
+    bibtex += f"    publisher = {{{citation.publisher}}},\n"
+    bibtex += f"    isbn = {{{citation.isbn}}}\n"
+    bibtex += "}"
+    return bibtex
+
+def get_inproceedings_bibtex(citation, citation_id):
+    bibtex = f"@inproceedings{{inproceedings{citation_id},\n"
+    bibtex += f"    author = {{{citation.author}}},\n"
+    bibtex += f"    title = {{{citation.title}}},\n"
+    bibtex += f"    year = {{{citation.year}}},\n"
+    bibtex += f"    booktitle = {{{citation.booktitle}}}\n"
+    bibtex += "}"
+    return bibtex
+
+def get_article_bibtex(citation, citation_id):
+    bibtex = f"@article{{article{citation_id},\n"
+    bibtex += f"    author = {{{citation.author}}},\n"
+    bibtex += f"    title = {{{citation.title}}},\n"
+    bibtex += f"    journal = {{{citation.journal}}},\n"
+    bibtex += f"    year = {{{citation.year}}}\n"
+    bibtex += "}"
+    return bibtex
