@@ -3,7 +3,7 @@ from config import db, app
 from entities.citation import Citation
 from repositories.tags_repository import get_citation_tags
 
-def get_citation(citation_id):
+def get_citation(citation_id, tags):
     sql = text("""SELECT id, type, title, author, publisher, isbn,
                year, booktitle, journal FROM citations WHERE id = :id""")
     result = db.session.execute(sql, { "id": citation_id })
@@ -19,7 +19,8 @@ def get_citation(citation_id):
             isbn=citation.isbn,
             year=citation.year,
             booktitle=citation.booktitle,
-            journal=citation.journal
+            journal=citation.journal,
+            tags=tags
         )
     else:
         return None

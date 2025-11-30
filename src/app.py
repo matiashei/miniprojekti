@@ -12,7 +12,9 @@ from repositories.citation_repository import (
     get_citation
 )
 from repositories.tags_repository import (
-    create_tags
+    create_tags,
+    get_citation_tags,
+    update_tags
 )
 
 from config import app, test_env
@@ -37,12 +39,12 @@ def citation_creation_book():
     isbn = request.form.get("isbn")
     year = request.form.get("year")
     citation_type = "book"
-    citation_tags = request.form.get("tags").split(",")
+    tags = request.form.get("tags").split(",")
 
     try:
         validate_book(title, author, publisher, isbn, year)
         citation_id = create_book_citation(citation_type, title, author, publisher, isbn, year)
-        create_tags(citation_id, citation_tags)
+        create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -55,12 +57,12 @@ def citation_creation_inproceedings():
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
     citation_type = "inproceedings"
-    citation_tags = request.form.get("tags").split(",")
+    tags = request.form.get("tags").split(",")
 
     try:
         validate_inproceedings(title, author, booktitle, year)
         citation_id = create_inproceedings_citation(citation_type, title, author, booktitle, year)
-        create_tags(citation_id, citation_tags)
+        create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -73,12 +75,12 @@ def citation_creation_article():
     journal = request.form.get("journal")
     year = request.form.get("year")
     citation_type = "article"
-    citation_tags = request.form.get("tags").split(",")
+    tags = request.form.get("tags").split(",")
 
     try:
         validate_article(title, author, journal, year)
         citationd_id = create_article_citation(citation_type, title, author, journal, year)
-        create_tags(citationd_id, citation_tags)
+        create_tags(citationd_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -86,10 +88,14 @@ def citation_creation_article():
 
 @app.route("/edit_citation/<int:id>")
 def edit_citation(id):
-    citation = get_citation(id)
-    print("Editing citation:", citation)
+    tags = get_citation_tags(id)
+    if tags is None:
+        tags = []
+
+    citation = get_citation(id, tags)
     if citation is None:
         return redirect("/")
+
     return render_template("edit_citation.html", citation=citation)
 
 @app.route("/edit_book_citation/<int:id>", methods=["POST"])
@@ -99,11 +105,12 @@ def citation_edition_book(id):
     publisher = request.form.get("publisher")
     isbn = request.form.get("isbn")
     year = request.form.get("year")
+    tags = request.form.get("tags").split(",")
 
     try:
         validate_book(title, author, publisher, isbn, year)
         update_book_citation(id, title, author, publisher, isbn, year)
-        print("Book citation updated successfully.")
+        update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -115,10 +122,12 @@ def citation_edition_inproceedings(id):
     author = request.form.get("author")
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
+    tags = request.form.get("tags").split(",")
 
     try:
         validate_inproceedings(title, author, booktitle, year)
         update_inproceedings_citation(id, title, author, booktitle, year)
+        update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -130,10 +139,12 @@ def citation_edition_article(id):
     author = request.form.get("author")
     journal = request.form.get("journal")
     year = request.form.get("year")
+    tags = request.form.get("tags").split(",")
 
     try:
         validate_article(title, author, journal, year)
         update_article_citation(id, title, author, journal, year)
+        update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))

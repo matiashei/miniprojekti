@@ -13,6 +13,17 @@ def create_tags(citation_id: int, tags: list):
 
         db.session.commit()
 
+def update_tags(citation_id: int, tags: list):
+    with app.app_context():
+        sql = text("DELETE FROM tags WHERE citation_id = :citation_id")
+        db.session.execute(sql, { "citation_id": citation_id })
+
+        sql = text("INSERT INTO tags (citation_id, tag) VALUES (:citation_id, :tag)")
+        for tag in tags:
+            db.session.execute(sql, { "citation_id": citation_id, "tag": tag })
+
+        db.session.commit()
+
 def get_citation_tags(citation_id):
     with app.app_context():
         sql = text("""SELECT tag FROM tags
