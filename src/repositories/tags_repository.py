@@ -1,6 +1,5 @@
 from sqlalchemy import text
 from config import db, app
-from entities.citation import Citation
 
 def create_tags(citation_id: int, tags: list):
     with app.app_context():

@@ -1,6 +1,6 @@
 import os
-from config import db, app
 from sqlalchemy import text
+from config import db, app
 
 def reset_db():
     print("Clearing contents from table citations")
