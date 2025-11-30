@@ -21,4 +21,4 @@ def get_citation_tags(citation_id):
         """)
 
         result = db.session.execute(sql, { "citation_id": citation_id }).fetchall()
-        return result if result else None
+        return [row.tag for row in result] if result else None

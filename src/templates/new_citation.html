@@ -48,7 +48,7 @@ Create a new citation
         <input type="number" name="year" id="year" min="0" max="2025">
       </p>
       <p>
-        <label for="tags">Optional tags for the refrence:</label>
+        <label for="tags">Tags separated with a comma (optional)</label>
         <input type="text" name="tags" id="book_tags">
       </p>
       <button type="submit" id="submit_button" >Create</button>
@@ -70,6 +70,10 @@ Create a new citation
         <label for="year">The year the conference proceedings were published:</label>
         <input type="number" name="year" id="year" min="0" max="2025">
       </p>
+      <p>
+        <label for="tags">Tags separated with a comma (optional):</label>
+        <input type="text" name="tags" id="inproceedings_tags">
+      </p>
       <button type="submit" id="submit_button" >Create</button>
   </form>
 <form action="/create_article_citation" method="post" id="article" class="hidden">
@@ -88,6 +92,10 @@ Create a new citation
       <p>
         <label for="year">The year of publication:</label>
         <input type="number" name="year" id="year" min="0" max="2025">
+      </p>
+      <p>
+        <label for="tags">Tags separated with a comma (optional)</label>
+        <input type="text" name="tags" id="book_tags">
       </p>
       <button type="submit" id="submit_button" >Create</button>
   </form>

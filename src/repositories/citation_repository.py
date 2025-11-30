@@ -50,40 +50,38 @@ def get_all_citations():
 
 def create_book_citation(citation_type, title, author, publisher, isbn, year):
     with app.app_context():
-        sql = text("""INSERT INTO citations
-            (type, title, author, publisher, isbn, year)
-            VALUES (:citation_type, :title, :author, :publisher, :isbn, :year)
-            RETURNING id
-        """)
+        sql = text("""INSERT INTO citations (type, title, author, publisher, isbn, year)
+                   VALUES (:citation_type, :title, :author, :publisher, :isbn, :year)
+                   RETURNING id""")
 
-        result = db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
-                                "publisher": publisher, "isbn": isbn, "year": year })
+        result = db.session.execute(sql, { "citation_type": citation_type, "title": title,
+                                          "author": author, "publisher": publisher, "isbn": isbn,
+                                          "year": year })
         db.session.commit()
-
         return result.fetchone()[0]
 
 def create_inproceedings_citation(citation_type, title, author, booktitle, year):
     with app.app_context():
         citation_type = "inproceedings"
-        sql = text("""INSERT INTO citations
-        (type, title, author, booktitle, year)
-        VALUES (:citation_type, :title, :author, :booktitle, :year)
-        """)
+        sql = text("""INSERT INTO citations (type, title, author, booktitle, year)
+                   VALUES (:citation_type, :title, :author, :booktitle, :year)
+                   RETURNING id""")
 
-        db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
-                                "booktitle": booktitle, "year": year })
+        result = db.session.execute(sql, { "citation_type": citation_type, "title": title,
+                                          "author": author, "booktitle": booktitle, "year": year })
         db.session.commit()
+        return result.fetchone()[0]
 
 def create_article_citation(citation_type, title, author, journal, year):
     with app.app_context():
-        sql = text("""INSERT INTO citations
-            (type, title, author, journal, year)
-            VALUES (:citation_type, :title, :author, :journal, :year)
-        """)
+        sql = text("""INSERT INTO citations (type, title, author, journal, year)
+                   VALUES (:citation_type, :title, :author, :journal, :year)
+                   RETURNING id""")
 
-        db.session.execute(sql, { "citation_type": citation_type, "title": title, "author": author,
-                                "journal": journal, "year": year })
+        result = db.session.execute(sql, { "citation_type": citation_type, "title": title,
+                                          "author": author,"journal": journal, "year": year })
         db.session.commit()
+        return result.fetchone()[0]
 
 def delete_citation(citation_id):
     with app.app_context():
@@ -101,8 +99,8 @@ def update_book_citation(id, title, author, publisher, isbn, year):
                 year = :year
             WHERE id = :id
         """)
-        db.session.execute(sql, { "id": id, "title": title, "author": author, "publisher": publisher,
-                                "isbn": isbn, "year": year })
+        db.session.execute(sql, { "id": id, "title": title, "author": author,
+                                 "publisher": publisher, "isbn": isbn, "year": year })
         db.session.commit()
 
 def update_inproceedings_citation(id, title, author, booktitle, year):
@@ -114,8 +112,8 @@ def update_inproceedings_citation(id, title, author, booktitle, year):
                 year = :year
             WHERE id = :id
         """)
-        db.session.execute(sql, { "id": id, "title": title, "author": author, "booktitle": booktitle,
-                                "year": year })
+        db.session.execute(sql, { "id": id, "title": title, "author": author,
+                                 "booktitle": booktitle, "year": year })
         db.session.commit()
 
 def update_article_citation(id, title, author, journal, year):

@@ -25,7 +25,6 @@ def index():
     book_citations = get_all_citations()
     return render_template("index.html", book_citations=book_citations)
 
-
 @app.route("/new_citation")
 def new():
     return render_template("new_citation.html")
@@ -43,7 +42,6 @@ def citation_creation_book():
     try:
         validate_book(title, author, publisher, isbn, year)
         citation_id = create_book_citation(citation_type, title, author, publisher, isbn, year)
-        print(citation_id)
         create_tags(citation_id, citation_tags)
         return redirect("/")
     except Exception as error:
@@ -57,10 +55,12 @@ def citation_creation_inproceedings():
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
     citation_type = "inproceedings"
+    citation_tags = request.form.get("tags").split(",")
 
     try:
         validate_inproceedings(title, author, booktitle, year)
-        create_inproceedings_citation(citation_type, title, author, booktitle, year)
+        citation_id = create_inproceedings_citation(citation_type, title, author, booktitle, year)
+        create_tags(citation_id, citation_tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -73,10 +73,12 @@ def citation_creation_article():
     journal = request.form.get("journal")
     year = request.form.get("year")
     citation_type = "article"
+    citation_tags = request.form.get("tags").split(",")
 
     try:
         validate_article(title, author, journal, year)
-        create_article_citation(citation_type, title, author, journal, year)
+        citationd_id = create_article_citation(citation_type, title, author, journal, year)
+        create_tags(citationd_id, citation_tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
