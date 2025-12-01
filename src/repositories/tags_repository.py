@@ -1,16 +1,19 @@
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from config import db, app
 
 def create_tags(citation_id: int, tags: list):
     with app.app_context():
         for tag in tags:
-            sql = text("""INSERT INTO tags
-                (citation_id, tag)
-                VALUES (:citation_id, :tag)
-            """)
+            try:
+                sql = text("""INSERT INTO tags
+                        (citation_id, tag)
+                        VALUES (:citation_id, :tag)""")
 
-            db.session.execute(sql, { "citation_id": citation_id, "tag": tag })
-
+                db.session.execute(sql, { "citation_id": citation_id, "tag": tag })
+            except IntegrityError:
+                db.session.rollback()
+                continue
         db.session.commit()
 
 def update_tags(citation_id: int, tags: list):

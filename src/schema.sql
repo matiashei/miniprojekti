@@ -13,5 +13,6 @@ CREATE TABLE citations (
 CREATE TABLE tags (
   id SERIAL PRIMARY KEY,
   citation_id SERIAL REFERENCES citations(id) ON DELETE CASCADE,
-  tag TEXT
+  tag TEXT,
+  UNIQUE(citation_id, tag)
 );

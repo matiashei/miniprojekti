@@ -18,7 +18,13 @@ from repositories.tags_repository import (
 )
 
 from config import app, test_env
-from util import validate_book, validate_inproceedings, validate_article
+from util import (
+    validate_book,
+    validate_inproceedings,
+    validate_article,
+    clean_tags,
+    validate_tags
+)
 
 
 @app.route("/")
@@ -39,11 +45,12 @@ def citation_creation_book():
     isbn = request.form.get("isbn")
     year = request.form.get("year")
     citation_type = "book"
-    tags = request.form.get("tags").split(",")
+    tags = clean_tags(request.form.get("tags"))
 
     try:
         validate_book(title, author, publisher, isbn, year)
         citation_id = create_book_citation(citation_type, title, author, publisher, isbn, year)
+        validate_tags(tags)
         create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
@@ -57,11 +64,12 @@ def citation_creation_inproceedings():
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
     citation_type = "inproceedings"
-    tags = request.form.get("tags").split(",")
+    tags = clean_tags(request.form.get("tags"))
 
     try:
         validate_inproceedings(title, author, booktitle, year)
         citation_id = create_inproceedings_citation(citation_type, title, author, booktitle, year)
+        validate_tags(tags)
         create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
@@ -75,11 +83,12 @@ def citation_creation_article():
     journal = request.form.get("journal")
     year = request.form.get("year")
     citation_type = "article"
-    tags = request.form.get("tags").split(",")
+    tags = clean_tags(request.form.get("tags"))
 
     try:
         validate_article(title, author, journal, year)
         citationd_id = create_article_citation(citation_type, title, author, journal, year)
+        validate_tags(tags)
         create_tags(citationd_id, tags)
         return redirect("/")
     except Exception as error:
@@ -105,16 +114,17 @@ def citation_edition_book(id):
     publisher = request.form.get("publisher")
     isbn = request.form.get("isbn")
     year = request.form.get("year")
-    tags = request.form.get("tags").split(",")
+    tags = clean_tags(request.form.get("tags"))
 
     try:
         validate_book(title, author, publisher, isbn, year)
         update_book_citation(id, title, author, publisher, isbn, year)
+        validate_tags(tags)
         update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect(f"/edit_citation/{id}")
+        return redirect(f"/edit_citation/{id}")
 
 @app.route("/edit_inproceedings_citation/<int:id>", methods=["POST"])
 def citation_edition_inproceedings(id):
@@ -122,11 +132,12 @@ def citation_edition_inproceedings(id):
     author = request.form.get("author")
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
-    tags = request.form.get("tags").split(",")
+    tags = clean_tags(request.form.get("tags"))
 
     try:
         validate_inproceedings(title, author, booktitle, year)
         update_inproceedings_citation(id, title, author, booktitle, year)
+        validate_tags(tags)
         update_tags(id, tags)
         return redirect("/")
     except Exception as error:
@@ -139,17 +150,17 @@ def citation_edition_article(id):
     author = request.form.get("author")
     journal = request.form.get("journal")
     year = request.form.get("year")
-    tags = request.form.get("tags").split(",")
+    tags = clean_tags(request.form.get("tags"))
 
     try:
         validate_article(title, author, journal, year)
         update_article_citation(id, title, author, journal, year)
+        validate_tags(tags)
         update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
         return  redirect(f"/edit_citation/{id}")
-
 
 @app.route("/delete_citations", methods=["POST"])
 def delete_citations():

@@ -3,6 +3,9 @@ from sqlalchemy import text
 from config import db, app
 
 def reset_db():
+    print("Clearing contents from table tags")
+    sql = text("DELETE FROM tags")
+    db.session.execute(sql)
     print("Clearing contents from table citations")
     sql = text("DELETE FROM citations")
     db.session.execute(sql)
@@ -29,7 +32,7 @@ def setup_db():
     if len(tables_in_db) > 0:
         print(f"Tables exist, dropping: {', '.join(tables_in_db)}")
         for table in tables_in_db:
-            sql = text(f"DROP TABLE {table}")
+            sql = text(f"DROP TABLE {table} CASCADE")
             db.session.execute(sql)
         db.session.commit()
 
