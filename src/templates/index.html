@@ -21,7 +21,12 @@ citation app
     {% if citation.type == 'book' %}
       <li class="citation">
         Type: {{ citation.type }} <br>
-        Tags: {{ citation.tags }} <br>
+        {% if citation.tags %}
+          Tags: 
+          {% for tag in citation.tags %}
+            {{ tag }}{% if not loop.last %}, {% endif %}
+          {% endfor %} <br>
+        {% endif %}
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
         <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
         <a href="/edit_citation/{{ citation.id }}">Edit</a>
@@ -30,7 +35,12 @@ citation app
     {% elif citation.type == 'inproceedings' %}
       <li class="citation">
         Type: {{ citation.type }} <br>
-        Tags: {{ citation.tags }} <br>
+        {% if citation.tags %}
+          Tags: 
+          {% for tag in citation.tags %}
+            {{ tag }}{% if not loop.last %}, {% endif %}
+          {% endfor %} <br>
+        {% endif %}
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
         <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
         <a href="/edit_citation/{{ citation.id }}">Edit</a>
@@ -39,7 +49,12 @@ citation app
     {% elif citation.type == 'article' %}
       <li class="citation">
         Type: {{ citation.type }} <br>
-        Tags: {{ citation.tags }} <br>
+        {% if citation.tags %}
+          Tags: 
+          {% for tag in citation.tags %}
+            {{ tag }}{% if not loop.last %}, {% endif %}
+          {% endfor %} <br>
+        {% endif %}
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
         <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> <br>
         <a href="/edit_citation/{{ citation.id }}">Edit</a>
