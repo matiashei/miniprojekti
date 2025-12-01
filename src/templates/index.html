@@ -68,20 +68,7 @@ citation app
 
 {% endif %}
 <div>
-  <form action="/" method="POST">
-    <button type="submit">Get BibTeX citations</button>
-  </form>
-</div>
-
-<div>
-  <div id="bibtex_output">
-    {% if bibtex_results %}
-      {% for bibtex in bibtex_results %}
-          <pre>{{ bibtex }}</pre>
-      {% endfor %}  
-    {% endif %}
-  </div>
-
+  <a href="/bibtex">Get citations in BibTeX format</a>
 </div>
 
 {% endblock %}

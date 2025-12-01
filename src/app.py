@@ -143,14 +143,14 @@ def delete_citations():
             return redirect("/")
     return redirect("/")
 
-@app.route("/", methods=["GET","POST"])
+@app.route("/bibtex", methods=["GET","POST"])
 def get_bibtex():
     bibtex_results = []
-    if request.method == "POST":
-        for citation in get_all_citations():
-            bibtex = get_bibtex_citation(citation.id)
-            bibtex_results.append(bibtex)
-    return render_template("index.html", bibtex_results=bibtex_results, book_citations=get_all_citations())
+    for citation in get_all_citations():
+        bibtex = get_bibtex_citation(citation.id)
+        bibtex_results.append(bibtex)
+
+    return render_template("bibtex.html", bibtex_results=bibtex_results)
 
 
 # testausta varten oleva reitti
