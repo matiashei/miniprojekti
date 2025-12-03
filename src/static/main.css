@@ -1,9 +1,17 @@
 body {
   font-family: serif;
+  background-color: rgb(20, 20, 20);
+  color: rgb(237, 237, 237);
 }
 
 div {
   margin: 1em;
+}
+
+label {
+  display: inline-block;
+  width: 7em;
+  text-align: right;
 }
 
 .citation {
