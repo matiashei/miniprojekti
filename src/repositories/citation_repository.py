@@ -90,7 +90,7 @@ def create_article_citation(citation_type, title, author, journal, year):
         """)
 
         result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
-                                          "author": author,"journal": journal, "year": year})
+                                          "author": author, "journal": journal, "year": year})
         db.session.commit()
         return result.fetchone()[0]
 

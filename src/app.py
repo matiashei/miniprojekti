@@ -87,9 +87,9 @@ def citation_creation_article():
 
     try:
         validate_article(title, author, journal, year)
-        citationd_id = create_article_citation(citation_type, title, author, journal, year)
+        citation_id = create_article_citation(citation_type, title, author, journal, year)
         validate_tags(tags)
-        create_tags(citationd_id, tags)
+        create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
