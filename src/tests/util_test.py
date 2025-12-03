@@ -1,5 +1,5 @@
 import unittest
-from util import UserInputError, validate_book, validate_inproceedings, validate_article
+from util import UserInputError, validate_book, validate_inproceedings, validate_article, validate_tags, clean_tags
 
 VALID_BOOK = {
     "title": "Computer Organization and Architecture",
@@ -80,3 +80,15 @@ class TestValidateUtil(unittest.TestCase):
         self.check_invalid(validate_article, VALID_ARTICLE, {"journal": ""})
         self.check_invalid(validate_article, VALID_ARTICLE, {"journal": "   "})
         self.check_invalid(validate_article, VALID_ARTICLE, {"journal": "x" * 100})
+
+class TestValidateTags(unittest.TestCase):
+
+    def test_tags_too_long(self):
+        with self.assertRaises(UserInputError):
+            validate_tags(["tag" * 21])
+
+
+class TestCleanTags(unittest.TestCase):
+
+    def test_clean_tags(self):
+        self.assertEqual(clean_tags(" tag ,  tag2 ,tag3 "), ["tag", "tag2", "tag3"])
