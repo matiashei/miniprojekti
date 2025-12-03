@@ -144,7 +144,7 @@ def update_article_citation(citation_id, title, author, journal, year):
         db.session.commit()
 
 def get_bibtex_citation(citation_id):
-    citation = get_citation(citation_id)
+    citation = get_citation(citation_id, tags=[])
     if not citation:
         return None
 
