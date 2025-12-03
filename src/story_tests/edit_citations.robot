@@ -25,7 +25,7 @@ Edit Citation With Empty Title
     Input Text  id=title  ${EMPTY}
     Click Button  Edit
     Edit Citation Page Should Be Open
-    Page Should Contain  Title cannot be empty and the lenght must be less than 75 characters
+    Page Should Contain  Title cannot be empty and the length must be less than 75 characters
 
 Edit Citation With Invalid Year
     Go To Home Page

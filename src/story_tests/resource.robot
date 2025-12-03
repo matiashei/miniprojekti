@@ -40,3 +40,7 @@ Add Citation Page Should Be Open
 Reset Citations And Go To Home Page
     Reset Database
     Go To Home Page
+
+Set Book Tag
+    [Arguments]    ${tags}
+    Input Text    name:tags    ${tags}

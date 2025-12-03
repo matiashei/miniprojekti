@@ -1,5 +1,9 @@
 import requests
-from repositories.citation_repository import create_book_citation, create_inproceedings_citation, create_article_citation
+from repositories.citation_repository import (
+    create_book_citation,
+    create_inproceedings_citation,
+    create_article_citation
+)
 
 class AppLibrary:
     def __init__(self):
