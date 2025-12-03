@@ -1,0 +1,19 @@
+<button onclick="copyBibtex()">Copy BibTeX</button>
+
+<script>
+  function copyBibtex() {
+      const text = document.getElementById("bibtex_output").innerText;
+      navigator.clipboard.writeText(text);
+  }
+</script>
+
+<div>
+  <div id="bibtex_output">
+    {% if bibtex_results %}
+      {% for bibtex in bibtex_results %}
+          <pre>{{ bibtex }}</pre>
+      {% endfor %}  
+    {% endif %}
+  </div>
+
+</div>
