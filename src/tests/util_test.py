@@ -1,148 +1,82 @@
 import unittest
-
 from util import UserInputError, validate_book, validate_inproceedings, validate_article
 
-class TestValidateBook(unittest.TestCase):
+VALID_BOOK = {
+    "title": "Computer Organization and Architecture",
+    "author": "William Stallings",
+    "publisher": "Pearson",
+    "isbn": "978-0-13-410161-3",
+    "year": "2024"
+}
 
-    def test_valid_book(self):
-        validate_book("Title", "Author", "Publisher", "12345", "2025")
+VALID_INPROCEEDINGS = {
+    "title": "A Conference Paper",
+    "author": "John Doe",
+    "booktitle": "Proceedings of a Conference",
+    "year": "1996"
+}
+
+VALID_ARTICLE = {
+    "title": "A Valid Article",
+    "author": "Jane Smith",
+    "journal": "Journal of Testing",
+    "year": "3"
+}
+
+class TestValidateUtil(unittest.TestCase):
+
+    def check_invalid(self, validation_func, base_kwargs, override_kwargs):
+        test_kwargs = base_kwargs.copy()
+        test_kwargs.update(override_kwargs)
+        with self.assertRaises(UserInputError):
+            validation_func(**test_kwargs)
+
+    def test_valid_item(self):
+        validate_book(**VALID_BOOK)
+        validate_inproceedings(**VALID_INPROCEEDINGS)
+        validate_article(**VALID_ARTICLE)
 
     def test_empty_title(self):
-        with self.assertRaises(UserInputError):
-            validate_book("", "Author", "Publisher", "123", "2025")
-
-    def test_title_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_book(" ", "Author", "Publisher", "123", "2025")
+        self.check_invalid(validate_book, VALID_BOOK, {"title": ""})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"title": ""})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"title": ""})
 
     def test_too_long_title(self):
-        with self.assertRaises(UserInputError):
-            validate_book("x" * 200, "Author", "Publisher", "123", "2025")
+        self.check_invalid(validate_book, VALID_BOOK, {"title": "x" * 200})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"title": "x" * 200})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"title": "x" * 200})
 
-    def test_author_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", " ", "Publisher", "123", "2025")
+    def test_empty_author(self):
+        self.check_invalid(validate_book, VALID_BOOK, {"author": ""})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"author": ""})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"author": ""})
 
-    def test_too_long_author(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "x" * 76, "Publisher", "123", "2025")
-
-    def test_publisher_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", " ", "123", "2025")
-
-    def test_too_long_publisher(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", "x" * 51, "123", "2025")
-
-    def test_isbn_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", "Publisher", " ", "2025")
-
-    def test_too_long_isbn(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", "Publisher", "0" * 21, "2025")
-
-    def test_year_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", "Publisher", "123", " ")
+    def test_negative_year(self):
+        self.check_invalid(validate_book, VALID_BOOK, {"year": "-5"})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"year": "-5"})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"year": "-5"})
 
     def test_too_high_year(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", "Publisher", "123", "2026")
+        self.check_invalid(validate_book, VALID_BOOK, {"year": "3000"})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"year": "3000"})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"year": "3000"})
 
-    def test_too_low_year(self):
-        with self.assertRaises(UserInputError):
-            validate_book("Title", "Author", "Publisher", "123", "-1")
+    def test_invalid_publisher(self):
+        self.check_invalid(validate_book, VALID_BOOK, {"publisher": "   "})
+        self.check_invalid(validate_book, VALID_BOOK, {"publisher": ""})
+        self.check_invalid(validate_book, VALID_BOOK, {"publisher": "x" * 100})
 
+    def test_invalid_isbn(self):
+        self.check_invalid(validate_book, VALID_BOOK, {"isbn": ""})
+        self.check_invalid(validate_book, VALID_BOOK, {"isbn": "   "})
+        self.check_invalid(validate_book, VALID_BOOK, {"isbn": "x" * 50})
 
-class TestValidateInproceedings(unittest.TestCase):
+    def test_invalid_booktitle(self):
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": ""})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": "   "})
+        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": "x" * 100})
 
-    def test_valid_inproceedings(self):
-        validate_inproceedings("Title", "Author", "Book Title", "2025")
-
-    def test_empty_title(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("", "Author", "Book Title", "2025")
-
-    def test_title_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings(" ", "Author", "Book Title", "2025")
-
-    def test_too_long_title(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("x" * 200, "Author", "Book Title", "2025")
-
-    def test_author_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", " ", "Book Title", "2025")
-
-    def test_too_long_author(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", "x" * 76, "Book Title", "2025")
-
-    def test_boobktitle_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", "Author", " ", "2025")
-
-    def test_too_long_booktitle(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", "Author", "x" * 76, "2025")
-
-    def test_year_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", "Author", "Booktitle", " ")
-
-    def test_too_high_year(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", "Author", "Booktitle", "2026")
-
-    def test_too_low_year(self):
-        with self.assertRaises(UserInputError):
-            validate_inproceedings("Title", "Author", "Booktitle", "-1")
-
-
-class TestValidateArticle(unittest.TestCase):
-
-    def test_valid_article(self):
-        validate_article("Title", "Author", "Journal", "2025")
-
-    def test_empty_title(self):
-        with self.assertRaises(UserInputError):
-            validate_article("", "Author", "Journal", "2025")
-
-    def test_title_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_article(" ", "Author", "Journal", "2025")
-
-    def test_too_long_title(self):
-        with self.assertRaises(UserInputError):
-            validate_article("x" * 200, "Author", "Journal", "2025")
-
-    def test_author_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", " ", "Journal", "2025")
-
-    def test_too_long_author(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", "x" * 76, "Journal", "2025")
-
-    def test_journal_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", "Author", " ", "2025")
-
-    def test_too_long_journal(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", "Author", "x" * 76, "2025")
-
-    def test_year_is_space(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", "Author", "Journal", " ")
-
-    def test_too_high_year(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", "Author", "Journal", "2026")
-
-    def test_too_low_year(self):
-        with self.assertRaises(UserInputError):
-            validate_article("Title", "Author", "Journal", "-1")
+    def test_invalid_journal(self):
+        self.check_invalid(validate_article, VALID_ARTICLE, {"journal": ""})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"journal": "   "})
+        self.check_invalid(validate_article, VALID_ARTICLE, {"journal": "x" * 100})
