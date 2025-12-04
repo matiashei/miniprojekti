@@ -1,17 +1,6 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import (
-    get_all_citations,
-    create_book_citation,
-    create_inproceedings_citation,
-    create_article_citation,
-    delete_citation,
-    update_book_citation,
-    update_inproceedings_citation,
-    update_article_citation,
-    get_citation,
-    get_bibtex_citation
-)
+from repositories.citation_repository import CitationRepository
 from repositories.tags_repository import (
     create_tags,
     get_citation_tags,
@@ -27,12 +16,12 @@ from util import (
     validate_tags
 )
 
+citation_repo = CitationRepository()
 
 @app.route("/")
 def index():
-    # temporary function to fetch all citations
-    book_citations = get_all_citations()
-    return render_template("index.html", book_citations=book_citations)
+    citations = citation_repo.get_all_citations()
+    return render_template("index.html", citations=citations)
 
 @app.route("/new_citation")
 def new():
@@ -50,7 +39,9 @@ def citation_creation_book():
 
     try:
         validate_book(title, author, publisher, isbn, year)
-        citation_id = create_book_citation(citation_type, title, author, publisher, isbn, year)
+        citation_id = citation_repo.create_book_citation(
+            citation_type, title, author, publisher, isbn, year
+        )
         validate_tags(tags)
         create_tags(citation_id, tags)
         return redirect("/")
@@ -69,7 +60,9 @@ def citation_creation_inproceedings():
 
     try:
         validate_inproceedings(title, author, booktitle, year)
-        citation_id = create_inproceedings_citation(citation_type, title, author, booktitle, year)
+        citation_id = citation_repo.create_inproceedings_citation(
+            citation_type, title, author, booktitle, year
+        )
         validate_tags(tags)
         create_tags(citation_id, tags)
         return redirect("/")
@@ -88,7 +81,9 @@ def citation_creation_article():
 
     try:
         validate_article(title, author, journal, year)
-        citation_id = create_article_citation(citation_type, title, author, journal, year)
+        citation_id = citation_repo.create_article_citation(
+            citation_type, title, author, journal, year
+        )
         validate_tags(tags)
         create_tags(citation_id, tags)
         return redirect("/")
@@ -102,7 +97,7 @@ def edit_citation(id):
     if tags is None:
         tags = []
 
-    citation = get_citation(id, tags)
+    citation = citation_repo.get_citation(id, tags)
     if citation is None:
         return redirect("/")
 
@@ -119,7 +114,7 @@ def citation_edition_book(id):
 
     try:
         validate_book(title, author, publisher, isbn, year)
-        update_book_citation(id, title, author, publisher, isbn, year)
+        citation_repo.update_book_citation(id, title, author, publisher, isbn, year)
         validate_tags(tags)
         update_tags(id, tags)
         return redirect("/")
@@ -137,7 +132,7 @@ def citation_edition_inproceedings(id):
 
     try:
         validate_inproceedings(title, author, booktitle, year)
-        update_inproceedings_citation(id, title, author, booktitle, year)
+        citation_repo.update_inproceedings_citation(id, title, author, booktitle, year)
         validate_tags(tags)
         update_tags(id, tags)
         return redirect("/")
@@ -155,7 +150,7 @@ def citation_edition_article(id):
 
     try:
         validate_article(title, author, journal, year)
-        update_article_citation(id, title, author, journal, year)
+        citation_repo.update_article_citation(id, title, author, journal, year)
         validate_tags(tags)
         update_tags(id, tags)
         return redirect("/")
@@ -167,7 +162,7 @@ def citation_edition_article(id):
 def delete_citations():
     for citation_id in request.form.getlist("citation_id"):
         try:
-            delete_citation(citation_id)
+            citation_repo.delete_citation(citation_id)
         except Exception as error:
             flash(str(error))
             return redirect("/")
@@ -176,8 +171,8 @@ def delete_citations():
 @app.route("/bibtex", methods=["GET","POST"])
 def get_bibtex():
     bibtex_results = []
-    for citation in get_all_citations():
-        bibtex = get_bibtex_citation(citation.id)
+    for citation in citation_repo.get_all_citations():
+        bibtex = citation_repo.get_bibtex_citation(citation.id)
         bibtex_results.append(bibtex)
 
     return render_template("bibtex.html", bibtex_results=bibtex_results)

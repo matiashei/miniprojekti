@@ -3,41 +3,22 @@ from config import db, app
 from entities.citation import Citation
 from repositories.tags_repository import get_citation_tags
 
-def get_citation(citation_id, tags):
-    sql = text("""
-        SELECT id, type, title, author, publisher, isbn, year, booktitle, journal 
-        FROM citations 
-        WHERE id = :id
-    """)
+class CitationRepository:
+    def __init__(self):
+        pass
 
-    result = db.session.execute(sql, {"id": citation_id})
-    citation = result.fetchone()
+    def get_citation(self, citation_id, tags):
+        sql = text("""
+            SELECT id, type, title, author, publisher, isbn, year, booktitle, journal 
+            FROM citations 
+            WHERE id = :id
+        """)
 
-    if citation:
-        return Citation(
-            citation_id=citation.id,
-            citation_type=citation.type,
-            title=citation.title,
-            author=citation.author,
-            publisher=citation.publisher,
-            isbn=citation.isbn,
-            year=citation.year,
-            booktitle=citation.booktitle,
-            journal=citation.journal,
-            tags=tags
-        )
-    else:
-        return None
+        result = db.session.execute(sql, {"id": citation_id})
+        citation = result.fetchone()
 
-def get_all_citations():
-    result = db.session.execute(text("SELECT * FROM citations"))
-    citations = result.fetchall()
-
-    citation_objects = []
-    for citation in citations:
-        tag_list = get_citation_tags(citation.id)
-        citation_objects.append(
-            Citation(
+        if citation:
+            return Citation(
                 citation_id=citation.id,
                 citation_type=citation.type,
                 title=citation.title,
@@ -47,139 +28,161 @@ def get_all_citations():
                 year=citation.year,
                 booktitle=citation.booktitle,
                 journal=citation.journal,
-                tags = tag_list
+                tags=tags
             )
-        )
+        else:
+            return None
 
-    return citation_objects
+    def get_all_citations(self):
+        result = db.session.execute(text("SELECT * FROM citations"))
+        citations = result.fetchall()
 
-def create_book_citation(citation_type, title, author, publisher, isbn, year):
-    with app.app_context():
-        sql = text("""
-            INSERT INTO citations (type, title, author, publisher, isbn, year)
-            VALUES (:citation_type, :title, :author, :publisher, :isbn, :year)
-            RETURNING id
-        """)
+        citation_objects = []
+        for citation in citations:
+            tag_list = get_citation_tags(citation.id)
+            citation_objects.append(
+                Citation(
+                    citation_id=citation.id,
+                    citation_type=citation.type,
+                    title=citation.title,
+                    author=citation.author,
+                    publisher=citation.publisher,
+                    isbn=citation.isbn,
+                    year=citation.year,
+                    booktitle=citation.booktitle,
+                    journal=citation.journal,
+                    tags = tag_list
+                )
+            )
 
-        result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
-                                          "author": author, "publisher": publisher, "isbn": isbn,
-                                          "year": year})
-        db.session.commit()
-        return result.fetchone()[0]
+        return citation_objects
 
-def create_inproceedings_citation(citation_type, title, author, booktitle, year):
-    with app.app_context():
-        citation_type = "inproceedings"
-        sql = text("""
-            INSERT INTO citations (type, title, author, booktitle, year)
-            VALUES (:citation_type, :title, :author, :booktitle, :year)
-            RETURNING id
-        """)
+    def create_book_citation(self, citation_type, title, author, publisher, isbn, year):
+        with app.app_context():
+            sql = text("""
+                INSERT INTO citations (type, title, author, publisher, isbn, year)
+                VALUES (:citation_type, :title, :author, :publisher, :isbn, :year)
+                RETURNING id
+            """)
 
-        result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
-                                          "author": author, "booktitle": booktitle, "year": year})
-        db.session.commit()
-        return result.fetchone()[0]
+            result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
+                                            "author": author, "publisher": publisher, "isbn": isbn,
+                                            "year": year})
+            db.session.commit()
+            return result.fetchone()[0]
 
-def create_article_citation(citation_type, title, author, journal, year):
-    with app.app_context():
-        sql = text("""
-            INSERT INTO citations (type, title, author, journal, year)
-            VALUES (:citation_type, :title, :author, :journal, :year)
-            RETURNING id
-        """)
+    def create_inproceedings_citation(self, citation_type, title, author, booktitle, year):
+        with app.app_context():
+            sql = text("""
+                INSERT INTO citations (type, title, author, booktitle, year)
+                VALUES (:citation_type, :title, :author, :booktitle, :year)
+                RETURNING id
+            """)
 
-        result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
-                                          "author": author, "journal": journal, "year": year})
-        db.session.commit()
-        return result.fetchone()[0]
+            result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
+                                            "author": author, "booktitle": booktitle, "year": year})
+            db.session.commit()
+            return result.fetchone()[0]
 
-def delete_citation(citation_id):
-    with app.app_context():
-        sql = text("DELETE FROM citations WHERE id = :id")
-        db.session.execute(sql, {"id": citation_id})
-        db.session.commit()
+    def create_article_citation(self, citation_type, title, author, journal, year):
+        with app.app_context():
+            sql = text("""
+                INSERT INTO citations (type, title, author, journal, year)
+                VALUES (:citation_type, :title, :author, :journal, :year)
+                RETURNING id
+            """)
 
-def update_book_citation(citation_id, title, author, publisher, isbn, year):
-    with app.app_context():
-        sql = text("""
-            UPDATE citations
-            SET title = :title,
-                author = :author,
-                publisher = :publisher,
-                isbn = :isbn,
-                year = :year
-            WHERE id = :id
-        """)
-        db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
-                                 "publisher": publisher, "isbn": isbn, "year": year})
-        db.session.commit()
+            result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
+                                            "author": author, "journal": journal, "year": year})
+            db.session.commit()
+            return result.fetchone()[0]
 
-def update_inproceedings_citation(citation_id, title, author, booktitle, year):
-    with app.app_context():
-        sql = text("""
-            UPDATE citations
-            SET title = :title,
-                author = :author,
-                booktitle = :booktitle,
-                year = :year
-            WHERE id = :id
-        """)
-        db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
-                                 "booktitle": booktitle, "year": year})
-        db.session.commit()
+    def delete_citation(self, citation_id):
+        with app.app_context():
+            sql = text("DELETE FROM citations WHERE id = :id")
+            db.session.execute(sql, {"id": citation_id})
+            db.session.commit()
 
-def update_article_citation(citation_id, title, author, journal, year):
-    with app.app_context():
-        sql = text("""
-            UPDATE citations
-            SET title = :title,
-                author = :author,
-                journal = :journal,
-                year = :year
-            WHERE id = :id
-        """)
-        db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
-                                 "journal": journal, "year": year})
-        db.session.commit()
+    def update_book_citation(self, citation_id, title, author, publisher, isbn, year):
+        with app.app_context():
+            sql = text("""
+                UPDATE citations
+                SET title = :title,
+                    author = :author,
+                    publisher = :publisher,
+                    isbn = :isbn,
+                    year = :year
+                WHERE id = :id
+            """)
+            db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
+                                    "publisher": publisher, "isbn": isbn, "year": year})
+            db.session.commit()
 
-def get_bibtex_citation(citation_id):
-    citation = get_citation(citation_id, tags=[])
-    if not citation:
+    def update_inproceedings_citation(self, citation_id, title, author, booktitle, year):
+        with app.app_context():
+            sql = text("""
+                UPDATE citations
+                SET title = :title,
+                    author = :author,
+                    booktitle = :booktitle,
+                    year = :year
+                WHERE id = :id
+            """)
+            db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
+                                    "booktitle": booktitle, "year": year})
+            db.session.commit()
+
+    def update_article_citation(self, citation_id, title, author, journal, year):
+        with app.app_context():
+            sql = text("""
+                UPDATE citations
+                SET title = :title,
+                    author = :author,
+                    journal = :journal,
+                    year = :year
+                WHERE id = :id
+            """)
+            db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
+                                    "journal": journal, "year": year})
+            db.session.commit()
+
+    def get_bibtex_citation(self, citation_id):
+        citation = self.get_citation(citation_id, tags=[])
+        if not citation:
+            return None
+
+        if citation.type == "book":
+            return self.get_book_bibtex(citation, citation_id)
+        if citation.type == "inproceedings":
+            return self.get_inproceedings_bibtex(citation, citation_id)
+        if citation.type == "article":
+            return self.get_article_bibtex(citation, citation_id)
         return None
 
-    if citation.type == "book":
-        return get_book_bibtex(citation, citation_id)
-    if citation.type == "inproceedings":
-        return get_inproceedings_bibtex(citation, citation_id)
-    if citation.type == "article":
-        return get_article_bibtex(citation, citation_id)
-    return None
+    def get_book_bibtex(self, citation, citation_id):
+        bibtex = f"@book{{book{citation_id},\n"
+        bibtex += f"    author = {{{citation.author}}},\n"
+        bibtex += f"    title = {{{citation.title}}},\n"
+        bibtex += f"    year = {{{citation.year}}},\n"
+        bibtex += f"    publisher = {{{citation.publisher}}},\n"
+        bibtex += f"    isbn = {{{citation.isbn}}}\n"
+        bibtex += "}"
+        return bibtex
 
-def get_book_bibtex(citation, citation_id):
-    bibtex = f"@book{{book{citation_id},\n"
-    bibtex += f"    author = {{{citation.author}}},\n"
-    bibtex += f"    title = {{{citation.title}}},\n"
-    bibtex += f"    year = {{{citation.year}}},\n"
-    bibtex += f"    publisher = {{{citation.publisher}}},\n"
-    bibtex += f"    isbn = {{{citation.isbn}}}\n"
-    bibtex += "}"
-    return bibtex
+    def get_inproceedings_bibtex(self, citation, citation_id):
+        bibtex = f"@inproceedings{{inproceedings{citation_id},\n"
+        bibtex += f"    author = {{{citation.author}}},\n"
+        bibtex += f"    title = {{{citation.title}}},\n"
+        bibtex += f"    year = {{{citation.year}}},\n"
+        bibtex += f"    booktitle = {{{citation.booktitle}}}\n"
+        bibtex += "}"
+        return bibtex
 
-def get_inproceedings_bibtex(citation, citation_id):
-    bibtex = f"@inproceedings{{inproceedings{citation_id},\n"
-    bibtex += f"    author = {{{citation.author}}},\n"
-    bibtex += f"    title = {{{citation.title}}},\n"
-    bibtex += f"    year = {{{citation.year}}},\n"
-    bibtex += f"    booktitle = {{{citation.booktitle}}}\n"
-    bibtex += "}"
-    return bibtex
-
-def get_article_bibtex(citation, citation_id):
-    bibtex = f"@article{{article{citation_id},\n"
-    bibtex += f"    author = {{{citation.author}}},\n"
-    bibtex += f"    title = {{{citation.title}}},\n"
-    bibtex += f"    journal = {{{citation.journal}}},\n"
-    bibtex += f"    year = {{{citation.year}}}\n"
-    bibtex += "}"
-    return bibtex
+    def get_article_bibtex(self, citation, citation_id):
+        bibtex = f"@article{{article{citation_id},\n"
+        bibtex += f"    author = {{{citation.author}}},\n"
+        bibtex += f"    title = {{{citation.title}}},\n"
+        bibtex += f"    journal = {{{citation.journal}}},\n"
+        bibtex += f"    year = {{{citation.year}}}\n"
+        bibtex += "}"
+        return bibtex
