@@ -25,7 +25,7 @@ Kokeilimme toisen sprintin retrossa ohjaajan suosituksesta [retrotool.oi](https:
 - Lisää parikoodausta! Olemme jo nyt tehneet jonkin verran asioita ryhmässä ja pienemmissä porukoissa, mikä on toiminut hyvin.
 - Luetaan arvosteluperusteet ja materiaali vielä tarkemmin ja tarpeen tullen useastikin, jottei tule unohduksia ja kaikki tiimiläiset ovat perillä kunkin sprintin vaatimuksista. Jatketaan näiden vaihtuvien vaatimusten kirjaamista myös backlogille muistiin.
 - Kommunikointi on pelannut hyvin ja esim. avun pyytäminen tuntuu helpolta.
-- Olemme onnistuneet jakamaan storyt selkeiksi taskeiksi.
+- Olimme onnistuneet jakamaan storyt selkeiksi taskeiksi.
 
 ### Kehitystoimenpiteet
 
@@ -33,3 +33,25 @@ Kokeilimme toisen sprintin retrossa ohjaajan suosituksesta [retrotool.oi](https:
 1. Ohjeiden tarkempi lukeminen: Kaikki katsovat läpi sprintin 3 arvosteluperusteet hyvissä ajoin
 2. Aikataulutuksen ja ymmärryksen parantaminen: Pidetään lyhyt juttuhetki joka perjantai ja maanantai (livenä tai Discordissa), jossa käydään storyjen ja taskien statukset läpi
 3. Työtavat: Enemmän parikoodausta mahdollisuuksien mukaan
+
+## Sprint 3 (3.12.2025)
+Edellisen sprintin kehitystoimenpiteistä kaksi päätyi mukavasti osaksi tiimin työskentelyä: otimme viikkoon mukaan kaksi lyhyttä status-palaveria, yhden perjantaina ja toisen maanantaina, jossa voitiin päivittää eri storyjen status tiimin kesken. Lisäksi tiimissä parikoodattiin kahdessa ryhmässä. Valitettavasti kolmas tavoite ei toteutunut hyvin ja nousikin uudelleen esiin myös tässä retrossa.
+
+Käytimme myös tällä kertaa Retrotoolia ja sen tarjoamaan Start, Stop, Continue -pohjaa.
+
+**Start**
+- Palaverit tuntuvat edelleen sekavilta eikä niissä aina tiedetä mistä pitäisi puhua, joten konkreettinen lista asioista esimerkiksi Slackiin tai Discordiin per tapaaminen voisi olla hyvä käytäntö. Tätä kokeiltiin heti retron jälkeen sprintin suunnittelupalaverissa.
+- Arvosteluperusteiden parempi lukeminen. Tämä oli kehityskohteena jo viime kerralla, mutta valitettavasti uudet vaatimukset arvosteluperusteissa onnistuivat edelleen yllättämään koko tiimin.
+- Uskalletaan jättää jokin user story kesken, jos se tarkoittaa että toinen story saadaan tehtyä laadukkaammin valmiiksi. Esim. parempi tehdä hyvät testit yhdelle storylle kuin huonot kaikille.
+
+**Stop**
+- Viimeisten branchien mergeämisen ja PR:ien läpikäymisten jättäminen deadline-päivän aamuun. Edellisessä sprintissä mergeäminen jäi hyvin viime tippaan, joten tästä lähtien voitaisiin varmistaa mainin ajantasaisuus viimeistään deadlinea edeltävänä iltana ja myös ylipäänsä mergetä feature branchejä useammin deviin.
+
+**Continue**
+- Pariohjelmointi ja featureiden työnjako parien/ryhmien välillä onnistui ja toimi hyvin. Jatketaan samaa rataa myös seuraavassa sprintissä.
+- Ehdimme tehdä pientä refaktorointia, joten yritetään sisällyttää myös seuraavaan sprinttiin sopivasti korjailua.
+
+### Kehitystoimenpiteet
+1. Palaverien strukturointi ja kirjalliset agendat
+2. Suunnitellaan paremmin milloin mergetään ja miten (ja tehdään se hyvissä ajoin)
+3. Tehdään parhaamme myös tässä sprintissä! :)
