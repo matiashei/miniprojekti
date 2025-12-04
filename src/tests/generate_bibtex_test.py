@@ -1,13 +1,12 @@
 import unittest
 
 from unittest.mock import Mock
-from repositories.citation_repository import (
-    get_book_bibtex,
-    get_inproceedings_bibtex,
-    get_article_bibtex
-)
+from repositories.citation_repository import CitationRepository
 
 class TestBibtex(unittest.TestCase):
+    def setUp(self):
+        self.citation_repo = CitationRepository()
+
     def test_get_book_bibtex(self):
         citation = Mock()
         citation.author = "Matti Meikalainen"
@@ -16,7 +15,7 @@ class TestBibtex(unittest.TestCase):
         citation.publisher = "Testijulkaisija"
         citation.isbn = "123-4567890123"
 
-        result = get_book_bibtex(citation, 1)
+        result = self.citation_repo.get_book_bibtex(citation, 1)
 
         expected = (
             "@book{book1,\n"
@@ -37,7 +36,7 @@ class TestBibtex(unittest.TestCase):
         citation.year = "2020"
         citation.booktitle = "Testiotsikko"
 
-        result = get_inproceedings_bibtex(citation, 1)
+        result = self.citation_repo.get_inproceedings_bibtex(citation, 1)
 
         expected = (
             "@inproceedings{inproceedings1,\n"
@@ -57,7 +56,7 @@ class TestBibtex(unittest.TestCase):
         citation.year = "2020"
         citation.journal = "Testilehti"
 
-        result = get_article_bibtex(citation, 1)
+        result = self.citation_repo.get_article_bibtex(citation, 1)
         expected = (
             "@article{article1,\n"
             "    author = {Matti Meikalainen},\n"
@@ -68,4 +67,3 @@ class TestBibtex(unittest.TestCase):
         )
 
         self.assertEqual(result, expected)
-
