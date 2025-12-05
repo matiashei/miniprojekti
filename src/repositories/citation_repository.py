@@ -1,13 +1,12 @@
 from sqlalchemy import text
 from config import db, app
 from entities.citation import Citation
-from repositories.tags_repository import get_citation_tags
 
 class CitationRepository:
-    def __init__(self):
-        pass
+    def __init__(self, tag_repository):
+        self.tag_repo = tag_repository
 
-    def get_citation(self, citation_id, tags):
+    def get_citation(self, citation_id):
         sql = text("""
             SELECT id, type, title, author, publisher, isbn, year, booktitle, journal 
             FROM citations 
@@ -18,6 +17,8 @@ class CitationRepository:
         citation = result.fetchone()
 
         if citation:
+            tags = self.tag_repo.get_citation_tags(citation.id)
+
             return Citation(
                 citation_id=citation.id,
                 citation_type=citation.type,
@@ -39,7 +40,7 @@ class CitationRepository:
 
         citation_objects = []
         for citation in citations:
-            tag_list = get_citation_tags(citation.id)
+            tag_list = self.tag_repo.get_citation_tags(citation.id)
             citation_objects.append(
                 Citation(
                     citation_id=citation.id,
@@ -147,7 +148,7 @@ class CitationRepository:
             db.session.commit()
 
     def get_bibtex_citation(self, citation_id):
-        citation = self.get_citation(citation_id, tags=[])
+        citation = self.get_citation(citation_id)
         if not citation:
             return None
 

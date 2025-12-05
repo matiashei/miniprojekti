@@ -1,10 +1,12 @@
 import requests
 from repositories.citation_repository import CitationRepository
+from repositories.tags_repository import TagRepository
 
 class AppLibrary:
     def __init__(self):
         self._base_url = "http://localhost:5001"
-        self.citation_repo = CitationRepository()
+        self.tag_repo = TagRepository()
+        self.citation_repo = CitationRepository(self.tag_repo)
 
     def reset_database(self):
         requests.post(f"{self._base_url}/reset_db")

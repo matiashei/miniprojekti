@@ -2,13 +2,15 @@ import unittest
 from unittest.mock import patch, ANY
 
 from repositories.citation_repository import CitationRepository
+from repositories.tags_repository import TagRepository
 
 class TestCreateCitation(unittest.TestCase):
     def setUp(self):
         self.book_citation = ("book", "Title", "Author", "Publisher", "1234", "2023")
         self.inproceedings_citation = ("inproceedings", "Title", "Author", "Booktitle", "2023")
         self.article_citation = ("article", "Title", "Author", "Journal", "2023")
-        self.citation_repo = CitationRepository()
+        self.tag_repo = TagRepository()
+        self.citation_repo = CitationRepository(self.tag_repo)
 
     @patch("repositories.citation_repository.db")
     def test_create_valid_book_citation(self, mock_db):

@@ -1,11 +1,7 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import CitationRepository
-from repositories.tags_repository import (
-    create_tags,
-    get_citation_tags,
-    update_tags
-)
+from repositories.tags_repository import TagRepository
 
 from config import app, test_env
 from util import (
@@ -16,7 +12,8 @@ from util import (
     validate_tags
 )
 
-citation_repo = CitationRepository()
+tag_repo = TagRepository()
+citation_repo = CitationRepository(tag_repo)
 
 @app.route("/")
 def index():
@@ -43,7 +40,7 @@ def citation_creation_book():
             citation_type, title, author, publisher, isbn, year
         )
         validate_tags(tags)
-        create_tags(citation_id, tags)
+        tag_repo.create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -64,7 +61,7 @@ def citation_creation_inproceedings():
             citation_type, title, author, booktitle, year
         )
         validate_tags(tags)
-        create_tags(citation_id, tags)
+        tag_repo.create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -85,7 +82,7 @@ def citation_creation_article():
             citation_type, title, author, journal, year
         )
         validate_tags(tags)
-        create_tags(citation_id, tags)
+        tag_repo.create_tags(citation_id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -93,11 +90,7 @@ def citation_creation_article():
 
 @app.route("/edit_citation/<int:id>")
 def edit_citation(id):
-    tags = get_citation_tags(id)
-    if tags is None:
-        tags = []
-
-    citation = citation_repo.get_citation(id, tags)
+    citation = citation_repo.get_citation(id)
     if citation is None:
         return redirect("/")
 
@@ -116,7 +109,7 @@ def citation_edition_book(id):
         validate_book(title, author, publisher, isbn, year)
         citation_repo.update_book_citation(id, title, author, publisher, isbn, year)
         validate_tags(tags)
-        update_tags(id, tags)
+        tag_repo.update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -134,7 +127,7 @@ def citation_edition_inproceedings(id):
         validate_inproceedings(title, author, booktitle, year)
         citation_repo.update_inproceedings_citation(id, title, author, booktitle, year)
         validate_tags(tags)
-        update_tags(id, tags)
+        tag_repo.update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -152,7 +145,7 @@ def citation_edition_article(id):
         validate_article(title, author, journal, year)
         citation_repo.update_article_citation(id, title, author, journal, year)
         validate_tags(tags)
-        update_tags(id, tags)
+        tag_repo.update_tags(id, tags)
         return redirect("/")
     except Exception as error:
         flash(str(error))
