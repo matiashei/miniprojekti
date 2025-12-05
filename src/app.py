@@ -15,7 +15,8 @@ from repositories.citation_repository import (
 from repositories.tags_repository import (
     create_tags,
     get_citation_tags,
-    update_tags
+    update_tags,
+    get_all_tags
 )
 
 from config import app, test_env
@@ -32,7 +33,9 @@ from util import (
 def index():
     # temporary function to fetch all citations
     book_citations = get_all_citations()
-    return render_template("index.html", book_citations=book_citations)
+    all_tags = get_all_tags()
+
+    return render_template("index.html", book_citations=book_citations, tags=all_tags)
 
 @app.route("/new_citation")
 def new():

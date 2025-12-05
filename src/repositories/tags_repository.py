@@ -37,3 +37,18 @@ def get_citation_tags(citation_id):
 
         result = db.session.execute(sql, {"citation_id": citation_id}).fetchall()
         return [row.tag for row in result] if result else None
+
+def get_all_tags():
+    with app.app_context():
+        sql = text("""
+            SELECT tag FROM tags
+            GROUP BY tag
+        """)
+
+    result = db.session.execute(sql).fetchall()
+
+    taglist = []
+    for tag in result:
+        taglist.append(tag[0])
+
+    return taglist

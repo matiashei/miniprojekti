@@ -12,6 +12,15 @@ citation app
   <a href="/new_citation"><button type="button">Create new citation</button></a>
 </div>
 
+{% if tags %}
+  <h3>Added tags:</h3>
+  {% for tag in tags %}
+  <li class="citation">
+    {{ tag }}
+  </li>
+  {% endfor %}
+  <hr />
+{% endif %}
 
 {% if book_citations %}
   <h3>Added citations:</h3>
@@ -89,7 +98,7 @@ citation app
 
 {% endif %}
 <div>
-  <a href="/bibtex">Get citations in BibTeX format</a>
+  <a href="/bibtex"><button type="button">Get citations in BibTeX format</button></a>
 </div>
 
 {% endblock %}
