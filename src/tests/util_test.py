@@ -1,5 +1,5 @@
 import unittest
-from util import UserInputError, validate_book, validate_inproceedings, validate_article, validate_tags, clean_tags
+from util import UserInputError, InputValidation
 
 VALID_BOOK = {
     "title": "Computer Organization and Architecture",
@@ -24,6 +24,8 @@ VALID_ARTICLE = {
 }
 
 class TestValidateUtil(unittest.TestCase):
+    def setUp(self):
+        self.validator = InputValidation()
 
     def check_invalid(self, validation_func, base_kwargs, override_kwargs):
         test_kwargs = base_kwargs.copy()
@@ -32,63 +34,84 @@ class TestValidateUtil(unittest.TestCase):
             validation_func(**test_kwargs)
 
     def test_valid_item(self):
-        validate_book(**VALID_BOOK)
-        validate_inproceedings(**VALID_INPROCEEDINGS)
-        validate_article(**VALID_ARTICLE)
+        self.validator.validate_book(**VALID_BOOK)
+        self.validator.validate_inproceedings(**VALID_INPROCEEDINGS)
+        self.validator.validate_article(**VALID_ARTICLE)
 
     def test_empty_title(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"title": ""})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"title": ""})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"title": ""})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"title": ""})
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"title": ""}
+        )
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"title": ""})
 
     def test_too_long_title(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"title": "x" * 200})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"title": "x" * 200})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"title": "x" * 200})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"title": "x" * 200})
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"title": "x" * 200}
+        )
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"title": "x" * 200})
 
     def test_empty_author(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"author": ""})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"author": ""})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"author": ""})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"author": ""})
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"author": ""}
+        )
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"author": ""})
 
     def test_negative_year(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"year": "-5"})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"year": "-5"})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"year": "-5"})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"year": "-5"})
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"year": "-5"}
+        )
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"year": "-5"})
 
     def test_too_high_year(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"year": "3000"})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"year": "3000"})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"year": "3000"})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"year": "3000"})
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"year": "3000"}
+        )
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"year": "3000"})
 
     def test_invalid_publisher(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"publisher": "   "})
-        self.check_invalid(validate_book, VALID_BOOK, {"publisher": ""})
-        self.check_invalid(validate_book, VALID_BOOK, {"publisher": "x" * 100})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"publisher": "   "})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"publisher": ""})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"publisher": "x" * 100})
 
     def test_invalid_isbn(self):
-        self.check_invalid(validate_book, VALID_BOOK, {"isbn": ""})
-        self.check_invalid(validate_book, VALID_BOOK, {"isbn": "   "})
-        self.check_invalid(validate_book, VALID_BOOK, {"isbn": "x" * 50})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"isbn": ""})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"isbn": "   "})
+        self.check_invalid(self.validator.validate_book, VALID_BOOK, {"isbn": "x" * 50})
 
     def test_invalid_booktitle(self):
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": ""})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": "   "})
-        self.check_invalid(validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": "x" * 100})
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": ""}
+        )
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": "   "}
+        )
+        self.check_invalid(
+            self.validator.validate_inproceedings, VALID_INPROCEEDINGS, {"booktitle": "x" * 100}
+        )
 
     def test_invalid_journal(self):
-        self.check_invalid(validate_article, VALID_ARTICLE, {"journal": ""})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"journal": "   "})
-        self.check_invalid(validate_article, VALID_ARTICLE, {"journal": "x" * 100})
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"journal": ""})
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"journal": "   "})
+        self.check_invalid(self.validator.validate_article, VALID_ARTICLE, {"journal": "x" * 100})
+
 
 class TestValidateTags(unittest.TestCase):
+    def setUp(self):
+        self.validator = InputValidation()
 
     def test_tags_too_long(self):
         with self.assertRaises(UserInputError):
-            validate_tags(["tag" * 21])
+            self.validator.validate_tags(["tag" * 21])
 
 
 class TestCleanTags(unittest.TestCase):
+    def setUp(self):
+        self.validator = InputValidation()
 
     def test_clean_tags(self):
-        self.assertEqual(clean_tags(" tag ,  tag2 ,tag3 "), ["tag", "tag2", "tag3"])
+        self.assertEqual(self.validator.clean_tags(" tag ,  tag2 ,tag3 "), ["tag", "tag2", "tag3"])

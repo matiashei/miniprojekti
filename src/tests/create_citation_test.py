@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import patch, ANY
 
 from repositories.citation_repository import CitationRepository
-from repositories.tags_repository import TagRepository
 
 class TestCreateCitation(unittest.TestCase):
     def setUp(self):
