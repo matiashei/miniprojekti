@@ -2,13 +2,11 @@ import unittest
 
 from unittest.mock import patch
 from repositories.citation_repository import CitationRepository
-from repositories.tags_repository import TagRepository
 
 class TestDeleteCitation(unittest.TestCase):
     def setUp(self):
         self.citation_id = [1, 2]
-        self.tag_repo = TagRepository()
-        self.citation_repo = CitationRepository(self.tag_repo)
+        self.citation_repo = CitationRepository()
 
     # Using patch to mock the database so we don't touch the real db
     @patch("repositories.citation_repository.db")

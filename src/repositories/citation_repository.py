@@ -1,10 +1,11 @@
 from sqlalchemy import text
 from config import db, app
 from entities.citation import Citation
+from repositories.tags_repository import tag_repo
 
 class CitationRepository:
-    def __init__(self, tag_repository):
-        self.tag_repo = tag_repository
+    def __init__(self):
+        self.tag_repo = tag_repo
 
     def get_citation(self, citation_id):
         sql = text("""
@@ -187,3 +188,6 @@ class CitationRepository:
         bibtex += f"    year = {{{citation.year}}}\n"
         bibtex += "}"
         return bibtex
+
+
+citation_repo = CitationRepository()

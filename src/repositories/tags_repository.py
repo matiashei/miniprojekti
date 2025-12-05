@@ -41,3 +41,6 @@ class TagRepository:
 
             result = db.session.execute(sql, {"citation_id": citation_id}).fetchall()
             return [row.tag for row in result] if result else []
+
+
+tag_repo = TagRepository()

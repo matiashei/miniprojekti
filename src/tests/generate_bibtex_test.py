@@ -2,12 +2,10 @@ import unittest
 
 from unittest.mock import Mock
 from repositories.citation_repository import CitationRepository
-from repositories.tags_repository import TagRepository
 
 class TestBibtex(unittest.TestCase):
     def setUp(self):
-        self.tag_repo = TagRepository()
-        self.citation_repo = CitationRepository(self.tag_repo)
+        self.citation_repo = CitationRepository()
 
     def test_get_book_bibtex(self):
         citation = Mock()

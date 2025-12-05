@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import CitationRepository
-from repositories.tags_repository import TagRepository
+from repositories.citation_repository import citation_repo
+from repositories.tags_repository import tag_repo
 
 from config import app, test_env
 from util import (
@@ -11,9 +11,6 @@ from util import (
     clean_tags,
     validate_tags
 )
-
-tag_repo = TagRepository()
-citation_repo = CitationRepository(tag_repo)
 
 @app.route("/")
 def index():

@@ -9,8 +9,7 @@ class TestCreateCitation(unittest.TestCase):
         self.book_citation = ("book", "Title", "Author", "Publisher", "1234", "2023")
         self.inproceedings_citation = ("inproceedings", "Title", "Author", "Booktitle", "2023")
         self.article_citation = ("article", "Title", "Author", "Journal", "2023")
-        self.tag_repo = TagRepository()
-        self.citation_repo = CitationRepository(self.tag_repo)
+        self.citation_repo = CitationRepository()
 
     @patch("repositories.citation_repository.db")
     def test_create_valid_book_citation(self, mock_db):
