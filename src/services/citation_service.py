@@ -40,7 +40,7 @@ class CitationService:
                 citation_type, title, author, journal, year
             )
         else:
-            raise ValueError("Invalid citation type '{citation_type}'")
+            raise ValueError(f"Invalid citation type '{citation_type}'")
 
         tags = self.clean_tags(form_data.get("tags"))
         self.validator.validate_tags(tags)

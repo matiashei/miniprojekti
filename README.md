@@ -29,7 +29,7 @@ $ poetry run python src/index.py
 ```
 
 ### Definition of Done
-* A new feature should fullfill the acceptance criteria for it. The acceptance criteria is defined in the Product Backlog (link above) for each user story chosen for the sprint.
+* A new feature should fulfill the acceptance criteria for it. The acceptance criteria is defined in the Product Backlog (link above) for each user story chosen for the sprint.
 * The implemented code is tested with automated robot tests and unit tests:
   * Robot Framework tests are used to verify at least some of the user stories.
   * Unittests are used to verify at least some features.
