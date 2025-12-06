@@ -1,10 +1,9 @@
 from sqlalchemy import text
 from config import db, app
 from entities.citation import Citation
-from repositories.tags_repository import tag_repo
 
 class CitationRepository:
-    def __init__(self):
+    def __init__(self, tag_repo):
         self.tag_repo = tag_repo
 
     def get_citation(self, citation_id):
@@ -147,47 +146,3 @@ class CitationRepository:
             db.session.execute(sql, {"id": citation_id, "title": title, "author": author,
                                     "journal": journal, "year": year})
             db.session.commit()
-
-    def get_bibtex_citation(self, citation_id):
-        citation = self.get_citation(citation_id)
-        if not citation:
-            return None
-
-        if citation.type == "book":
-            return self.get_book_bibtex(citation, citation_id)
-        if citation.type == "inproceedings":
-            return self.get_inproceedings_bibtex(citation, citation_id)
-        if citation.type == "article":
-            return self.get_article_bibtex(citation, citation_id)
-        return None
-
-    def get_book_bibtex(self, citation, citation_id):
-        bibtex = f"@book{{book{citation_id},\n"
-        bibtex += f"    author = {{{citation.author}}},\n"
-        bibtex += f"    title = {{{citation.title}}},\n"
-        bibtex += f"    year = {{{citation.year}}},\n"
-        bibtex += f"    publisher = {{{citation.publisher}}},\n"
-        bibtex += f"    isbn = {{{citation.isbn}}}\n"
-        bibtex += "}"
-        return bibtex
-
-    def get_inproceedings_bibtex(self, citation, citation_id):
-        bibtex = f"@inproceedings{{inproceedings{citation_id},\n"
-        bibtex += f"    author = {{{citation.author}}},\n"
-        bibtex += f"    title = {{{citation.title}}},\n"
-        bibtex += f"    year = {{{citation.year}}},\n"
-        bibtex += f"    booktitle = {{{citation.booktitle}}}\n"
-        bibtex += "}"
-        return bibtex
-
-    def get_article_bibtex(self, citation, citation_id):
-        bibtex = f"@article{{article{citation_id},\n"
-        bibtex += f"    author = {{{citation.author}}},\n"
-        bibtex += f"    title = {{{citation.title}}},\n"
-        bibtex += f"    journal = {{{citation.journal}}},\n"
-        bibtex += f"    year = {{{citation.year}}}\n"
-        bibtex += "}"
-        return bibtex
-
-
-citation_repo = CitationRepository()
