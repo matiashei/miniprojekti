@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, ANY
+from unittest.mock import Mock, patch, ANY
 
 from repositories.citation_repository import CitationRepository
 
@@ -8,7 +8,8 @@ class TestCreateCitation(unittest.TestCase):
         self.book_citation = ("book", "Title", "Author", "Publisher", "1234", "2023")
         self.inproceedings_citation = ("inproceedings", "Title", "Author", "Booktitle", "2023")
         self.article_citation = ("article", "Title", "Author", "Journal", "2023")
-        self.citation_repo = CitationRepository()
+        self.tag_repo = Mock()
+        self.citation_repo = CitationRepository(self.tag_repo)
 
     @patch("repositories.citation_repository.db")
     def test_create_valid_book_citation(self, mock_db):

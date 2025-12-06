@@ -2,11 +2,19 @@ from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from config import app, test_env
 
-from repositories.citation_repository import citation_repo
-from repositories.tags_repository import tag_repo
+from repositories.citation_repository import CitationRepository
+from repositories.tags_repository import TagRepository
 
-from services.citation_service import citation_service
-from services.validator_service import validator
+from services.citation_service import CitationService
+from services.bibtex_service import BibtexService
+from services.validator_service import InputValidation
+
+
+tag_repo = TagRepository()
+citation_repo = CitationRepository(tag_repo)
+citation_service = CitationService()
+bibtex_service = BibtexService(citation_repo)
+validator = InputValidation()
 
 
 @app.route("/")
@@ -159,7 +167,7 @@ def delete_citations():
 def get_bibtex():
     bibtex_results = []
     for citation in citation_repo.get_all_citations():
-        bibtex = citation_repo.get_bibtex_citation(citation.id)
+        bibtex = bibtex_service.get_bibtex_citation(citation.id)
         bibtex_results.append(bibtex)
 
     return render_template("bibtex.html", bibtex_results=bibtex_results)

@@ -13,6 +13,3 @@ class CitationService:
             if cleaned_tag:
                 cleaned_tags.append(cleaned_tag.lower())
         return list(dict.fromkeys(cleaned_tags))
-
-
-citation_service = CitationService()

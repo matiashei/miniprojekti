@@ -1,11 +1,12 @@
 import unittest
 
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 from repositories.citation_repository import CitationRepository
 
 class TestupdateCitation(unittest.TestCase):
     def setUp(self):
-        self.citation_repo = CitationRepository()
+        self.tag_repo = Mock()
+        self.citation_repo = CitationRepository(self.tag_repo)
 
     @patch("repositories.citation_repository.db")
     def test_update_one_book_citation(self, mock_db):

@@ -72,6 +72,3 @@ class InputValidation:
         for tag in tags:
             if len(tag) > 20:
                 raise UserInputError("Each tag must be less than 20 characters")
-
-
-validator = InputValidation()

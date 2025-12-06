@@ -6,7 +6,7 @@ class AppLibrary:
     def __init__(self):
         self._base_url = "http://localhost:5001"
         self.tag_repo = TagRepository()
-        self.citation_repo = CitationRepository()
+        self.citation_repo = CitationRepository(self.tag_repo)
 
     def reset_database(self):
         requests.post(f"{self._base_url}/reset_db")
