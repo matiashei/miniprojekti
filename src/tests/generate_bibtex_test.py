@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import Mock
 from services.bibtex_service import BibtexService
 
-class TestBibtex(unittest.TestCase):
+class TestBibtexService(unittest.TestCase):
     def setUp(self):
         citation_repo = Mock()
         self.bibtex_service = BibtexService(citation_repo)

@@ -23,7 +23,7 @@ VALID_ARTICLE = {
     "year": "3"
 }
 
-class TestValidateUtil(unittest.TestCase):
+class TestValidatorService(unittest.TestCase):
     def setUp(self):
         self.validator = InputValidation()
 

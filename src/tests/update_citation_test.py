@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import Mock, patch
 from repositories.citation_repository import CitationRepository
 
-class TestupdateCitation(unittest.TestCase):
+class TestUpdateCitation(unittest.TestCase):
     def setUp(self):
         self.tag_repo = Mock()
         self.citation_repo = CitationRepository(self.tag_repo)

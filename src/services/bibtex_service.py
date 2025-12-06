@@ -1,3 +1,6 @@
+from entities.citation_types import CitationTypes
+
+
 class BibtexService:
     def __init__(self, citation_repo):
         self.citation_repo = citation_repo
@@ -7,11 +10,11 @@ class BibtexService:
         if not citation:
             return None
 
-        if citation.type == "book":
+        if citation.type == CitationTypes.BOOK.value:
             return self.get_book_bibtex(citation, citation_id)
-        if citation.type == "inproceedings":
+        if citation.type == CitationTypes.INPROCEEDINGS.value:
             return self.get_inproceedings_bibtex(citation, citation_id)
-        if citation.type == "article":
+        if citation.type == CitationTypes.ARTICLE.value:
             return self.get_article_bibtex(citation, citation_id)
         return None
 

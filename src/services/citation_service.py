@@ -1,9 +1,5 @@
-from enum import Enum
+from entities.citation_types import CitationTypes
 
-class CitationType(Enum):
-    BOOK = "book"
-    ARTICLE = "article"
-    INPROCEEDINGS = "inproceedings"
 
 class CitationService:
     def __init__(self, citation_repo, tag_repo, validator):
@@ -12,7 +8,7 @@ class CitationService:
         self.validator = validator
 
     def create_citation(self, citation_type, form_data):
-        if citation_type == CitationType.BOOK.value:
+        if citation_type == CitationTypes.BOOK.value:
             title = form_data.get("title")
             author = form_data.get("author")
             publisher = form_data.get("publisher")
@@ -23,7 +19,7 @@ class CitationService:
             citation_id = self.citation_repo.create_book_citation(
                 citation_type, title, author, publisher, isbn, year
             )
-        elif citation_type == CitationType.INPROCEEDINGS.value:
+        elif citation_type == CitationTypes.INPROCEEDINGS.value:
             title = form_data.get("title")
             author = form_data.get("author")
             booktitle = form_data.get("booktitle")
@@ -33,7 +29,7 @@ class CitationService:
             citation_id = self.citation_repo.create_inproceedings_citation(
                 citation_type, title, author, booktitle, year
             )
-        elif citation_type == CitationType.ARTICLE.value:
+        elif citation_type == CitationTypes.ARTICLE.value:
             title = form_data.get("title")
             author = form_data.get("author")
             journal = form_data.get("journal")
@@ -52,7 +48,7 @@ class CitationService:
         return citation_id
 
     def update_citation(self, citation_id, citation_type, form_data):
-        if citation_type == CitationType.BOOK.value:
+        if citation_type == CitationTypes.BOOK.value:
             title = form_data.get("title")
             author = form_data.get("author")
             publisher = form_data.get("publisher")
@@ -63,7 +59,7 @@ class CitationService:
             self.citation_repo.update_book_citation(
                 citation_id, title, author, publisher, isbn, year
             )
-        elif citation_type == CitationType.INPROCEEDINGS.value:
+        elif citation_type == CitationTypes.INPROCEEDINGS.value:
             title = form_data.get("title")
             author = form_data.get("author")
             booktitle = form_data.get("booktitle")
@@ -73,7 +69,7 @@ class CitationService:
             self.citation_repo.update_inproceedings_citation(
                 citation_id, title, author, booktitle, year
             )
-        elif citation_type == CitationType.ARTICLE.value:
+        elif citation_type == CitationTypes.ARTICLE.value:
             title = form_data.get("title")
             author = form_data.get("author")
             journal = form_data.get("journal")
@@ -84,7 +80,7 @@ class CitationService:
                 citation_id, title, author, journal, year
             )
 
-        tags = self.clean_tags(form_data.get("tags", ""))
+        tags = self.clean_tags(form_data.get("tags"))
         self.validator.validate_tags(tags)
         self.tag_repo.update_tags(citation_id, tags)
 

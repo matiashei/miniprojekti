@@ -3,7 +3,7 @@ from unittest.mock import Mock
 from services.citation_service import CitationService
 
 
-class TestCleanTags(unittest.TestCase):
+class TestCitationService(unittest.TestCase):
     def setUp(self):
         self.citation_repo = Mock()
         self.tag_repo = Mock()

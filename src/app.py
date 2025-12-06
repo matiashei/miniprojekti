@@ -2,6 +2,8 @@ from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from config import app, test_env
 
+from entities.citation_types import CitationTypes
+
 from repositories.citation_repository import CitationRepository
 from repositories.tags_repository import TagRepository
 
@@ -16,7 +18,6 @@ validator = InputValidation()
 citation_service = CitationService(citation_repo, tag_repo, validator)
 bibtex_service = BibtexService(citation_repo)
 
-
 @app.route("/")
 def index():
     citations = citation_repo.get_all_citations()
@@ -29,7 +30,7 @@ def new():
 @app.route("/create_book_citation", methods=["POST"])
 def citation_creation_book():
     try:
-        citation_service.create_citation("book", request.form)
+        citation_service.create_citation(CitationTypes.BOOK.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -38,7 +39,7 @@ def citation_creation_book():
 @app.route("/create_inproceedings_citation", methods=["POST"])
 def citation_creation_inproceedings():
     try:
-        citation_service.create_citation("inproceedings", request.form)
+        citation_service.create_citation(CitationTypes.INPROCEEDINGS.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -47,7 +48,7 @@ def citation_creation_inproceedings():
 @app.route("/create_article_citation", methods=["POST"])
 def citation_creation_article():
     try:
-        citation_service.create_citation("article", request.form)
+        citation_service.create_citation(CitationTypes.ARTICLE.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -64,7 +65,7 @@ def edit_citation(id):
 @app.route("/edit_book_citation/<int:id>", methods=["POST"])
 def citation_edition_book(id):
     try:
-        citation_service.update_citation(id, "book", request.form)
+        citation_service.update_citation(id, CitationTypes.BOOK.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -73,7 +74,7 @@ def citation_edition_book(id):
 @app.route("/edit_inproceedings_citation/<int:id>", methods=["POST"])
 def citation_edition_inproceedings(id):
     try:
-        citation_service.update_citation(id, "inproceedings", request.form)
+        citation_service.update_citation(id, CitationTypes.INPROCEEDINGS.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -82,7 +83,7 @@ def citation_edition_inproceedings(id):
 @app.route("/edit_article_citation/<int:id>", methods=["POST"])
 def citation_edition_article(id):
     try:
-        citation_service.update_citation(id, "article", request.form)
+        citation_service.update_citation(id, CitationTypes.ARTICLE.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
