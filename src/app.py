@@ -12,9 +12,9 @@ from services.validator_service import InputValidation
 
 tag_repo = TagRepository()
 citation_repo = CitationRepository(tag_repo)
-citation_service = CitationService()
-bibtex_service = BibtexService(citation_repo)
 validator = InputValidation()
+citation_service = CitationService(citation_repo, tag_repo, validator)
+bibtex_service = BibtexService(citation_repo)
 
 
 @app.route("/")
@@ -28,21 +28,8 @@ def new():
 
 @app.route("/create_book_citation", methods=["POST"])
 def citation_creation_book():
-    title = request.form.get("title")
-    author = request.form.get("author")
-    publisher = request.form.get("publisher")
-    isbn = request.form.get("isbn")
-    year = request.form.get("year")
-    citation_type = "book"
-    tags = citation_service.clean_tags(request.form.get("tags"))
-
     try:
-        validator.validate_book(title, author, publisher, isbn, year)
-        citation_id = citation_repo.create_book_citation(
-            citation_type, title, author, publisher, isbn, year
-        )
-        validator.validate_tags(tags)
-        tag_repo.create_tags(citation_id, tags)
+        citation_service.create_citation("book", request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -50,20 +37,8 @@ def citation_creation_book():
 
 @app.route("/create_inproceedings_citation", methods=["POST"])
 def citation_creation_inproceedings():
-    title = request.form.get("title")
-    author = request.form.get("author")
-    booktitle = request.form.get("booktitle")
-    year = request.form.get("year")
-    citation_type = "inproceedings"
-    tags = citation_service.clean_tags(request.form.get("tags"))
-
     try:
-        validator.validate_inproceedings(title, author, booktitle, year)
-        citation_id = citation_repo.create_inproceedings_citation(
-            citation_type, title, author, booktitle, year
-        )
-        validator.validate_tags(tags)
-        tag_repo.create_tags(citation_id, tags)
+        citation_service.create_citation("inproceedings", request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -71,20 +46,8 @@ def citation_creation_inproceedings():
 
 @app.route("/create_article_citation", methods=["POST"])
 def citation_creation_article():
-    title = request.form.get("title")
-    author = request.form.get("author")
-    journal = request.form.get("journal")
-    year = request.form.get("year")
-    citation_type = "article"
-    tags = citation_service.clean_tags(request.form.get("tags"))
-
     try:
-        validator.validate_article(title, author, journal, year)
-        citation_id = citation_repo.create_article_citation(
-            citation_type, title, author, journal, year
-        )
-        validator.validate_tags(tags)
-        tag_repo.create_tags(citation_id, tags)
+        citation_service.create_citation("article", request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -100,18 +63,8 @@ def edit_citation(id):
 
 @app.route("/edit_book_citation/<int:id>", methods=["POST"])
 def citation_edition_book(id):
-    title = request.form.get("title")
-    author = request.form.get("author")
-    publisher = request.form.get("publisher")
-    isbn = request.form.get("isbn")
-    year = request.form.get("year")
-    tags = citation_service.clean_tags(request.form.get("tags"))
-
     try:
-        validator.validate_book(title, author, publisher, isbn, year)
-        citation_repo.update_book_citation(id, title, author, publisher, isbn, year)
-        validator.validate_tags(tags)
-        tag_repo.update_tags(id, tags)
+        citation_service.update_citation(id, "book", request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -119,17 +72,8 @@ def citation_edition_book(id):
 
 @app.route("/edit_inproceedings_citation/<int:id>", methods=["POST"])
 def citation_edition_inproceedings(id):
-    title = request.form.get("title")
-    author = request.form.get("author")
-    booktitle = request.form.get("booktitle")
-    year = request.form.get("year")
-    tags = citation_service.clean_tags(request.form.get("tags"))
-
     try:
-        validator.validate_inproceedings(title, author, booktitle, year)
-        citation_repo.update_inproceedings_citation(id, title, author, booktitle, year)
-        validator.validate_tags(tags)
-        tag_repo.update_tags(id, tags)
+        citation_service.update_citation(id, "inproceedings", request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -137,17 +81,8 @@ def citation_edition_inproceedings(id):
 
 @app.route("/edit_article_citation/<int:id>", methods=["POST"])
 def citation_edition_article(id):
-    title = request.form.get("title")
-    author = request.form.get("author")
-    journal = request.form.get("journal")
-    year = request.form.get("year")
-    tags = citation_service.clean_tags(request.form.get("tags"))
-
     try:
-        validator.validate_article(title, author, journal, year)
-        citation_repo.update_article_citation(id, title, author, journal, year)
-        validator.validate_tags(tags)
-        tag_repo.update_tags(id, tags)
+        citation_service.update_citation(id, "article", request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -155,12 +90,11 @@ def citation_edition_article(id):
 
 @app.route("/delete_citations", methods=["POST"])
 def delete_citations():
-    for citation_id in request.form.getlist("citation_id"):
-        try:
-            citation_repo.delete_citation(citation_id)
-        except Exception as error:
-            flash(str(error))
-            return redirect("/")
+    try:
+        citation_service.delete_citation(request.form)
+    except Exception as error:
+        flash(str(error))
+        return redirect("/")
     return redirect("/")
 
 @app.route("/bibtex", methods=["GET","POST"])
