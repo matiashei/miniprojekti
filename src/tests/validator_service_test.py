@@ -1,5 +1,5 @@
 import unittest
-from util import UserInputError, InputValidation
+from services.validator_service import UserInputError, InputValidation
 
 VALID_BOOK = {
     "title": "Computer Organization and Architecture",
@@ -107,11 +107,3 @@ class TestValidateTags(unittest.TestCase):
     def test_tags_too_long(self):
         with self.assertRaises(UserInputError):
             self.validator.validate_tags(["tag" * 21])
-
-
-class TestCleanTags(unittest.TestCase):
-    def setUp(self):
-        self.validator = InputValidation()
-
-    def test_clean_tags(self):
-        self.assertEqual(self.validator.clean_tags(" tag ,  tag2 ,tag3 "), ["tag", "tag2", "tag3"])

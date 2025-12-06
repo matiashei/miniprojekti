@@ -1,9 +1,12 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
+from config import app, test_env
+
 from repositories.citation_repository import citation_repo
 from repositories.tags_repository import tag_repo
-from config import app, test_env
-from util import validator
+
+from services.citation_service import citation_service
+from services.validator_service import validator
 
 
 @app.route("/")
@@ -23,7 +26,7 @@ def citation_creation_book():
     isbn = request.form.get("isbn")
     year = request.form.get("year")
     citation_type = "book"
-    tags = validator.clean_tags(request.form.get("tags"))
+    tags = citation_service.clean_tags(request.form.get("tags"))
 
     try:
         validator.validate_book(title, author, publisher, isbn, year)
@@ -44,7 +47,7 @@ def citation_creation_inproceedings():
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
     citation_type = "inproceedings"
-    tags = validator.clean_tags(request.form.get("tags"))
+    tags = citation_service.clean_tags(request.form.get("tags"))
 
     try:
         validator.validate_inproceedings(title, author, booktitle, year)
@@ -65,7 +68,7 @@ def citation_creation_article():
     journal = request.form.get("journal")
     year = request.form.get("year")
     citation_type = "article"
-    tags = validator.clean_tags(request.form.get("tags"))
+    tags = citation_service.clean_tags(request.form.get("tags"))
 
     try:
         validator.validate_article(title, author, journal, year)
@@ -94,7 +97,7 @@ def citation_edition_book(id):
     publisher = request.form.get("publisher")
     isbn = request.form.get("isbn")
     year = request.form.get("year")
-    tags = validator.clean_tags(request.form.get("tags"))
+    tags = citation_service.clean_tags(request.form.get("tags"))
 
     try:
         validator.validate_book(title, author, publisher, isbn, year)
@@ -112,7 +115,7 @@ def citation_edition_inproceedings(id):
     author = request.form.get("author")
     booktitle = request.form.get("booktitle")
     year = request.form.get("year")
-    tags = validator.clean_tags(request.form.get("tags"))
+    tags = citation_service.clean_tags(request.form.get("tags"))
 
     try:
         validator.validate_inproceedings(title, author, booktitle, year)
@@ -130,7 +133,7 @@ def citation_edition_article(id):
     author = request.form.get("author")
     journal = request.form.get("journal")
     year = request.form.get("year")
-    tags = validator.clean_tags(request.form.get("tags"))
+    tags = citation_service.clean_tags(request.form.get("tags"))
 
     try:
         validator.validate_article(title, author, journal, year)
