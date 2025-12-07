@@ -25,5 +25,6 @@ indent-after-paren=4
 [DESIGN]
 
 max-statements=50
-max-args=6
+max-args=8
+max-positional-arguments=8
 

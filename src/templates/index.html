@@ -13,10 +13,10 @@ citation app
 </div>
 
 
-{% if book_citations %}
+{% if citations %}
   <h3>Added citations:</h3>
   <form action="/delete_citations" method="post" class="delete_citations">
-    {% for citation in book_citations %}
+    {% for citation in citations %}
 
     {% if citation.type == 'book' %}
       <li class="citation">

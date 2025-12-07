@@ -1,38 +1,27 @@
 from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
-from repositories.citation_repository import (
-    get_all_citations,
-    create_book_citation,
-    create_inproceedings_citation,
-    create_article_citation,
-    delete_citation,
-    update_book_citation,
-    update_inproceedings_citation,
-    update_article_citation,
-    get_citation,
-    get_bibtex_citation
-)
-from repositories.tags_repository import (
-    create_tags,
-    get_citation_tags,
-    update_tags
-)
-
 from config import app, test_env
-from util import (
-    validate_book,
-    validate_inproceedings,
-    validate_article,
-    clean_tags,
-    validate_tags
-)
 
+from entities.citation_types import CitationTypes
+
+from repositories.citation_repository import CitationRepository
+from repositories.tags_repository import TagRepository
+
+from services.citation_service import CitationService
+from services.bibtex_service import BibtexService
+from services.validator_service import InputValidation
+
+
+tag_repo = TagRepository()
+citation_repo = CitationRepository(tag_repo)
+validator = InputValidation()
+citation_service = CitationService(citation_repo, tag_repo, validator)
+bibtex_service = BibtexService(citation_repo)
 
 @app.route("/")
 def index():
-    # temporary function to fetch all citations
-    book_citations = get_all_citations()
-    return render_template("index.html", book_citations=book_citations)
+    citations = citation_repo.get_all_citations()
+    return render_template("index.html", citations=citations)
 
 @app.route("/new_citation")
 def new():
@@ -40,19 +29,8 @@ def new():
 
 @app.route("/create_book_citation", methods=["POST"])
 def citation_creation_book():
-    title = request.form.get("title")
-    author = request.form.get("author")
-    publisher = request.form.get("publisher")
-    isbn = request.form.get("isbn")
-    year = request.form.get("year")
-    citation_type = "book"
-    tags = clean_tags(request.form.get("tags"))
-
     try:
-        validate_book(title, author, publisher, isbn, year)
-        citation_id = create_book_citation(citation_type, title, author, publisher, isbn, year)
-        validate_tags(tags)
-        create_tags(citation_id, tags)
+        citation_service.create_citation(CitationTypes.BOOK.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -60,18 +38,8 @@ def citation_creation_book():
 
 @app.route("/create_inproceedings_citation", methods=["POST"])
 def citation_creation_inproceedings():
-    title = request.form.get("title")
-    author = request.form.get("author")
-    booktitle = request.form.get("booktitle")
-    year = request.form.get("year")
-    citation_type = "inproceedings"
-    tags = clean_tags(request.form.get("tags"))
-
     try:
-        validate_inproceedings(title, author, booktitle, year)
-        citation_id = create_inproceedings_citation(citation_type, title, author, booktitle, year)
-        validate_tags(tags)
-        create_tags(citation_id, tags)
+        citation_service.create_citation(CitationTypes.INPROCEEDINGS.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -79,18 +47,8 @@ def citation_creation_inproceedings():
 
 @app.route("/create_article_citation", methods=["POST"])
 def citation_creation_article():
-    title = request.form.get("title")
-    author = request.form.get("author")
-    journal = request.form.get("journal")
-    year = request.form.get("year")
-    citation_type = "article"
-    tags = clean_tags(request.form.get("tags"))
-
     try:
-        validate_article(title, author, journal, year)
-        citation_id = create_article_citation(citation_type, title, author, journal, year)
-        validate_tags(tags)
-        create_tags(citation_id, tags)
+        citation_service.create_citation(CitationTypes.ARTICLE.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -98,11 +56,7 @@ def citation_creation_article():
 
 @app.route("/edit_citation/<int:id>")
 def edit_citation(id):
-    tags = get_citation_tags(id)
-    if tags is None:
-        tags = []
-
-    citation = get_citation(id, tags)
+    citation = citation_repo.get_citation(id)
     if citation is None:
         return redirect("/")
 
@@ -110,18 +64,8 @@ def edit_citation(id):
 
 @app.route("/edit_book_citation/<int:id>", methods=["POST"])
 def citation_edition_book(id):
-    title = request.form.get("title")
-    author = request.form.get("author")
-    publisher = request.form.get("publisher")
-    isbn = request.form.get("isbn")
-    year = request.form.get("year")
-    tags = clean_tags(request.form.get("tags"))
-
     try:
-        validate_book(title, author, publisher, isbn, year)
-        update_book_citation(id, title, author, publisher, isbn, year)
-        validate_tags(tags)
-        update_tags(id, tags)
+        citation_service.update_citation(id, CitationTypes.BOOK.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
@@ -129,59 +73,39 @@ def citation_edition_book(id):
 
 @app.route("/edit_inproceedings_citation/<int:id>", methods=["POST"])
 def citation_edition_inproceedings(id):
-    title = request.form.get("title")
-    author = request.form.get("author")
-    booktitle = request.form.get("booktitle")
-    year = request.form.get("year")
-    tags = clean_tags(request.form.get("tags"))
-
     try:
-        validate_inproceedings(title, author, booktitle, year)
-        update_inproceedings_citation(id, title, author, booktitle, year)
-        validate_tags(tags)
-        update_tags(id, tags)
+        citation_service.update_citation(id, CitationTypes.INPROCEEDINGS.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect(f"/edit_citation/{id}")
+        return redirect(f"/edit_citation/{id}")
 
 @app.route("/edit_article_citation/<int:id>", methods=["POST"])
 def citation_edition_article(id):
-    title = request.form.get("title")
-    author = request.form.get("author")
-    journal = request.form.get("journal")
-    year = request.form.get("year")
-    tags = clean_tags(request.form.get("tags"))
-
     try:
-        validate_article(title, author, journal, year)
-        update_article_citation(id, title, author, journal, year)
-        validate_tags(tags)
-        update_tags(id, tags)
+        citation_service.update_citation(id, CitationTypes.ARTICLE.value, request.form)
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect(f"/edit_citation/{id}")
+        return redirect(f"/edit_citation/{id}")
 
 @app.route("/delete_citations", methods=["POST"])
 def delete_citations():
-    for citation_id in request.form.getlist("citation_id"):
-        try:
-            delete_citation(citation_id)
-        except Exception as error:
-            flash(str(error))
-            return redirect("/")
+    try:
+        citation_service.delete_citation(request.form)
+    except Exception as error:
+        flash(str(error))
+        return redirect("/")
     return redirect("/")
 
 @app.route("/bibtex", methods=["GET","POST"])
 def get_bibtex():
     bibtex_results = []
-    for citation in get_all_citations():
-        bibtex = get_bibtex_citation(citation.id)
+    for citation in citation_repo.get_all_citations():
+        bibtex = bibtex_service.get_bibtex_citation(citation.id)
         bibtex_results.append(bibtex)
 
     return render_template("bibtex.html", bibtex_results=bibtex_results)
-
 
 # testausta varten oleva reitti
 if test_env:
