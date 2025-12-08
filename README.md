@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/matiashei/miniprojekti/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/matiashei/miniprojekti/actions/workflows/ci.yml)
 ![Pylint Status](https://github.com/matiashei/miniprojekti/actions/workflows/pylint.yml/badge.svg)
+[![codecov](https://codecov.io/gh/matiashei/miniprojekti/graph/badge.svg?token=RHLFH9FXF0)](https://codecov.io/gh/matiashei/miniprojekti)
 
 
 Project Backlog and individual Sprint Backlogs: [Google Docs](https://docs.google.com/spreadsheets/d/1Oh1xeJ6td34I5xTl3dneJ4uoo6Xl9Ed_Dc_2IyDjGgE/edit?usp=sharing)
