@@ -8,6 +8,28 @@ citation app
 
 <h1>citation app</h1>
 
+{% if tags %}
+<form action="/" method="get">
+    <label>Filter by tags:</label><br>
+
+    {% for tag in tags %}
+        <input type="checkbox"
+               name="tag"
+               value="{{ tag }}"
+               {% if selected_tags and tag in selected_tags %}checked{% endif %}>
+        {{ tag }} <br>
+    {% endfor %}
+    <label for="filtering_method">Filtering method:</label>
+    <select id="filtering_method" name="match_all">
+        <option value="">-Choose-</option>
+        <option value="false" {% if match_all == false %}selected{% endif %}>Match one</option>
+        <option value="true" {% if match_all == true %}selected{% endif %}>Match all</option>
+      </select>
+    <button type="submit">Filter</button>
+    <button type="button" onclick="window.location.href='/'">Clear filters</button>
+</form>
+{% endif %}
+
 <div>
   <a href="/new_citation"><button type="button">Create new citation</button></a>
 </div>
@@ -22,28 +44,28 @@ citation app
       <li class="citation">
         <b>{{ citation.type }}</b> <br>
         {% if citation.tags %}
-          Tags: 
+          Tags:
           {% for tag in citation.tags %}
             {{ tag }}{% if not loop.last %}, {% endif %}
           {% endfor %} <br>
         {% endif %}
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> | 
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
         <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
       </li>
       <hr />
-    
+
     {% elif citation.type == 'inproceedings' %}
       <li class="citation">
         <b>{{ citation.type }}</b> <br>
         {% if citation.tags %}
-          Tags: 
+          Tags:
           {% for tag in citation.tags %}
             {{ tag }}{% if not loop.last %}, {% endif %}
           {% endfor %} <br>
         {% endif %}
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> | 
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
         <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
       </li>
       <hr />
@@ -52,13 +74,13 @@ citation app
       <li class="citation">
         <b>{{ citation.type }}</b> <br>
         {% if citation.tags %}
-          Tags: 
+          Tags:
           {% for tag in citation.tags %}
             {{ tag }}{% if not loop.last %}, {% endif %}
           {% endfor %} <br>
         {% endif %}
         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> | 
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
         <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
       </li>
       <hr />

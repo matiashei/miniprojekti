@@ -20,8 +20,27 @@ bibtex_service = BibtexService(citation_repo)
 
 @app.route("/")
 def index():
+    selected_tags = request.args.getlist("tag")
+    match_all = request.args.get("match_all", "false").lower() == "true"
+    all_tags = tag_repo.get_all_tags()
+
+    if selected_tags:
+        citations = citation_repo.get_citations_by_tag(selected_tags, match_all=match_all)
+    else:
+        citations = citation_repo.get_all_citations()
+
+    return render_template(
+        "index.html",
+        citations=citations,
+        tags=all_tags,
+        selected_tags=selected_tags,
+        match_all=match_all
+    )
+
+"""@app.route("/")
+def index():
     citations = citation_repo.get_all_citations()
-    return render_template("index.html", citations=citations)
+    return render_template("index.html", citations=citations)"""
 
 @app.route("/new_citation")
 def new():

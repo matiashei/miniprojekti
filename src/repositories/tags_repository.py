@@ -1,3 +1,4 @@
+from unittest import result
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from config import db, app
@@ -41,3 +42,8 @@ class TagRepository:
 
             result = db.session.execute(sql, {"citation_id": citation_id}).fetchall()
             return [row.tag for row in result] if result else []
+
+    def get_all_tags(self):
+        sql = text("SELECT DISTINCT tag FROM tags ORDER BY tag")
+        result = db.session.execute(sql)
+        return [row[0] for row in result.fetchall()]
