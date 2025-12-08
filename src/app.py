@@ -31,10 +31,12 @@ from util import (
 
 @app.route("/")
 def index():
-    selected_tag = request.args.get("tag")
+    selected_tags = request.args.getlist("tag")
+    match_all = request.args.get("match_all", "false").lower() == "true"
     all_tags = get_all_tags()
-    if selected_tag:
-        book_citations = get_citations_by_tag(selected_tag)
+
+    if selected_tags:
+        book_citations = get_citations_by_tag(selected_tags, match_all=match_all)
     else:
         book_citations = get_all_citations()
 
@@ -42,7 +44,8 @@ def index():
         "index.html",
         book_citations=book_citations,
         tags=all_tags,
-        selected_tag=selected_tag
+        selected_tags=selected_tags,
+        match_all=match_all
     )
 
 @app.route("/new_citation")

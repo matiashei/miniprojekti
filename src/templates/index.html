@@ -23,7 +23,11 @@ citation app
                {% if selected_tags and tag in selected_tags %}checked{% endif %}>
         {{ tag }} <br>
     {% endfor %}
-    
+    <label for="filtering_method">Filtering method:</label>
+    <select id="filtering_method" name="match_all">
+        <option value="">-Choose-</option>
+        <option value="false" {% if match_all == false %}selected{% endif %}>Match one</option>
+        <option value="true" {% if match_all == true %}selected{% endif %}>Match all</option>    </select>
     <button type="submit">Filter</button>
 </form>
 {% endif %}

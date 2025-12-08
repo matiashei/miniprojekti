@@ -53,16 +53,37 @@ def get_all_citations():
 
     return citation_objects
 
-def get_citations_by_tag(tag):
-    sql = text("""
-        SELECT citation.id, c.type, c.title, c.author, c.publisher, c.isbn,
-               c.year, c.booktitle, c.journal
-        FROM citations c
-        JOIN tags t ON c.id = t.citation_id
-        WHERE t.tag = :tag
-    """)
+def get_citations_by_tag(tags, match_all=False):
+    if not tags:
+        return []
 
-    result = db.session.execute(sql, {"tag": tag})
+    if match_all:
+        return _get_citations_with_all_tags(tags)
+    else:
+        return _get_citations_with_any_tag(tags)
+
+def _get_citations_with_all_tags(tags):
+    if not tags:
+        return []
+
+    placeholders = ",".join(f"'{tag}'" for tag in tags)
+    print("hello")
+    tag_count = len(tags)
+
+    sql = text(f"""
+            SELECT c.*
+            FROM citations c
+            WHERE c.id IN (
+                -- Viittaukset, joilla on kaikki haetut tagit (Kuten nykyinen match_all)
+                SELECT citation_id
+                FROM tags
+                WHERE tag IN ({placeholders})
+                GROUP BY citation_id
+                HAVING COUNT(DISTINCT tag) = :tag_count
+            )
+        """)
+
+    result = db.session.execute(sql, {"tag_count": tag_count})
     citations = result.fetchall()
 
     citation_objects = []
@@ -79,7 +100,46 @@ def get_citations_by_tag(tag):
                 year=citation.year,
                 booktitle=citation.booktitle,
                 journal=citation.journal,
-                tags=tag_list
+                tags=tag_list if tag_list else []
+            )
+        )
+
+    return citation_objects
+
+def _get_citations_with_any_tag(tags):
+    if not tags:
+        return []
+
+    placeholders = ",".join(f"'{tag}'" for tag in tags)
+    print("world")
+    print(placeholders)
+    sql = text(f"""
+        SELECT DISTINCT c.id, c.type, c.title, c.author, c.publisher, c.isbn,
+               c.year, c.booktitle, c.journal
+        FROM citations c
+        JOIN tags t ON c.id = t.citation_id
+        WHERE t.tag IN ({placeholders})
+        ORDER BY c.id
+    """)
+
+    result = db.session.execute(sql)
+    citations = result.fetchall()
+
+    citation_objects = []
+    for citation in citations:
+        tag_list = get_citation_tags(citation.id)
+        citation_objects.append(
+            Citation(
+                citation_id=citation.id,
+                citation_type=citation.type,
+                title=citation.title,
+                author=citation.author,
+                publisher=citation.publisher,
+                isbn=citation.isbn,
+                year=citation.year,
+                booktitle=citation.booktitle,
+                journal=citation.journal,
+                tags=tag_list if tag_list else []
             )
         )
 
