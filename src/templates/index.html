@@ -8,10 +8,6 @@ citation app
 
 <h1>citation app</h1>
 
-<div>
-  <a href="/new_citation"><button type="button">Create new citation</button></a>
-</div>
-
 {% if tags %}
 <form action="/" method="get">
     <label>Filter by tags:</label><br>
@@ -34,12 +30,16 @@ citation app
 </form>
 {% endif %}
 
+<div>
+  <a href="/new_citation"><button type="button">Create new citation</button></a>
+</div>
+
 <hr>
 
-{% if book_citations %}
+{% if citations %}
   <h3>Added citations:</h3>
   <form action="/delete_citations" method="post" class="delete_citations">
-    {% for citation in book_citations %}
+    {% for citation in citations %}
 
     {% if citation.type == 'book' %}
       <li class="citation">
