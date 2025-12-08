@@ -27,8 +27,10 @@ citation app
     <select id="filtering_method" name="match_all">
         <option value="">-Choose-</option>
         <option value="false" {% if match_all == false %}selected{% endif %}>Match one</option>
-        <option value="true" {% if match_all == true %}selected{% endif %}>Match all</option>    </select>
+        <option value="true" {% if match_all == true %}selected{% endif %}>Match all</option>
+      </select>
     <button type="submit">Filter</button>
+    <button type="button" onclick="window.location.href='/'">Clear filters</button>
 </form>
 {% endif %}
 
