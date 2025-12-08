@@ -5,8 +5,8 @@ from repositories.tags_repository import get_citation_tags
 
 def get_citation(citation_id, tags):
     sql = text("""
-        SELECT id, type, title, author, publisher, isbn, year, booktitle, journal 
-        FROM citations 
+        SELECT id, type, title, author, publisher, isbn, year, booktitle, journal
+        FROM citations
         WHERE id = :id
     """)
 
@@ -48,6 +48,38 @@ def get_all_citations():
                 booktitle=citation.booktitle,
                 journal=citation.journal,
                 tags = tag_list
+            )
+        )
+
+    return citation_objects
+
+def get_citations_by_tag(tag):
+    sql = text("""
+        SELECT citation.id, c.type, c.title, c.author, c.publisher, c.isbn,
+               c.year, c.booktitle, c.journal
+        FROM citations c
+        JOIN tags t ON c.id = t.citation_id
+        WHERE t.tag = :tag
+    """)
+
+    result = db.session.execute(sql, {"tag": tag})
+    citations = result.fetchall()
+
+    citation_objects = []
+    for citation in citations:
+        tag_list = get_citation_tags(citation.id)
+        citation_objects.append(
+            Citation(
+                citation_id=citation.id,
+                citation_type=citation.type,
+                title=citation.title,
+                author=citation.author,
+                publisher=citation.publisher,
+                isbn=citation.isbn,
+                year=citation.year,
+                booktitle=citation.booktitle,
+                journal=citation.journal,
+                tags=tag_list
             )
         )
 

@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, jsonify, flash
 from db_helper import reset_db
 from repositories.citation_repository import (
     get_all_citations,
+    get_citations_by_tag,
     create_book_citation,
     create_inproceedings_citation,
     create_article_citation,
@@ -28,14 +29,21 @@ from util import (
     validate_tags
 )
 
-
 @app.route("/")
 def index():
-    # temporary function to fetch all citations
-    book_citations = get_all_citations()
+    selected_tag = request.args.get("tag")
     all_tags = get_all_tags()
+    if selected_tag:
+        book_citations = get_citations_by_tag(selected_tag)
+    else:
+        book_citations = get_all_citations()
 
-    return render_template("index.html", book_citations=book_citations, tags=all_tags)
+    return render_template(
+        "index.html",
+        book_citations=book_citations,
+        tags=all_tags,
+        selected_tag=selected_tag
+    )
 
 @app.route("/new_citation")
 def new():
@@ -184,7 +192,6 @@ def get_bibtex():
         bibtex_results.append(bibtex)
 
     return render_template("bibtex.html", bibtex_results=bibtex_results)
-
 
 # testausta varten oleva reitti
 if test_env:
