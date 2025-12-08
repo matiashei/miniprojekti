@@ -44,8 +44,8 @@ jobs:
         run: poetry install
       - name: Run pylint
         run: poetry run pylint $(git ls-files '*.py') --fail-under=8.0
-      - name: Run unit tests
-        run: poetry run pytest src/tests
+      - name: Run unit tests with coverage
+        run: poetry run coverage run -m pytest src/tests
       - name: Setup chromedriver
         uses: nanasess/setup-chromedriver@master
       - run: |
