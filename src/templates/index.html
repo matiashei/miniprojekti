@@ -39,10 +39,11 @@ citation app
 <hr>
 
 {% if citations %}
-  <h3>Added citations:</h3>
+  <h2>Added citations:</h2>
   <form action="/delete_citations" method="post" class="delete_citations">
 
     {% if articles %}
+    <div class="group">
     <h3>Articles:</h3>
       {% for citation in articles %}
         <li class="citation">
@@ -56,11 +57,12 @@ citation app
          <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
           <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
        </li>
-      <hr />
      {% endfor %}
     {% endif %}
+    </div>
 
     {% if books %}
+    <div class="group">
     <h3><strong>Books:</strong></h3>
       {% for citation in books %}
         <li class="citation">
@@ -74,11 +76,12 @@ citation app
         <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
           <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
         </li>
-       <hr />
       {% endfor %}
     {% endif %}
-      
+    </div>
+
     {% if inproceedings_list %}
+    <div class="group">
     <h3><strong>Conference proceedings:</strong></h3>
       {% for citation in inproceedings_list %}
         <li class="citation">
@@ -92,10 +95,9 @@ citation app
           <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
           <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
         </li>
-      <hr />
     {% endfor %}
     {% endif %}
-  
+    </div>
 
     <input type="submit" value="Delete selected citations" style="display:none" id="deleteButton">
   </form>

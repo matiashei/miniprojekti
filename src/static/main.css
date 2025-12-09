@@ -28,3 +28,11 @@ div {
   width: 14em;
   padding: 1em;
 }
+
+.group {
+  margin:0.5em;
+  padding: 0.2em;
+  font-family: serif;
+  background-color: rgb(40, 40, 40);
+  border-radius: 10px;
+}
