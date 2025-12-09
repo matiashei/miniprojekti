@@ -41,7 +41,8 @@ div {
     padding: 4px 10px;
     border: 1px solid #353535;
     border-radius: 2px;
-    background-color: #353535;
+    background-color: rgb(40, 40, 40);
+    border-radius: 10px;
 }
 
 .input_doi input[type="text"] {
