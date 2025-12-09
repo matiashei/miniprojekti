@@ -25,6 +25,10 @@ def index():
     match_all = request.args.get("match_all", "false").lower() == "true"
     all_tags = tag_repo.get_all_tags()
 
+    articles = [c for c in citation_repo.get_all_citations() if c.type == 'article']
+    books = [c for c in citation_repo.get_all_citations() if c.type == 'book']
+    inproceedings_list = [c for c in citation_repo.get_all_citations() if c.type == 'inproceedings']
+
     if selected_tags:
         citations = citation_repo.get_citations_by_tag(selected_tags, match_all=match_all)
     else:
@@ -35,7 +39,10 @@ def index():
         citations=citations,
         tags=all_tags,
         selected_tags=selected_tags,
-        match_all=match_all
+        match_all=match_all,
+        articles=articles,
+        books=books,
+        inproceedings_list=inproceedings_list
     )
 
 @app.route("/new_citation")

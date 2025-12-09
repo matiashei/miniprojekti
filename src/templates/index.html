@@ -39,55 +39,62 @@ citation app
 {% if citations %}
   <h3>Added citations:</h3>
   <form action="/delete_citations" method="post" class="delete_citations">
-    {% for citation in citations %}
 
-    {% if citation.type == 'book' %}
-      <li class="citation">
-        <b>{{ citation.type }}</b> <br>
-        {% if citation.tags %}
-          Tags:
-          {% for tag in citation.tags %}
-            {{ tag }}{% if not loop.last %}, {% endif %}
-          {% endfor %} <br>
-        {% endif %}
-        {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
-        <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
-      </li>
+    {% if articles %}
+    <h3>Articles:</h3>
+      {% for citation in articles %}
+        <li class="citation">
+          {% if citation.tags %}
+            Tags:
+            {% for tag in citation.tags %}
+              {{ tag }}{% if not loop.last %}, {% endif %}
+            {% endfor %} <br>
+          {% endif %}
+          {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
+         <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
+          <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
+       </li>
       <hr />
-
-    {% elif citation.type == 'inproceedings' %}
-      <li class="citation">
-        <b>{{ citation.type }}</b> <br>
-        {% if citation.tags %}
-          Tags:
-          {% for tag in citation.tags %}
-            {{ tag }}{% if not loop.last %}, {% endif %}
-          {% endfor %} <br>
-        {% endif %}
-        {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
-        <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
-      </li>
-      <hr />
-
-    {% elif citation.type == 'article' %}
-      <li class="citation">
-        <b>{{ citation.type }}</b> <br>
-        {% if citation.tags %}
-          Tags:
-          {% for tag in citation.tags %}
-            {{ tag }}{% if not loop.last %}, {% endif %}
-          {% endfor %} <br>
-        {% endif %}
-        {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.journal }}, {{ citation.year }}.
-        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
-        <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
-      </li>
-      <hr />
+     {% endfor %}
     {% endif %}
 
+    {% if books %}
+    <h3><strong>Books:</strong></h3>
+      {% for citation in books %}
+        <li class="citation">
+          {% if citation.tags %}
+            Tags:
+            {% for tag in citation.tags %}
+             {{ tag }}{% if not loop.last %}, {% endif %}
+           {% endfor %} <br>
+         {% endif %}
+         {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.publisher }}, {{ citation.year }}. ISBN {{ citation.isbn }}
+        <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
+          <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
+        </li>
+       <hr />
+      {% endfor %}
+    {% endif %}
+      
+    {% if inproceedings_list %}
+    <h3><strong>Conference proceedings:</strong></h3>
+      {% for citation in inproceedings_list %}
+        <li class="citation">
+          {% if citation.tags %}
+            Tags:
+            {% for tag in citation.tags %}
+             {{ tag }}{% if not loop.last %}, {% endif %}
+            {% endfor %} <br>
+          {% endif %}
+          {{ citation.author }}. <em>{{ citation.title }}.</em> {{ citation.booktitle }}, {{ citation.year }}.
+          <input type="checkbox" name="citation_id" value="{{ citation.id }}" class="checkbox"> |
+          <a href="/edit_citation/{{ citation.id }}"><button type="button">Edit</button></a>
+        </li>
+      <hr />
     {% endfor %}
+    {% endif %}
+  
+
     <input type="submit" value="Delete selected citations" style="display:none" id="deleteButton">
   </form>
 
