@@ -18,31 +18,32 @@ Edit citation
 .hidden { display: none; }
 </style>
 
+<div class="new_citation">
 {% if citation.type == "book" %}
     <form action="/edit_book_citation/{{ citation.id }}" method="post" id="{{ citation.id }}" class="{% if citation.type == 'book' %}{% else %}hidden{% endif %}">
         <p>
-          <label for="title">The title of the book:</label>
-          <input type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
+          <label for="title">Title*</label>
+          <input title="The title of the book" type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
         </p>
         <p>
-          <label for="author">The author(s) of the book:</label>
-          <input type="text" name="author" id="author" maxlength="75" value="{{ citation.author }}">
+          <label for="author">Author(s)*</label>
+          <input title="The author(s) of the book" type="text" name="author" id="author" maxlength="75" value="{{ citation.author }}">
         </p>
         <p>
-          <label for="publisher">The publisher of the book:</label>
-          <input type="text" name="publisher" id="publisher" maxlength="50" value="{{ citation.publisher }}">
+          <label for="publisher">Publisher*</label>
+          <input title="The publisher of the book" type="text" name="publisher" id="publisher" maxlength="50" value="{{ citation.publisher }}">
         </p>
         <p>
-          <label for="isbn">ISBN of the book:</label>
-          <input type="text" name="isbn" id="isbn" maxlength="20" value="{{ citation.isbn }}">
+          <label for="isbn">ISBN*</label>
+          <input title="The ISBN of the book" type="text" name="isbn" id="isbn" maxlength="20" value="{{ citation.isbn }}">
         </p>
         <p>
-          <label for="year">The year the book was published:</label>
-          <input type="number" name="year" id="year" min="0" max="2025" value="{{ citation.year }}">
+          <label for="year">Year*</label>
+          <input title="The year of publication" type="number" name="year" id="year" min="0" max="2025" value="{{ citation.year }}">
         </p>
         <p>
-          <label for="tags">Tags separated with a comma (optional)</label>
-          <input type="text" name="tags" id="book_tags" value="{% for tag in citation.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}">
+          <label for="tags">Tags</label>
+          <input title="Tags separated with a comma (optional)" type="text" name="tags" id="book_tags" value="{% for tag in citation.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}">
         </p>
         <button type="submit" id="submit_button" >Edit</button>
     </form>
@@ -51,24 +52,24 @@ Edit citation
 {%elif citation.type == "inproceedings"%}
     <form action="/edit_inproceedings_citation/{{citation.id}}" method="post" id="{{ citation.id }}" class="{% if citation.type == 'inproceedings' %}{% else %}hidden{% endif %}">
       <p>
-        <label for="title">The title of the paper:</label>
-        <input type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
+        <label for="title">Paper*</label>
+        <input title="The title of the paper" type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
       </p>
       <p>
-        <label for="author">The author(s) of the paper:</label>
-        <input type="text" name="author" id="author" value="{{ citation.author }}">
+        <label for="author">Author(s)*</label>
+        <input title="The author(s) of the paper" type="text" name="author" id="author" value="{{ citation.author }}">
       </p>
       <p>
-        <label for="booktitle">The title of the conference proceedings:</label>
-        <input type="text" name="booktitle" id="booktitle" maxlength="100" value="{{ citation.booktitle }}">
+        <label for="booktitle">Conference*</label>
+        <input title="The title of the conference proceedings" type="text" name="booktitle" id="booktitle" maxlength="100" value="{{ citation.booktitle }}">
       </p>
       <p>
-        <label for="year">The year the conference proceedings were published:</label>
-        <input type="number" name="year" id="year" min="0" max="2025" value="{{ citation.year }}">
+        <label for="year">Year*</label>
+        <input title="The year the conference proceedings were published" type="number" name="year" id="year" min="0" max="2025" value="{{ citation.year }}">
       </p>
       <p>
-        <label for="tags">Tags separated with a comma (optional)</label>
-        <input type="text" name="tags" id="inprocceeding_tags" value="{% for tag in citation.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}">
+        <label for="tags">Tags</label>
+        <input title="Tags separated with a comma (optional)" type="text" name="tags" id="inproceeding_tags" value="{% for tag in citation.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}">
       </p>
       <button type="submit" id="submit_button" >Edit</button>
   </form>
@@ -76,27 +77,29 @@ Edit citation
 {% elif citation.type == "article" %}
     <form action="/edit_article_citation/{{citation.id}}" method="post" id="{{ citation.id }}" class="{% if citation.type == 'article' %}{% else %}hidden{% endif %}">
       <p>
-        <label for="title">The title of the article:</label>
-        <input type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
+        <label for="title">Title*</label>
+        <input title="The title of the article" type="text" name="title" id="title" maxlength="75" value="{{ citation.title }}">
       </p>
       <p>
-        <label for="author">The name(s) of the author(s) of the article:</label>
-        <input type="text" name="author" id="author" value="{{ citation.author }}">
+        <label for="author">Authors*</label>
+        <input title="The author(s) of the article" type="text" name="author" id="author" value="{{ citation.author }}">
       </p>
       <p>
-        <label for="journal">The name of the journal, magazine, or newspaper in which the article was published:</label>
-        <input type="text" name="journal" id="journal" value="{{ citation.journal }}">
+        <label for="journal">Journal*</label>
+        <input title="The name of the journal, magazine, or newspaper in which the article was published" type="text" name="journal" id="journal" value="{{ citation.journal }}">
       </p>
       <p>
-        <label for="year">The year of publication:</label>
-        <input type="number" name="year" id="year" min="0" max="2025" value="{{ citation.year }}">
+        <label for="year">Year*</label>
+        <input title="The year of publication" type="number" name="year" id="year" min="0" max="2025" value="{{ citation.year }}">
       </p>
       <p>
-        <label for="tags">Tags separated with a comma (optional)</label>
-        <input type="text" name="tags" id="article_tags" value="{% for tag in citation.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}">
+        <label for="tags">Tags</label>
+        <input title="Tags separated with a comma (optional)" type="text" name="tags" id="article_tags" value="{% for tag in citation.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}">
       </p>
       <button type="submit" id="submit_button" >Edit</button>
   </form>
+
 {% endif %}
+</div>
 
 {% endblock %}

@@ -10,6 +10,7 @@ from repositories.tags_repository import TagRepository
 from services.citation_service import CitationService
 from services.bibtex_service import BibtexService
 from services.validator_service import InputValidation
+from services.doi_service import DoiService
 
 
 tag_repo = TagRepository()
@@ -18,10 +19,32 @@ validator = InputValidation()
 citation_service = CitationService(citation_repo, tag_repo, validator)
 bibtex_service = BibtexService(citation_repo)
 
+
 @app.route("/")
 def index():
-    citations = citation_repo.get_all_citations()
-    return render_template("index.html", citations=citations)
+    selected_tags = request.args.getlist("tag")
+    match_all = request.args.get("match_all", "false").lower() == "true"
+    all_tags = tag_repo.get_all_tags()
+
+    if selected_tags:
+        citations = citation_repo.get_citations_by_tag(selected_tags, match_all=match_all)
+    else:
+        citations = citation_repo.get_all_citations()
+
+    articles = [c for c in citations if c.type == 'article']
+    books = [c for c in citations if c.type == 'book']
+    inproceedings_list = [c for c in citations if c.type == 'inproceedings']
+
+    return render_template(
+        "index.html",
+        citations=citations,
+        tags=all_tags,
+        selected_tags=selected_tags,
+        match_all=match_all,
+        articles=articles,
+        books=books,
+        inproceedings_list=inproceedings_list
+    )
 
 @app.route("/new_citation")
 def new():
@@ -98,14 +121,44 @@ def delete_citations():
         return redirect("/")
     return redirect("/")
 
-@app.route("/bibtex", methods=["GET","POST"])
+@app.route("/bibtex", methods=["GET", "POST"])
 def get_bibtex():
-    bibtex_results = []
-    for citation in citation_repo.get_all_citations():
-        bibtex = bibtex_service.get_bibtex_citation(citation.id)
-        bibtex_results.append(bibtex)
+    selected_tags = request.args.getlist("tag")
+    match_all = request.args.get("match_all", "false").lower() == "true"
 
-    return render_template("bibtex.html", bibtex_results=bibtex_results)
+    if selected_tags:
+        citations = citation_repo.get_citations_by_tag(selected_tags, match_all=match_all)
+    else:
+        citations = citation_repo.get_all_citations()
+
+    bibtex_results = []
+    for citation in citations:
+        bibtex = bibtex_service.get_bibtex_citation(citation.id)
+        if bibtex:
+            bibtex_results.append(bibtex)
+
+    return render_template(
+        "bibtex.html",
+        bibtex_results=bibtex_results,
+        selected_tags=selected_tags,
+        match_all=match_all,
+    )
+
+
+@app.route("/doi", methods=["POST"])
+def add_from_doi():
+    doi = request.form.get("doi", "").strip()
+    bibtex = DoiService.fetch_bibtex_from_doi(doi)
+
+    try:
+        parsed_data = bibtex_service.parse_bibtex_string(bibtex)
+        citation_service.create_citation(parsed_data["type"], parsed_data["fields"])
+    except Exception as e:
+        flash(f"Error: {e}")
+        return redirect("/new_citation")
+    else:
+        flash("Citation added successfully!")
+        return redirect("/")
 
 # testausta varten oleva reitti
 if test_env:

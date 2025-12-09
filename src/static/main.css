@@ -1,20 +1,58 @@
 body {
+  margin: auto;
+  max-width: 50em;
   font-family: serif;
   background-color: rgb(20, 20, 20);
   color: rgb(237, 237, 237);
-}
+  }
 
 div {
   margin: 1em;
 }
 
-label {
+.new_citation label {
   display: inline-block;
-  width: 7em;
+  width: 6em;
   text-align: right;
 }
 
 .citation {
   margin: 1em 1em;
   list-style: square;
+}
+
+.filter-panel {
+  position: fixed;
+  top: 4em;
+  left: calc(50% + 24em);
+  width: 14em;
+  padding: 1em;
+}
+
+.group {
+  margin:0.5em;
+  padding: 0.2em;
+  font-family: serif;
+  background-color: rgb(40, 40, 40);
+  border-radius: 10px;
+}
+.input_doi {
+    margin: 10px 0;
+    padding: 4px 10px;
+    border: 1px solid #353535;
+    border-radius: 2px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 10px;
+}
+
+.input_doi input[type="text"] {
+    padding: 4px;
+    width: 100%;
+    max-width: 500px;
+    margin-right: 10px;
+}
+
+.input_doi button {
+    padding: 4px 10px;
+    cursor: pointer;
 }
