@@ -58,7 +58,7 @@ class CitationRepository:
 
         return citation_objects
 
-    def create_book_citation(citation_type, title, author, publisher, isbn, year):
+    def create_book_citation(self, citation_type, title, author, publisher, isbn, year):
         with app.app_context():
             sql = text("""
                 INSERT INTO citations (type, title, author, publisher, isbn, year)
