@@ -1,5 +1,14 @@
-<button onclick="copyBibtex()">Copy BibTeX</button>
+{% extends "layout.html" %}
 
+{% block body %}
+
+<div>
+  <a href="/">
+      <button type="button">Back</button>
+  </a>
+</div>
+<button onclick="copyBibtex()">Copy BibTeX</button>
+<br /><br />
 <script>
   function copyBibtex() {
       const text = document.getElementById("bibtex_output").innerText;
@@ -17,3 +26,5 @@
   </div>
 
 </div>
+
+{% endblock %}
