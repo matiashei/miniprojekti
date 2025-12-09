@@ -113,14 +113,29 @@ def delete_citations():
         return redirect("/")
     return redirect("/")
 
-@app.route("/bibtex", methods=["GET","POST"])
+@app.route("/bibtex", methods=["GET", "POST"])
 def get_bibtex():
-    bibtex_results = []
-    for citation in citation_repo.get_all_citations():
-        bibtex = bibtex_service.get_bibtex_citation(citation.id)
-        bibtex_results.append(bibtex)
+    selected_tags = request.args.getlist("tag")
+    match_all = request.args.get("match_all", "false").lower() == "true"
 
-    return render_template("bibtex.html", bibtex_results=bibtex_results)
+    if selected_tags:
+        citations = citation_repo.get_citations_by_tag(selected_tags, match_all=match_all)
+    else:
+        citations = citation_repo.get_all_citations()
+
+    bibtex_results = []
+    for citation in citations:
+        bibtex = bibtex_service.get_bibtex_citation(citation.id)
+        if bibtex:
+            bibtex_results.append(bibtex)
+
+    return render_template(
+        "bibtex.html",
+        bibtex_results=bibtex_results,
+        selected_tags=selected_tags,
+        match_all=match_all,
+    )
+
 
 # testausta varten oleva reitti
 if test_env:

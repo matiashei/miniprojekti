@@ -47,3 +47,19 @@ class TagRepository:
         sql = text("SELECT DISTINCT tag FROM tags ORDER BY tag")
         result = db.session.execute(sql)
         return [row[0] for row in result.fetchall()]
+
+    def search_citations_by_tag(self, tags):
+        with app.app_context():
+            placeholders = ', '.join([':tag{}'.format(i) for i in range(len(tags))])
+            sql = text(f"""
+                SELECT citation_id FROM tags
+                WHERE tag IN ({placeholders})
+            """)
+
+            result = db.session.execute(sql, {f'tag{i}': tag for i, tag in enumerate(tags)}).fetchall()
+
+        citation_ids = []
+        for row in result:
+            citation_ids.append(row.citation_id)
+
+        return citation_ids

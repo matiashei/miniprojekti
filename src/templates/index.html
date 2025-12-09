@@ -112,7 +112,9 @@ citation app
 
 {% endif %}
 <div>
-  <a href="/bibtex"><button type="button">Get citations in BibTeX format</button></a>
+  <a href="{{ url_for('get_bibtex', tag=selected_tags, match_all='true' if match_all else 'false') }}">
+    <button type="button">Get citations in BibTeX format</button>
+  </a>
 </div>
 
 {% endblock %}

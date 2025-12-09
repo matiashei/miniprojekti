@@ -20,8 +20,10 @@
   <div id="bibtex_output">
     {% if bibtex_results %}
       {% for bibtex in bibtex_results %}
-          <pre>{{ bibtex }}</pre>
+        <pre>{{ bibtex }}</pre>
       {% endfor %}  
+    {% else %}
+      <p>No citations for selected tags</p>
     {% endif %}
   </div>
 
