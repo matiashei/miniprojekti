@@ -27,6 +27,14 @@ Create a new citation
     </select> <a href="/"><button type="button">Return to frontpage</button></a> 
     <br>
 
+  <div class="input_doi">
+      <h3>Add Citation from DOI</h3>
+      <form method="POST" action="{{ url_for('add_from_doi') }}">
+          <input type="text" name="doi">
+          <button type="submit">Submit</button>
+      </form>
+  </div>
+
 <form action="/create_book_citation" method="post" id="book" class="hidden">
       <p>
         <label for="title">Title*</label>

@@ -18,3 +18,23 @@ label {
   margin: 1em 1em;
   list-style: square;
 }
+
+.input_doi {
+    margin: 10px 0;
+    padding: 4px 10px;
+    border: 1px solid #353535;
+    border-radius: 2px;
+    background-color: #353535;
+}
+
+.input_doi input[type="text"] {
+    padding: 4px;
+    width: 100%;
+    max-width: 500px;
+    margin-right: 10px;
+}
+
+.input_doi button {
+    padding: 4px 10px;
+    cursor: pointer;
+}

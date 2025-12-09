@@ -10,6 +10,7 @@ from repositories.tags_repository import TagRepository
 from services.citation_service import CitationService
 from services.bibtex_service import BibtexService
 from services.validator_service import InputValidation
+from services.doi_service import DoiService
 
 
 tag_repo = TagRepository()
@@ -106,6 +107,21 @@ def get_bibtex():
         bibtex_results.append(bibtex)
 
     return render_template("bibtex.html", bibtex_results=bibtex_results)
+
+@app.route("/doi", methods=["POST"])
+def add_from_doi():
+    doi = request.form.get("doi", "").strip()
+    bibtex = DoiService.fetch_bibtex_from_doi(doi)
+
+    try:
+        parsed_data = bibtex_service.parse_bibtex_string(bibtex)
+        citation_service.create_citation(parsed_data["type"], parsed_data["fields"])
+    except Exception as e:
+        flash(f"Error: {e}")
+        return redirect("/new_citation")
+    else:
+        flash("Citation added successfully!")
+        return redirect("/")
 
 # testausta varten oleva reitti
 if test_env:

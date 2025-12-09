@@ -1,19 +1,54 @@
-<button onclick="copyBibtex()">Copy BibTeX</button>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Example</title>
 
-<script>
-  function copyBibtex() {
+  <style>
+    #copied {
+      position: fixed;
+      top: 10px;
+      left: 110px;
+      background-color: black;
+      color: white;
+      padding: 3px 4px;
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.15s;
+      font-size: 12px;
+    }
+
+    #copied.show {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="copyBibtex()">Copy BibTeX</button>
+  <div id="copied">copied!</div>
+
+  <script>
+    function copyBibtex() {
       const text = document.getElementById("bibtex_output").innerText;
       navigator.clipboard.writeText(text);
-  }
-</script>
+      const copied = document.getElementById("copied");
+      copied.classList.add("show");
+      setTimeout(() => {
+        copied.classList.remove("show");
+      }, 800);
+    }
+  </script>
 
-<div>
-  <div id="bibtex_output">
-    {% if bibtex_results %}
-      {% for bibtex in bibtex_results %}
+  <div>
+    <div id="bibtex_output">
+      {% if bibtex_results %}
+        {% for bibtex in bibtex_results %}
           <pre>{{ bibtex }}</pre>
-      {% endfor %}  
-    {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
 
-</div>
+</body>
+</html>
