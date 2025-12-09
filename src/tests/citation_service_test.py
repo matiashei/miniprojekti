@@ -12,3 +12,6 @@ class TestCitationService(unittest.TestCase):
 
     def test_clean_tags(self):
         self.assertEqual(self.citations.clean_tags(" tag ,  tag2 ,tag3 "), ["tag", "tag2", "tag3"])
+
+    def test_clean_tags_empty(self):
+        self.assertEqual(self.citations.clean_tags("  "), [])

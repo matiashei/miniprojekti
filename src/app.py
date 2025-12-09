@@ -34,7 +34,7 @@ def citation_creation_book():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_citation")
+        return redirect("/new_citation")
 
 @app.route("/create_inproceedings_citation", methods=["POST"])
 def citation_creation_inproceedings():
@@ -43,7 +43,7 @@ def citation_creation_inproceedings():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_citation")
+        return redirect("/new_citation")
 
 @app.route("/create_article_citation", methods=["POST"])
 def citation_creation_article():
@@ -52,7 +52,7 @@ def citation_creation_article():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_citation")
+        return redirect("/new_citation")
 
 @app.route("/edit_citation/<int:id>")
 def edit_citation(id):
