@@ -9,8 +9,9 @@ citation app
 <h1>citation app</h1>
 
 {% if tags %}
+<div class="filter-panel">
 <form action="/" method="get">
-    <label>Filter by tags:</label><br>
+    <label> <h3>Filter by tags:</h3> </label>
 
     {% for tag in tags %}
         <input type="checkbox"
@@ -19,15 +20,16 @@ citation app
                {% if selected_tags and tag in selected_tags %}checked{% endif %}>
         {{ tag }} <br>
     {% endfor %}
-    <label for="filtering_method">Filtering method:</label>
+    <label for="filtering_method"> <h4>Filtering method:</h4> </label>
     <select id="filtering_method" name="match_all">
         <option value="">-Choose-</option>
         <option value="false" {% if match_all == false %}selected{% endif %}>Match one</option>
         <option value="true" {% if match_all == true %}selected{% endif %}>Match all</option>
-      </select>
-    <button type="submit">Filter</button>
+      </select> <br> <br>
+    <button type="submit">Apply filters</button>
     <button type="button" onclick="window.location.href='/'">Clear filters</button>
 </form>
+</div>
 {% endif %}
 
 <div>
