@@ -105,5 +105,6 @@ class TestValidateTags(unittest.TestCase):
         self.validator = InputValidation()
 
     def test_tags_too_long(self):
+        invalid_tag = "tag" * 21
         with self.assertRaises(UserInputError):
-            self.validator.validate_tags(["tag" * 21])
+            self.validator.validate_tags(["validtag", invalid_tag])
