@@ -135,4 +135,13 @@ Create a new citation
     });
 </script>
 
+
+  <div class="input_doi">
+      <h3>Add Citation from DOI</h3>
+      <form method="POST" action="{{ url_for('add_from_doi') }}">
+          <input type="text" name="doi">
+          <button type="submit">Submit</button>
+      </form>
+  </div>
+
 {% endblock %}

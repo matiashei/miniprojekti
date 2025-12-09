@@ -2,19 +2,46 @@
 
 {% block body %}
 
-<div>
-  <a href="/">
+  <style>
+    #copied {
+      position: fixed;
+      top: 45px;
+      left: 540px;
+      background-color: black;
+      color: white;
+      padding: 3px 4px;
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.15s;
+      font-size: 12px;
+    }
+
+    #copied.show {
+      opacity: 0.7;
+    }
+  </style>
+
+  <div>
+    <a href="/">
       <button type="button">Back</button>
-  </a>
-</div>
-<button onclick="copyBibtex()">Copy BibTeX</button>
-<br /><br />
-<script>
-  function copyBibtex() {
+    </a>
+  </div>
+
+  <button onclick="copyBibtex()">Copy BibTeX</button>
+  <br /><br />
+  <div id="copied">copied!</div>
+
+  <script>
+    function copyBibtex() {
       const text = document.getElementById("bibtex_output").innerText;
       navigator.clipboard.writeText(text);
-  }
-</script>
+      const copied = document.getElementById("copied");
+      copied.classList.add("show");
+      setTimeout(() => {
+        copied.classList.remove("show");
+      }, 800);
+    }
+  </script>
 
 <div>
   <div id="bibtex_output">
