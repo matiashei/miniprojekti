@@ -1,20 +1,30 @@
 body {
+  margin: auto;
+  max-width: 50em;
   font-family: serif;
   background-color: rgb(20, 20, 20);
-  color: rgb(237, 237, 237);
-}
+  color: rgb(237, 237, 237)
+  }
 
 div {
   margin: 1em;
 }
 
-label {
+.new_citation label {
   display: inline-block;
-  width: 7em;
+  width: 6em;
   text-align: right;
 }
 
 .citation {
   margin: 1em 1em;
   list-style: square;
+}
+
+.filter-panel {
+  position: fixed;
+  top: 4em;
+  left: calc(50% + 24em);
+  width: 14em;
+  padding: 1em;
 }
