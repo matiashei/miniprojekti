@@ -46,7 +46,7 @@ Create Citations
 
 Select Tag To Filter
     [Arguments]  ${tag}
-    Select Checkbox  //input[@type="checkbox" and @value="${tag}"]
+    Select Checkbox  css:input[type="checkbox"][value="${tag}"]
 
 Select Filtering Method
     [Arguments]  ${option}
