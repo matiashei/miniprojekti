@@ -35,6 +35,24 @@ Select Multiple Tags And Filter Citations With Match All
     Page Should Contain  Kirja1
     Page Should Not Contain  Kirja2
 
+Debug Available Tags
+    Reset Database
+    Create Citations
+    Sleep  1s
+    Go To Home Page
+    Sleep  1s
+    Capture Page Screenshot
+    ${page_source}=  Get Source
+    Log  ${page_source}
+    ${checkboxes}=  Get WebElements  css:input[type="checkbox"]
+    ${count}=  Get Length  ${checkboxes}
+    Log To Console  \nFound ${count} tag checkboxes
+    FOR  ${checkbox}  IN  @{checkboxes}
+        ${value}=  Get Element Attribute  ${checkbox}  value
+        ${visible}=  Run Keyword And Return Status  Element Should Be Visible  ${checkbox}
+        Log To Console  Tag: ${value}, Visible: ${visible}
+    END
+
 
 *** Variables ***
 @{TAGS1}  kandi  maisteri  luettu
