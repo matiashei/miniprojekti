@@ -3,11 +3,11 @@ name = "miniprojekti"
 version = "0.1.0"
 description = ""
 authors = [
-    "Janne Haikonen <haikonenjanne@outlook.com>",
-    "Lauri Tikka <tikkalauri1@gmail.com>",
-    "Karoliina Teppola <karoliina.teppola@gmail.com>",
-    "Matias Heino <matias.heino@helsinki.fi>",
-    "Anna Häkkinen <anna.k.hakkinen@helsinki.fi>"
+    {name = "Janne Haikonen", email = "haikonenjanne@outlook.com"},
+    {name = "Lauri Tikka", email = "tikkalauri1@gmail.com"},
+    {name = "Karoliina Teppola", email = "karoliina.teppola@gmail.com"},
+    {name = "Matias Heino", email = "matias.heino@helsinki.fi"},
+    {name = "Anna Häkkinen", email = "anna.k.hakkinen@helsinki.fi"}
 ]
 
 license = {text = "MIT"}
