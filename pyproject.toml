@@ -4,9 +4,9 @@ version = "0.1.0"
 description = ""
 authors = [
     {name = "Janne Haikonen", email = "haikonenjanne@outlook.com"},
-    {name = "Lauri Tikka", email = "tikkalauri1@gmail.com",
-    {name = "Karoliina Teppola", email = "karoliina.teppola@gmail.com",
-    {name = "Matias Heino", email = "matias.heino@helsinki.fi",
+    {name = "Lauri Tikka", email = "tikkalauri1@gmail.com"},
+    {name = "Karoliina Teppola", email = "karoliina.teppola@gmail.com"},
+    {name = "Matias Heino", email = "matias.heino@helsinki.fi"},
     {name = "Anna Häkkinen",email = "anna.k.hakkinen@helsinki.fi"}
 ]
 license = {text = "MIT"}
