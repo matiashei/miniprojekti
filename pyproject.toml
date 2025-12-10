@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = [
     "Janne Haikonen <haikonenjanne@outlook.com>",
+    "Lauri Tikka <tikkalauri1@gmail.com>",
+    "Karoliina Teppola <karoliina.teppola@gmail.com>",
+    "Matias Heino <matias.heino@helsinki.fi>",
+    "Anna Häkkinen <anna.k.hakkinen@helsinki.fi>"
 ]
 
 license = {text = "MIT"}
