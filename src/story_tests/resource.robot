@@ -27,6 +27,7 @@ Open And Configure Browser
         Set Selenium Speed  ${DELAY}
     END
     Open Browser  browser=${BROWSER}  options=${options}
+    Maximize Browser Window
 
 Go To Home Page
     Go To  ${HOME_URL}
@@ -44,3 +45,16 @@ Reset Citations And Go To Home Page
 Set Book Tag
     [Arguments]    ${tags}
     Input Text    name:tags    ${tags}
+
+Select Tag To Filter
+    [Arguments]  ${tag}
+    Wait Until Element Is Visible  css:input[type="checkbox"][value="${tag}"]  timeout=10s
+    Wait Until Element Is Enabled  css:input[type="checkbox"][value="${tag}"]  timeout=10s
+    Select Checkbox  css:input[type="checkbox"][value="${tag}"]
+
+Select Filtering Method
+    [Arguments]  ${option}
+    Wait Until Element Is Visible  id:filtering_method  timeout=10s
+    Wait Until Element Is Enabled  id:filtering_method  timeout=10s
+    Click Element  id:filtering_method
+    Select From List By Label  match_all  ${option}

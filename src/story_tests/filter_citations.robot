@@ -8,6 +8,7 @@ Test Setup      Reset Citations and Go To Home Page
 Select One Tag And Filter Citations
     Create Citations
     Go To Home Page
+    Page Should Contain  Filter by tags:
     Select Tag to Filter  kandi
     Select Filtering Method  Match one
     Click Button  Apply filters
@@ -43,12 +44,3 @@ Select Multiple Tags And Filter Citations With Match All
 Create Citations
     Create Book Citation  Kirja1  Matti Meikalainen  Testijulkaisija  123-4567890123  2024  ${TAGS1}
     Create Book Citation  Kirja2  Matti Meikalainen2  Testijulkaisija2  123-4567890127  2020  ${TAGS2}
-
-Select Tag To Filter
-    [Arguments]  ${tag}
-    Select Checkbox  css:input[type="checkbox"][value="${tag}"]
-
-Select Filtering Method
-    [Arguments]  ${option}
-    Click Element  filtering_method
-    Select From List By Label  match_all  ${option}

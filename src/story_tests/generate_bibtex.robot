@@ -38,12 +38,3 @@ List Shows BibTeX For Only Filtered Citations
 Create Citations
     Create Book Citation  Testikirja  Matti Meikalainen  Testijulkaisija  123-4567890123  2024  ${TAGS1}
     Create Book Citation  Testikirja2  Teppo Teikalainen  Testijulkaisija2  123-4567890124  2025  ${TAGS2}
-
-Select Tag To Filter
-    [Arguments]  ${tag}
-    Select Checkbox  css:input[type="checkbox"][value="${tag}"]
-
-Select Filtering Method
-    [Arguments]  ${option}
-    Click Element  filtering_method
-    Select From List By Label  match_all  ${option}
