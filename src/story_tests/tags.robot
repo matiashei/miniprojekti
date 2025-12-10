@@ -5,7 +5,7 @@ Suite Teardown  Close Browser
 Test Setup      Reset Citations
 
 *** Test Cases ***
-Add tags to a citation
+Add Tags To A Citation
     Create First Book Citation
     Go To Home Page
     Click Link  Edit
@@ -16,14 +16,13 @@ Add tags to a citation
     Page Should Contain  tag2,
     Page Should Contain  tag3
 
-Add a tag too long
+Add A Too Long Tag
     Create First Book Citation
     Go To Home Page
     Click Link  Edit
     Set Book Tag  thistagiswaytoolongtobevalid, valid
     Click Button  Edit
     Page Should Contain  Each tag must be less than 20 characters
-
 
 
 *** Keywords ***

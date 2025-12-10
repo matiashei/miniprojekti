@@ -11,13 +11,23 @@ class AppLibrary:
     def reset_database(self):
         requests.post(f"{self._base_url}/reset_db")
 
-    def create_book_citation(self, title, author, publisher, isbn, year):
-        self.citation_repo.create_book_citation("book", title, author, publisher, isbn, year)
+    def create_book_citation(self, title, author, publisher, isbn, year, tags=None):
+        citation_id = self.citation_repo.create_book_citation(
+            "book", title, author, publisher, isbn, year
+        )
+        if tags:
+            self.tag_repo.create_tags(citation_id, tags)
 
-    def create_inproceedings_citation(self, title, author, booktitle, year):
-        self.citation_repo.create_inproceedings_citation(
+    def create_inproceedings_citation(self, title, author, booktitle, year, tags=None):
+        citation_id = self.citation_repo.create_inproceedings_citation(
             "inproceedings", title, author, booktitle, year
         )
+        if tags:
+            self.tag_repo.create_tags(citation_id, tags)
 
-    def create_article_citation(self, title, author, journal, year):
-        self.citation_repo.create_article_citation("article", title, author, journal, year)
+    def create_article_citation(self, title, author, journal, year, tags=None):
+        citation_id = self.citation_repo.create_article_citation(
+            "article", title, author, journal, year
+        )
+        if tags:
+            self.tag_repo.create_tags(citation_id, tags)

@@ -24,19 +24,19 @@ Add Book Sitation With Missing Title
     Add Citation Should Fail With Message  Title cannot be empty and the length must be less than 75 characters
 
 Add Inproceedings Citation With Valid Inputs
-    Select Citation Option From Dropwdown  Inproceedings
+    Select Citation Option From Dropwdown  Conference proceedings
     Set Inproceedings Citation Fields  Testipaperi  Jukka Julkaisija  Testijulkaisu  2025
     Click Button  css=#inproceedings button[type="submit"]
     Add Citation Should Succeed
 
 Add Inproceedings Citation With Invalid Year
-    Select Citation Option From Dropwdown  Inproceedings
+    Select Citation Option From Dropwdown  Conference proceedings
     Set Inproceedings Citation Fields  Testipaperi  Jukka Julkaisija  Testijulkaisu  9999
     Click Button  css=#inproceedings button[type="submit"]
     Form Submmission Should Fail
 
 Add Inproceedings Citation With Missing Title
-    Select Citation Option From Dropwdown  Inproceedings
+    Select Citation Option From Dropwdown  Conference proceedings
     Set Inproceedings Citation Fields  ${EMPTY}  Jukka Julkaisija  Testijulkaisu  2025
     Click Button  css=#inproceedings button[type="submit"]
     Add Citation Should Fail With Message  Title cannot be empty and the length must be less than 75 characters
