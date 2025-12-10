@@ -41,6 +41,13 @@ Debug Available Tags
     Sleep  1s
     Go To Home Page
     Sleep  1s
+
+    ${filter_exists}=  Run Keyword And Return Status  Page Should Contain Element  css:.filter-panel
+    Log To Console  \nFilter panel exists: ${filter_exists}
+    
+    ${has_filter_text}=  Run Keyword And Return Status  Page Should Contain  Filter by tags:
+    Log To Console  Has filter text: ${has_filter_text}
+
     Capture Page Screenshot
     ${page_source}=  Get Source
     Log  ${page_source}
