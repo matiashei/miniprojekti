@@ -48,9 +48,11 @@ Set Book Tag
 
 Select Tag To Filter
     [Arguments]  ${tag}
+    ${checkbox}=  Set Variable  css:input[type="checkbox"][value="${tag}"]
     Wait Until Element Is Visible  css:input[type="checkbox"][value="${tag}"]  timeout=10s
     Wait Until Element Is Enabled  css:input[type="checkbox"][value="${tag}"]  timeout=10s
-    Select Checkbox  css:input[type="checkbox"][value="${tag}"]
+    Scroll Element Into View  ${checkbox}
+    Click Element  ${checkbox}
 
 Select Filtering Method
     [Arguments]  ${option}

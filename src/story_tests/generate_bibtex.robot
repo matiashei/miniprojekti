@@ -38,3 +38,4 @@ List Shows BibTeX For Only Filtered Citations
 Create Citations
     Create Book Citation  Testikirja  Matti Meikalainen  Testijulkaisija  123-4567890123  2024  ${TAGS1}
     Create Book Citation  Testikirja2  Teppo Teikalainen  Testijulkaisija2  123-4567890124  2025  ${TAGS2}
+    Sleep  1s

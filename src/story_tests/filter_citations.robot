@@ -44,3 +44,4 @@ Select Multiple Tags And Filter Citations With Match All
 Create Citations
     Create Book Citation  Kirja1  Matti Meikalainen  Testijulkaisija  123-4567890123  2024  ${TAGS1}
     Create Book Citation  Kirja2  Matti Meikalainen2  Testijulkaisija2  123-4567890127  2020  ${TAGS2}
+    Sleep  1s
