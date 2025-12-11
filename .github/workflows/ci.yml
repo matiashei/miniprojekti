@@ -44,8 +44,8 @@ jobs:
         run: poetry install
       - name: Run pylint
         run: poetry run pylint $(git ls-files '*.py') --fail-under=8.0
-      - name: Run unit tests
-        run: poetry run coverage run --branch -m pytest
+      - name: Run unit tests with coverage
+        run: poetry run coverage run -m pytest src/tests
       - name: Setup chromedriver
         uses: nanasess/setup-chromedriver@master
       - run: |
@@ -54,3 +54,9 @@ jobs:
           sudo Xvfb -ac :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
       - name: Run robot tests
         run: bash run_robot_tests.sh
+      - name: Coverage report
+        run: poetry run coverage xml
+      - name: Coverage report to Codecov
+        uses: codecov/codecov-action@v5
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
