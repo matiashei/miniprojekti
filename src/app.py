@@ -144,7 +144,6 @@ def get_bibtex():
         match_all=match_all,
     )
 
-
 @app.route("/doi", methods=["POST"])
 def add_from_doi():
     doi = request.form.get("doi", "").strip()

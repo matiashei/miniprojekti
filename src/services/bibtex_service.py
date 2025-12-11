@@ -1,5 +1,5 @@
-from entities.citation_types import CitationTypes
 import re
+from entities.citation_types import CitationTypes
 
 
 class BibtexService:

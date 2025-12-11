@@ -28,7 +28,8 @@ class TestCreateCitation(unittest.TestCase):
         })
 
         self.citation_repo = CitationRepository(Mock())
-        self.citation_service = CitationService(self.citation_repo, Mock(), Mock())
+        self.tag_repo = Mock()
+        self.citation_service = CitationService(self.citation_repo, self.tag_repo, Mock())
 
     @patch("repositories.citation_repository.db")
     def test_create_valid_book_citation(self, mock_db):
@@ -84,3 +85,35 @@ class TestCreateCitation(unittest.TestCase):
     def test_citation_not_created_with_invalid_type(self):
         with self.assertRaises(ValueError):
             self.citation_service.create_citation("invalid_type", self.book_citation)
+
+    @patch("repositories.citation_repository.db")
+    def test_get_one_citation(self, mock_db):
+        mock_row = Mock()
+        mock_row.id = 1
+        mock_row.citation_type = "book"
+        mock_row.title = self.book_citation["title"]
+        mock_row.author = self.book_citation["author"]
+        mock_row.publisher = self.book_citation["publisher"]
+        mock_row.isbn = self.book_citation["isbn"]
+        mock_row.year = self.book_citation["year"]
+        mock_row.journal = None
+        mock_row.booktitle = None
+        mock_row.tags = ["tag1", "tag2"]
+
+        mock_db.session.execute.return_value.fetchone.return_value = mock_row
+
+        citation = self.citation_repo.get_citation(ANY)
+
+        self.assertEqual(citation.title, self.book_citation["title"])
+        self.assertEqual(citation.author, self.book_citation["author"])
+        self.assertEqual(citation.publisher, self.book_citation["publisher"])
+        self.assertEqual(citation.isbn, self.book_citation["isbn"])
+        self.assertEqual(citation.year, self.book_citation["year"])
+
+    @patch("repositories.citation_repository.db")
+    def test_nonexistent_citation_not_found(self, mock_db):
+        mock_db.session.execute.return_value.fetchone.return_value = None
+
+        citation = self.citation_repo.get_citation(999)
+
+        self.assertIsNone(citation)
