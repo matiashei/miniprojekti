@@ -55,6 +55,7 @@ jobs:
       - name: Run robot tests
         run: bash run_robot_tests.sh
       - name: Upload artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           path: ./results
