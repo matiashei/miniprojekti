@@ -48,8 +48,7 @@ Set Book Tag
 
 Select Tag To Filter
     [Arguments]  ${tag}
-    ${checkbox}=  Set Variable  css:input[type="checkbox"][value="${tag}"]
-    Click Element  ${checkbox}
+    Select Checkbox  //input[@type="checkbox" and @value="${tag}"]
 
 Select Filtering Method
     [Arguments]  ${option}
