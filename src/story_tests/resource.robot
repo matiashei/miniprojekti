@@ -27,7 +27,7 @@ Open And Configure Browser
         Set Selenium Speed  ${DELAY}
     END
     Open Browser  browser=${BROWSER}  options=${options}
-    Maximize Browser Window
+    Set Window Size  1920  1080
 
 Go To Home Page
     Go To  ${HOME_URL}
@@ -49,14 +49,9 @@ Set Book Tag
 Select Tag To Filter
     [Arguments]  ${tag}
     ${checkbox}=  Set Variable  css:input[type="checkbox"][value="${tag}"]
-    Wait Until Element Is Visible  css:input[type="checkbox"][value="${tag}"]  timeout=10s
-    Wait Until Element Is Enabled  css:input[type="checkbox"][value="${tag}"]  timeout=10s
-    Scroll Element Into View  ${checkbox}
     Click Element  ${checkbox}
 
 Select Filtering Method
     [Arguments]  ${option}
-    Wait Until Element Is Visible  id:filtering_method  timeout=10s
-    Wait Until Element Is Enabled  id:filtering_method  timeout=10s
     Click Element  id:filtering_method
     Select From List By Label  match_all  ${option}
