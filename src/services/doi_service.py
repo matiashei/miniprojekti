@@ -1,6 +1,5 @@
-import requests
 from urllib.parse import quote
-
+import requests
 
 class DoiService:
     DOI_BASE_URL = "https://doi.org/{}"
@@ -13,5 +12,5 @@ class DoiService:
         try:
             response = requests.get(url, headers=DoiService.HEADERS, timeout=10)
             return response.text if response.ok else None
-        except requests.RequestException as e:
+        except requests.RequestException:
             return None

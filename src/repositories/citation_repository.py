@@ -31,8 +31,7 @@ class CitationRepository:
                 journal=citation.journal,
                 tags=tags
             )
-        else:
-            return None
+        return None
 
     def get_all_citations(self):
         result = db.session.execute(text("SELECT * FROM citations"))
@@ -80,8 +79,15 @@ class CitationRepository:
                 RETURNING id
             """)
 
-            result = db.session.execute(sql, {"citation_type": citation_type, "title": title,
-                                            "author": author, "booktitle": booktitle, "year": year})
+            result = db.session.execute(
+                sql, {
+                    "citation_type": citation_type,
+                    "title": title,
+                    "author": author,
+                    "booktitle": booktitle,
+                    "year": year
+                    },
+                )
             db.session.commit()
             return result.fetchone()[0]
 
@@ -104,8 +110,7 @@ class CitationRepository:
 
         if match_all:
             return self.get_citations_with_all_tags(tags)
-        else:
-            return self.get_citations_with_any_tag(tags)
+        return self.get_citations_with_any_tag(tags)
 
     def get_citations_with_all_tags(self, tags):
         if not tags:
@@ -118,7 +123,6 @@ class CitationRepository:
                 SELECT c.*
                 FROM citations c
                 WHERE c.id IN (
-                    -- Viittaukset, joilla on kaikki haetut tagit (Kuten nykyinen match_all)
                     SELECT citation_id
                     FROM tags
                     WHERE tag IN ({placeholders})

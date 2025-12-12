@@ -56,10 +56,18 @@ class TagRepository:
                 WHERE tag IN ({placeholders})
             """)
 
-            result = db.session.execute(sql, {f'tag{i}': tag for i, tag in enumerate(tags)}).fetchall()
+            result = db.session.execute(
+                sql,
+                {
+                    f"tag{i}": tag
+                    for i, tag in enumerate(tags)
+                },
+            ).fetchall()
+
 
         citation_ids = []
         for row in result:
             citation_ids.append(row.citation_id)
 
         return citation_ids
+    

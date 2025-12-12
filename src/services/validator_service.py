@@ -1,3 +1,7 @@
+from datetime import date
+
+CURRENT_YEAR = date.today().year
+
 class UserInputError(Exception):
     pass
 
@@ -27,7 +31,7 @@ class InputValidation:
                 "ISBN cannot be empty and the length must be less than 20 characters"
                 )
 
-        if not year or year.isspace() or int(year) < 0 or int(year) > 2025:
+        if not year or year.isspace() or int(year) < 0 or int(year) > CURRENT_YEAR:
             raise UserInputError("Invalid year")
 
     def validate_inproceedings(self, title, author, booktitle, year):
@@ -46,7 +50,7 @@ class InputValidation:
                 "Booktitle cannot be empty and the length must be less than 75 characters"
                 )
 
-        if not year or year.isspace() or int(year) < 0 or int(year) > 2025:
+        if not year or year.isspace() or int(year) < 0 or int(year) > CURRENT_YEAR:
             raise UserInputError("Invalid year")
 
     def validate_article(self, title, author, journal, year):
@@ -65,7 +69,7 @@ class InputValidation:
                 "Journal cannot be empty and the length must be less than 75 characters"
                 )
 
-        if not year or year.isspace() or int(year) < 0 or int(year) > 2025:
+        if not year or year.isspace() or int(year) < 0 or int(year) > CURRENT_YEAR:
             raise UserInputError("Invalid year")
 
     def validate_tags(self, tags):
