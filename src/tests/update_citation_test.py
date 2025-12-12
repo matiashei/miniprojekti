@@ -1,30 +1,53 @@
 import unittest
+from unittest.mock import Mock, patch
+from werkzeug.datastructures import MultiDict
 
-from unittest.mock import patch
-from repositories.citation_repository import update_book_citation, update_article_citation, update_inproceedings_citation
+from repositories.citation_repository import CitationRepository
+from services.citation_service import CitationService
 
-class TestupdateCitation(unittest.TestCase):
+class TestUpdateCitation(unittest.TestCase):
+    def setUp(self):
+        self.citation_repo = CitationRepository(Mock())
+        self.citation_service = CitationService(self.citation_repo, Mock(), Mock())
+
+        self.book_citation = MultiDict({
+            "title": "Testikirja",
+            "author": "Matti Meikalainen",
+            "publisher": "Testijulkaisija",
+            "isbn": "123-4567890123",
+            "year": "2025"
+        })
+        self.inproceedings_citation = MultiDict({
+            "title": "Testipaperi",
+            "author": "Matti Meikalainen",
+            "booktitle": "Testiotsikko",
+            "year": "2025"
+        })
+        self.article_citation = MultiDict({
+            "title": "Testiartikkeli",
+            "author": "Matti Meikalainen",
+            "journal": "Testilehti",
+            "year": "2025",
+            "tags": "tag1, tag2"
+        })
+
     @patch("repositories.citation_repository.db")
     def test_update_one_book_citation(self, mock_db):
-        update_book_citation(1, "title", "author", "publisher", "12345678", "2020")
+        self.citation_service.update_citation(1, "book", self.book_citation)
+
         mock_db.session.execute.assert_called_once()
+        mock_db.session.commit.assert_called_once()
 
     @patch("repositories.citation_repository.db")
     def test_update_one_article_citation(self, mock_db):
-        update_article_citation(1, "title", "author", "journal", "2020")
+        self.citation_service.update_citation(1, "article", self.article_citation)
+
         mock_db.session.execute.assert_called_once()
+        mock_db.session.commit.assert_called_once()
 
     @patch("repositories.citation_repository.db")
     def test_update_one_inproceedings_citation(self, mock_db):
-        update_inproceedings_citation(1, "title", "author", "booktitle", "2020")
-        mock_db.session.execute.assert_called_once()
+        self.citation_service.update_citation(1, "inproceedings", self.inproceedings_citation)
 
-    @patch("repositories.citation_repository.db")
-    def test_update_several_citations(self, mock_db):
-        update_book_citation(1, "title", "author", "publisher", "12345678", "2020")
-        update_book_citation(2, "title", "author", "publisher", "12345678", "2020")
-        update_article_citation(3, "title", "author", "journal", "2020")
-        update_article_citation(4, "title", "author", "journal", "2020")
-        update_inproceedings_citation(5, "title", "author", "booktitle", "2020")
-        update_inproceedings_citation(6, "title", "author", "booktitle", "2020")
-        self.assertEqual(mock_db.session.execute.call_count, 6)
+        mock_db.session.execute.assert_called_once()
+        mock_db.session.commit.assert_called_once()

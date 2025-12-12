@@ -22,11 +22,12 @@ Create a new citation
     <select id="choice" name="citation_type">
         <option value="">-Choose-</option>
         <option value="book">Book</option>
-        <option value="inproceedings">Inproceedings</option>
+        <option value="inproceedings">Conference proceedings</option>
         <option value="article">Article</option>
     </select> <a href="/"><button type="button">Return to frontpage</button></a> 
     <br>
 
+<div class="new_citation">
 <form action="/create_book_citation" method="post" id="book" class="hidden">
       <p>
         <label for="title">Title*</label>
@@ -103,7 +104,7 @@ Create a new citation
 
 
 </form>
-
+</div>
 <script>
     const valinta = document.getElementById("choice");
     const book = document.getElementById("book");
@@ -133,5 +134,14 @@ Create a new citation
         }
     });
 </script>
+
+
+  <div class="input_doi">
+      <h3>Add Citation from DOI</h3>
+      <form method="POST" action="{{ url_for('add_from_doi') }}">
+          <input type="text" name="doi">
+          <button type="submit">Submit</button>
+      </form>
+  </div>
 
 {% endblock %}

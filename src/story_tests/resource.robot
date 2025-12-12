@@ -27,6 +27,7 @@ Open And Configure Browser
         Set Selenium Speed  ${DELAY}
     END
     Open Browser  browser=${BROWSER}  options=${options}
+    Set Window Size  1920  1080
 
 Go To Home Page
     Go To  ${HOME_URL}
@@ -44,3 +45,12 @@ Reset Citations And Go To Home Page
 Set Book Tag
     [Arguments]    ${tags}
     Input Text    name:tags    ${tags}
+
+Select Tag To Filter
+    [Arguments]  ${tag}
+    Select Checkbox  //input[@type="checkbox" and @value="${tag}"]
+
+Select Filtering Method
+    [Arguments]  ${option}
+    Click Element  filtering_method
+    Select From List By Label  match_all  ${option}
