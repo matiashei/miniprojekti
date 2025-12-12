@@ -155,11 +155,9 @@ def add_from_doi():
     except Exception as e:
         flash(f"Error: {e}")
         return redirect("/new_citation")
-    else:
-        flash("Citation added successfully!")
-        return redirect("/")
+    flash("Citation added successfully!")
+    return redirect("/")
 
-# testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db", methods=["POST"])
     def reset_database():
