@@ -4,17 +4,20 @@
 ![Pylint Status](https://github.com/matiashei/miniprojekti/actions/workflows/pylint.yml/badge.svg)
 [![codecov](https://codecov.io/gh/matiashei/miniprojekti/graph/badge.svg?token=RHLFH9FXF0)](https://codecov.io/gh/matiashei/miniprojekti)
 
+## Documentation
+* Project Backlog and individual Sprint Backlogs: [Google Sheets](https://docs.google.com/spreadsheets/d/1Oh1xeJ6td34I5xTl3dneJ4uoo6Xl9Ed_Dc_2IyDjGgE/edit?usp=sharing)
+* Project report (WIP!): [Google Docs](https://docs.google.com/document/d/1kBwKide9rMBoZNRZhqJLMgBlqgzc2iS9WgkpS-ca4V4/edit?usp=sharing)
+* License: [LICENSE](https://github.com/matiashei/miniprojekti/blob/main/LICENSE)
+* Notes and improvement ideas from sprint retrospectives: [retro.md](https://github.com/matiashei/miniprojekti/blob/main/retro.md)
 
-Project Backlog and individual Sprint Backlogs: [Google Docs](https://docs.google.com/spreadsheets/d/1Oh1xeJ6td34I5xTl3dneJ4uoo6Xl9Ed_Dc_2IyDjGgE/edit?usp=sharing)
-
-### Installation and usage instructions
-#### System requirements
+## Installation and usage instructions
+### System requirements
 - Check that both Python and Poetry are installed: 
 ```
 $ python3 --version
 $ poetry --version
 ```
-#### Installation
+### Installation
 - **Clone the project**. If using SSH the command is:
 ```
 $ git clone git@github.com:matiashei/miniprojekti.git
@@ -23,13 +26,13 @@ $ git clone git@github.com:matiashei/miniprojekti.git
 ```
 $ poetry install
 ```
-#### Usage
+### Usage
 - Start the application:
 ```
 $ poetry run python src/index.py 
 ```
 
-### Definition of Done
+## Definition of Done
 * A new feature should fulfill the acceptance criteria for it. The acceptance criteria is defined in the Product Backlog (link above) for each user story chosen for the sprint.
 * The implemented code is tested with automated robot tests and unit tests:
   * Robot Framework tests are used to verify at least some of the user stories.
